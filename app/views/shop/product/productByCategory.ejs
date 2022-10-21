@@ -1,0 +1,47 @@
+<%- include ('../../partials/nav') %>
+
+<div class="breadcrumbs">
+    <div class="container">
+        <a href="/shop">Home</a>
+        <i class="fa fa-chevron-right breadcrumb-separator"></i>
+        <span>Shop</span>
+    </div>
+</div>
+
+<div class="products-section container">
+    <div class="sidebar">
+
+        <h3 class="mt-3">Les catégories</h3>
+
+        <ul>
+            <% for(cat of categories){ %>
+             <li>
+                <a href="/category/<%= cat.id %>"><%= cat.name %></a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+
+    <div>
+        <div class="products text-center">
+
+            <% for(product of category.products) { %>
+                <div class="product">
+                    <a href="/product/<%= product.id%>">
+                        <img src="<%= product.image %>" alt="<%= product.title %>" />
+                    </a>
+                    <a href="/product/<%= product.id %>">
+                        <div class="product-name"><%= product.title %></div>
+                    </a>
+                    <div class="product-price"><%= product.priceHT %>€ HT</div>
+                    <div class="product-price">TVA <%= product.tva.title %>€</div>
+                    <div class="product-price"><%= product.priceTTC %>€ TTC</div>
+
+                </div>
+            <% } %>
+            
+        </div>
+    </div>
+</div>
+
+<%- include ('../../partials/foot') %>

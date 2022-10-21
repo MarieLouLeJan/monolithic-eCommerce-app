@@ -1,0 +1,12 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="container">
+
+    <h2><%= status %></h2>
+    <% if(status === 404) { %>
+        <img src="/img/404.gif" alt="Page Not Found">
+    <% } %>
+    <p><%= message %></p>
+</section>
+<%- include('partials/foot') %>

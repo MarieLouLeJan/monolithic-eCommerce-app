@@ -1,0 +1,74 @@
+<%- include ('./partials/head.ejs') %>
+<%- include ('./partials/header') %>
+<%- include ('./partials/sidebar') %>
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <%- include ('./partials/quickActions') %>
+    <div class="row">
+        <h1>
+            <% if (!locals.user){ %>
+                Vous n'êtes pas connecté ! 
+                Cliquez <a href="/login">ici</a> pour vous connecter !
+            <% } else if(locals.user){%>
+                Mes commandes
+            <% } %>
+        </h1>      
+        <hr>
+        <h3 class="info-perso">
+        <% if(locals.user && !locals.order){ %>
+            Aucun commande passée !
+        <%} %>
+            Commande du <%=order[0].created_at%>
+        </h3>
+
+        <hr>
+
+        <div class="info-div">
+
+            
+
+            <div class="info-key">Livrée à</div>
+            <div class="info"><%= user.name%> <%order[0].adress %></div>
+
+            <div class="info-key">Nombre de produits:</div>
+            <div class="info"><%= order[0].quantity %></div>
+
+            <div class="info-key">Total HT</div>
+            <div class="info"><%= order[0].totalHT %>€</div>
+
+            <div class="info-key">Total TVA</div>
+            <div class="info"><%= order[0].tax %>€</div>
+
+            <div class="info-key">Total TTC</div>
+            <div class="info"><%= order[0].totalTTC %>€</div>
+
+            <div class="info-key">Etat</div>
+            <div class="info"><%= order[0].state %></div>
+        </div>
+
+        <hr>
+        
+        <% for(const p of order) { %>
+            <div class="info-div">
+                <div class="info-key">Produit</div>
+                <div class="info"> <a href="/product/<%=p.products.id%>"><%= p.products.title %></a></div>
+                <div class="info-key">Prix HT</div>
+                <div class="info"><%= p.products.Order_has_product.priceHT %>€</div>
+                <div class="info-key">Montant TVA</div>
+                <div class="info"><%= p.products.Order_has_product.tva %></div>
+                <div class="info-key">Quantité</div>
+                <div class="info"><%= p.products.Order_has_product.quantity %></div>
+                <div class="info-key">Statut</div>
+                <div class="info"><%= p.products.Order_has_product.state %></div>
+            </div>
+            <hr>    
+        <%} %>
+
+
+
+
+
+
+    </div>
+</main>
+</body>

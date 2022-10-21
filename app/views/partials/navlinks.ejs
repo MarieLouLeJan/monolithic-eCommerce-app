@@ -1,0 +1,33 @@
+<ul>
+    <li>
+        <a href="/shop">Shop</a>
+    </li>
+    <!--  Si pas authentifié : affiche un lien vers signup, sinon afficher un lien vers dashboard -->
+    <% if (!locals.user) { %>
+
+        <li>
+            <a href="/register">Signup</a>
+        </li>
+        <li>
+            <a href="/login">Sign in</a>
+        </li>
+    <% } else { %>
+        <li>
+            <% if (locals.user.role.name === 'admin') { %>
+                <a href="/dashboard">Admin</a>
+            <% } else { %>
+                <a href="/dashboard">Votre profile</a>
+            <% }  %>
+        </li>
+        <li>
+            <a href="/logout"> Logout </a>
+        </li>
+    <% }  %>
+
+
+    <li>
+        <a href="/cart">
+            Panier
+        </a>
+    </li>
+</ul>

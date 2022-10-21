@@ -1,0 +1,88 @@
+
+<%- include ('../../partials/nav') %>
+
+
+<div class="breadcrumbs">
+        <div class="container">
+          <a href="/shop">Home</a>
+          <i class="fa fa-chevron-right breadcrumb-separator" ></i>
+          <span>Shopping Cart</span>
+          <i class="fa fa-chevron-right breadcrumb-separator" ></i>
+          <span>Checkout</span>
+        </div>
+      </div>
+        <% if (locals.cart?.length > 0) { %>
+          <div class="cart-section container">
+            <div class="cart-table">
+            <% for( let product of cart ) { %>
+              <div class="cart-table-row">
+                <div class="cart-table-row-left">
+                  <a href="/">
+                    <img
+                      src="<%= product.image %>"
+                      alt="item"
+                      class="cart-table-img"
+                    />
+                  </a>
+                  <div class="cart-item-details">
+                    <div class="cart-table-item">
+                      <a href="/product/<%= product.id %>">
+                        <%= product.title %>
+                      </a>
+                    </div>
+                    <div class="cart-table-description">
+                      <%= product.description %>
+                    </div>
+                  </div>
+                </div>
+                <div class="cart-table-row-right">   
+                  <div>
+                    <%= product.qty %>
+                  </div>
+                  <div>
+                    <%= product.priceHT * product.qty %> &euro; HT
+                  </div>
+                  <div>
+                    <%= Math.round((product.priceTTC * product.qty) * 100) / 100 %> &euro; TTC
+                  </div>
+                </div>
+              </div>
+            <% } %>
+              <div class="cart-totals">
+                <div class="cart-totals-left">
+                  Récapitulatif
+                </div>
+                <div class="cart-totals-right">
+                  <div>
+                    Subtotal <br />
+                    Tax <br />
+                    <span class="cart-totals-total">Total</span>
+                  </div>
+                  <div class="cart-totals-subtotal">
+                    <%= cartHT %>  &euro;
+                    <br/>
+                    <%= cartTax %> &euro;
+                    <br/>
+                    <span class="cart-totals-total"><%= cartTTC %> &euro;</span>
+                  </div>
+                </div>
+              </div>
+              <% if(user.shipping) {%>
+                <div class="cart-totals">
+                  <div class="cart-totals-left">
+                    Adresse de livraison
+                  </div>
+                  <div class="cart-totals-right">
+                    <%= user.shipping %>
+                  </div>
+                </div>
+                  <a href="/checkout/complete" class="button-primary">
+                    Buy
+                  </a>
+              <% } else {%>
+                <a class="button-cart" href="/dashboard/complete">Veuillez complétez vos informations</a>
+              <% } %>
+            </div>
+          </div>
+        <% } %>
+    <%- include ('../../partials/foot') %>

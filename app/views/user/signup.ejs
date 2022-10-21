@@ -1,0 +1,36 @@
+<%- include ('../partials/nav') %>
+
+<section class="container mt-5 mb-5">
+    <% if (locals.error) { %>
+        <div class="alert alert-danger">
+            <p class="text-danger"><%= error %> </p>
+        </div>
+    <% } %>
+    <h1 class="large text-primary">Sign Up</h1>
+    <p class="lead"><i class="fas fa-user"></i> Create Your Account</p>
+    <form class="form" method="POST" action="/register">
+        <div class="form-group">
+            <input type="text" placeholder="Votre prénom" name="firstname" />
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="Votre nom" name="lastname" />
+        </div>
+        <div class="form-group">
+            <input type="email" placeholder="Email Address" name="email" />
+        </div>
+        <div class="form-group">
+            <input type="password" placeholder="Password" name="password" />
+        </div>
+        <div class="form-group">
+            <input
+                type="password"
+                placeholder="Confirm Password"
+                name="passwordConfirm"
+            />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Register" />
+    </form>
+    <p class="my-1">Already have an account? <a href="/login">Sign In</a></p>
+</section>
+
+<% include ('../partials/foot') %>

@@ -1,0 +1,114 @@
+
+<%- include ('partials/nav') %>
+
+<div class="breadcrumbs">
+        <div class="container">
+          <a href="/shop">Home</a>
+          <i class="fa fa-chevron-right breadcrumb-separator" ></i>
+          <span>Shopping Cart</span>
+        </div>
+      </div>
+
+      <div class="cart-section container">
+        <div>
+          <h2>
+            <% if(locals.cart?.length  > 0) { %>
+                 <%= cart.length %> items in Shopping Cart
+            <% } else { %>
+                    Vous n'avez rien ajouté au panier
+            <% }  %>
+          </h2>
+          <div class="cart-table">
+              <% if (locals.cart?.length > 0) { %>
+               <% for( let product of cart ) { %>
+                    <div class="cart-table-row">
+                    <div class="cart-table-row-left">
+                      <a href="/">
+                        <img
+                          src="<%= product.image %>"
+                          alt="item"
+                          class="cart-table-img"
+                        />
+                      </a>
+                      <div class="cart-item-details">
+                        <div class="cart-table-item">
+                          <a href="/product/<%= product.id %>">
+                            <%= product.title %>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cart-table-row-right">
+                      <form action="/cart/erase/<%= product.id %>" method="POST">
+                        <input class="button-cart" value="Remove" type="submit">
+                      </form>    
+
+                      <form action="/cart/remove/<%= product.id %>" method="POST">
+                        <input class="button-cart" value="-" type="submit">
+                      </form>                      
+                      <div>
+                        <%= product.qty %>
+                      </div>
+                      <form action="/cart/<%= product.id %>" method="POST">
+                        <input class="button-cart" value="+" type="submit">
+                      </form>
+                      <div>
+                        <%= product.totalHT %> &euro; HT
+                      </div>
+                      <div>
+                        
+                        <%= product.totalTTC %> &euro; TTC
+                        
+
+                      </div>
+                    </div>
+                  </div>
+               <% } %>
+              <% } %>
+          </div>
+
+          <a href="/" class="have-code">
+            Have a Code?
+          </a>
+          <div class="have-code-container">
+            <form action="/">
+              <input type="text" />
+              <button type="submit" class="button button-plain">
+                Apply
+              </button>
+            </form>
+          </div>
+          <% if(locals.cart?.length  > 0) { %>
+            <div class="cart-totals">
+              <div class="cart-totals-left">
+                <a href="/cart/destroy" class="button-cart">Vider le panier</a>
+              </div>
+              <div class="cart-totals-right">
+                <div>
+                  Subtotal <br />
+                  Tax <br />
+                  <span class="cart-totals-total">Total</span>
+                </div>
+                <div class="cart-totals-subtotal">
+                <%= cart.totalHT %>  &euro;
+                  <br />
+                  <%= cart.totalTax %> &euro;
+                  <br />
+                  <span class="cart-totals-total"><%= cart.totalTTC %> &euro;</span>
+                </div>
+              </div>
+            </div>
+          <% } %>
+          <div class="cart-buttons">
+            <a href="/shop" class="button">
+              Continue Shopping
+            </a>
+              <% if(locals.cart?.length > 0){ %>
+                <a href="/checkout" class="button-primary">
+                  Proceed to Checkout
+                </a>
+              <% } %>
+          </div>
+        </div>
+      </div>
+<%- include ('partials/foot') %>

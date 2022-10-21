@@ -1,0 +1,19 @@
+<header class="with-background">
+    <div class="top-nav container">
+        <div class="logo">
+            <a href="/"> Express / EJS / Postgresql Ecommerce </a>
+        </div>
+		<%- include('./navlinks')  %>
+    </div>
+
+    <div class="hero container">
+        <div class="hero-copy">
+            <h1>Welcome <% if(locals.user){%> <%= user.name %> <% }%> !</h1>
+
+            <p>Des produits, Des categories, un panier</p>
+        </div>
+        <div class="hero-image">
+            <img src="img/first-image.png" alt="heropages" />
+        </div>
+    </div>
+</header>

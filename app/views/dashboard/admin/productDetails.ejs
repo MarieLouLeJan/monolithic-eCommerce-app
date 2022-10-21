@@ -1,0 +1,63 @@
+<%- include ('../partials/head') %>
+<%- include ('../partials/header') %>
+<%- include ('../partials/sidebar') %>
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="row">
+        <h1>
+            Bienvenu administrateur <%= user.name %>
+        </h1> 
+        
+        <hr>
+
+        <h3  class="info-perso">Produit <%= product.title %></h3>
+
+        <hr>    
+        <div class="product-section-image">
+            <img src="<%= product.image %> " alt="<%= product.title %> " />
+        </div>
+            <div class="info-div">
+                <div class="info-key">
+                    Référence
+                </div>
+                <div class="info">                       
+                    <%= product.ref %>  
+                </div>
+                <div class="info-key">
+                    Nom
+                </div>
+                <div class="info">                       
+                    <%= product.title %>  
+                </div>
+                <div class="info-key">
+                    Description 
+                </div>
+                <div class="info">                       
+                    <%= product.description %>  
+                </div>
+                <div class="info-key">
+                    Prix HT
+                </div>
+                <div class="info">                       
+                    <%= product.priceHT %>  
+                </div>
+                <div class="info-key">
+                    Taxe appliquée
+                </div>
+                <div class="info">                       
+                    <%= product.tva.title %>  
+                </div>
+                <div class="info-key">
+                    Catégorie
+                </div>
+                <div class="info">                       
+                    <%= product.categories.name %>  
+                </div>
+
+            </div>
+
+        <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/update">Modifiez le produit</a></div>
+        <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/delete">Supprimez le produit</a></div>
+
+    </div>
+</main>

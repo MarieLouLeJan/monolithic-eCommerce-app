@@ -1,0 +1,55 @@
+<%- include ('../partials/head') %>
+<%- include ('../partials/header') %>
+<%- include ('../partials/sidebar') %>
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="row">
+        <h1>
+            Bienvenu administrateur <%= user.name %>
+        </h1> 
+        
+        <hr>
+
+        <h3  class="info-perso">Modifiez le produit <%= product.title %></h3>
+
+        <hr>    
+
+        <form class="form" method="POST" action="/dashboard/admin/products/details/<%=product.id%>/update">
+            <div class="form-group">
+                <input type="text" placeholder="<%= product.title %>" name="title" />
+            </div>
+            <div class="form-group">
+                <input type="text" placeholder="<%= product.ref %>" name="ref" />
+            </div>
+            <div class="form-group">
+                <input type="textarea" placeholder="<%= product.description %>" name="description" />
+            </div>
+            <div class="form-group">
+                <input type="number" placeholder="<%= product.priceHT %>" step="any" name="priceHT" />
+            </div>
+            <div class="form-group">
+                <input type="url" placeholder="URL de l'image" name="image" />
+            </div>
+            <div class="form-group">
+                <label for="tva_selection">TVA:</label>
+                <select name="tva_id" id="tva_selection">
+                        <option value="">TVA: <%= product.tva.title %></option>
+                    <% for(tax of tva){ %>
+                        <option value="<%=tax.id%>"><%= tax.title %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="category_selection">TVA:</label>
+                <select name="category_id" id="category_selection">
+                        <option value="">Categorie: <%= product.categories.name %></option>
+                    <% for(cat of categories){ %>
+                        <option value="<%=cat.id%>"><%= cat.name %></option>
+                    <% } %>
+                </select>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Modifiez le produit" />
+        </form>
+
+    </div>
+</main>

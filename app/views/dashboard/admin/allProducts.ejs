@@ -1,0 +1,35 @@
+<%- include ('../partials/head') %>
+<%- include ('../partials/header') %>
+<%- include ('../partials/sidebar') %>
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="row">
+        <h1>
+            Bienvenu administrateur <%= user.name %>
+        </h1> 
+        
+        <hr>
+
+        <h3  class="info-perso">Produits</h3>
+
+        <hr>    
+
+        <% for(const cat of categories) { %>
+            <h3><%= cat.name %></h3>
+            <% for(const prod of cat.products){ %>
+                <div class="info-div">
+                <div class="info-key">
+                    <a href="/dashboard/admin/products/details/<%= prod.id %>"><%= prod.ref %> </a>
+                </div>
+                <div class="info">                       
+                    <%= prod.title %>  
+                </div>
+            </div>
+            <% } %>
+            <hr>
+        <% } %>
+
+        <div class="complete"><a  class="complete" href="/dashboard/admin/products/addProduct">Ajoutez un produit</a></div>
+
+    </div>
+</main>
