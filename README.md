@@ -28,14 +28,14 @@ Pour utiliser cette source, après l'avoir cloné sur votre machine, nous devrez
 La connaissance des langages `javascript` et `sql` est nécessaire.
 Pour commencer, initier l'application avec `npm init`
 Les frameworks et packages utilisés, et qu'il vous faudra installer sont les suivants: `npm i` + nom du package:
-        - `express`
-        - `express-session`
-        - `ejs`
-        - `dotenv`
-        - `bcrypt`
-        - `sequelize`
-        - `email-validator`
-        - `pg`
+- `express`
+- `express-session`
+- `ejs`
+- `dotenv`
+- `bcrypt`
+- `sequelize`
+- `email-validator`
+- `pg`
 Vous pouvez également utiliser le racourcis `npm i` qui installera toutes les dépendances.
 Vous trouverez dans le script `IMPORT-TABLES` un paragraphe vous permettant la création de votre BDD.
 Il vous faudra créer ensuite un fichier .env qui comprendra le port utilisé, le phrase secrete des sessions ainsi que l'URL permettant la connexion à votre base de donnée. Pour cela, le fichier .env.example vous servira d'exemple. 
@@ -43,17 +43,3 @@ Il vous faudra créer ensuite un fichier .env qui comprendra le port utilisé, l
 
 
 
-### Les limites
-
-
-- description de l'application
-- Quels langages et frameworks
-- Prérequis
-- but de l'exercice progresser css & nodeJS
-- apres avoir cloner le projet ou télécharger les sources, télécharger & installer nodejs & postgres sur la machine.
-- Créez la base de donnée en utilisant du script fournis. Donnez la notice sur cmt inserer les données
-- TODO >> mettre en commentaire dans script sql comment creer une BDD 
-- prérequis de la machine >> nodejs postgres
-- >> séparer les scripts table & datas
-
-Aller plus loin >>>
