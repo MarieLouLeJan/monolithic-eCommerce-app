@@ -1,6 +1,6 @@
-<%- include ('./partials/head.ejs') %>
-<%- include ('./partials/header') %>
-<%- include ('./partials/sidebar') %>
+<%- include ('../partials/head.ejs') %>
+<%- include ('../partials/header') %>
+<%- include ('../partials/sidebar') %>
 
 <main >
 <section class="container ">
@@ -10,7 +10,7 @@
         </div>
     <% } %>
     <h1 class="large text-primary">Completez vos informations</h1>
-    <form class="form" method="POST" action="/dashboard/complete">
+    <form class="form" method="POST" action="/dashboard/profil/update">
         <div class="form-group">
             <input type="text" placeholder="<%= user.name %>" name="name" />
         </div>

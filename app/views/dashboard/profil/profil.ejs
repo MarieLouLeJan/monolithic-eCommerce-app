@@ -1,9 +1,9 @@
-<%- include ('./partials/head') %>
-<%- include ('./partials/header') %>
-<%- include ('./partials/sidebar') %>
+<%- include ('../partials/head') %>
+<%- include ('../partials/header') %>
+<%- include ('../partials/sidebar') %>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <%- include ('./partials/quickActions') %>
+    <%- include ('../partials/quickActions') %>
     <div class="row">
         <h1>
             <% if (!locals.user){ %>
@@ -45,7 +45,7 @@
                 <div class="info">Non renseigné</div>
             <% } %>
         </div>
-        <div class="complete"><a  class="complete" href="/dashboard/complete">Complétez / modifiez votre profil</a></div>
+        <div class="complete"><a  class="complete" href="/dashboard/profil/update">Complétez / modifiez votre profil</a></div>
 
 
 

@@ -6,20 +6,19 @@ const checkoutController = {
     
     checkoutPage (req, res) {
         if(!req.session.user){
-            const message = "Veuillez vous connecter pour terminer votre commande !"
-            res.render('login', { message })
-            return;
-        } 
+            const message = "Veuillez vous connecter pour procéder au checkout"
+            res.render('user/signin', { message })
+        }
         const user = req.session.user;
         const cart = req.session.cart;
-        const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllTotals(cart)
-        res.render('/shop/cart/checkout', {cart, cartHT, cartTTC, cartTax, user})
+        const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(cart)
+        res.render('shop/cart/checkout', {cart, cartHT, cartTTC, cartTax, user})
     },
 
     async checkoutAction (req, res) {
         const cart = req.session.cart;
         const user = req.session.user
-        const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllTotals(cart)
+        const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(cart)
         console.log(cartHT, cartTTC, cartTax)
         let quantity = 0
         for(const p of cart){
@@ -45,7 +44,7 @@ const checkoutController = {
                         state: "en cours de livraison" }})
             };
             delete req.session.cart;
-            res.render('shop/cart/checkoutConfirmation', { user })
+            res.render('shop/cart/checkoutConfirmation')
         } catch (error) {
             console.log(error);
             res.locals.error = {

@@ -14,7 +14,7 @@ const productController = {
                 ],
             });
             const categories = allCategories.map(cat => cat.get( { plain: true } ))
-            res.render('dashboard/admin/allProducts', { categories, user: req.session.user })
+            res.render('dashboard/admin/allProducts', { categories })
         } catch (error) {
             console.log(error);
             res.locals.error = {
@@ -25,18 +25,6 @@ const productController = {
     },
 
     async showProductDetails (req, res) {
-        req.session.user = {
-            id: 2,
-            name: 'Maurice Admin',
-            email: 'admin@admin.com',
-            role_id: 2,
-            phone: null,
-            shipping: null,
-            billing: null,
-            created_at: '2022-10-18',
-            updated_at: null,
-            role: { id: 2, name: 'admin', created_at: '2022-10-18', updated_at: null }
-        };
         const productId = parseInt(req.params.productId)
         if(!isNaN(productId)){
             try {
@@ -48,7 +36,7 @@ const productController = {
                 })
                 product.priceHT = product.priceHT.toFixed(2)
                 console.log(product.priceHT)
-                res.render('dashboard/admin/productDetails', { product, user: req.session.user })
+                res.render('dashboard/admin/productDetails', { product })
             } catch (error) {
                 console.log(error);
                 res.locals.error = {
@@ -80,7 +68,7 @@ const productController = {
         try {
             const categories = await Category.findAll()
             const tva = await TVA.findAll()
-            res.render('dashboard/admin/addProduct', { categories, tva, user: req.session.user })
+            res.render('dashboard/admin/addProduct', { categories, tva })
 
         } catch (error) {
             console.log(error);
@@ -119,7 +107,7 @@ const productController = {
                 })
                 const categories = await Category.findAll({
                 })
-                res.render('dashboard/admin/updateProduct', { product, tva, categories, user: req.session.user })
+                res.render('dashboard/admin/updateProduct', { product, tva, categories })
             } catch (error) {
                 console.log(error);
                 res.locals.error = {

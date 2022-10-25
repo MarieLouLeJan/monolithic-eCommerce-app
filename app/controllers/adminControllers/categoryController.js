@@ -5,7 +5,7 @@ const categoryController = {
     async showAllCategories (req, res) {
         try {
             const categories = await Category.findAll();
-            res.render('dashboard/admin/categories', { categories, user: req.session.user})
+            res.render('dashboard/admin/categories', { categories })
         } catch (error) {
             console.log(error);
             res.locals.error = {
@@ -33,7 +33,7 @@ const categoryController = {
     async updateCategoriesPage (req, res) {
         try {
             const categories = await Category.findAll();
-            res.render('dashboard/admin/updateCategories', { categories, user: req.session.user })
+            res.render('dashboard/admin/updateCategories', { categories })
         } catch (error) {
             console.log(error);
             res.locals.error = {

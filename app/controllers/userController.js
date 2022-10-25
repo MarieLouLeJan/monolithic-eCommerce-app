@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const emailValidator = require('email-validator');
 const { User, Role } = require('../models');
 const validator = require("email-validator");
 
@@ -34,7 +33,7 @@ const userController = {
                     }
                   ]            
                 })
-            res.render('login', {
+            res.render('user/signin', {
                 message: 'Vous pouvez maintenant vous connecter !',
             });
         } catch (error) {
@@ -57,16 +56,15 @@ const userController = {
             });
             if(!user){
                 const message = "Utilisateur non existant";
-                res.render('login', { message })
+                res.render('user/signin', { message })
             }
             const result = await bcrypt.compare(req.body.password, user.password);
             if(!result){
                 const message = "Mot de passe incorrect";
-                res.render('login', { message })
+                res.render('user/signin', { message })
             }
             const {password, ...newUser} = user.get({plain: true});
             req.session.user = newUser
-            
             res.locals.user = newUser;
             res.redirect('/');
         } catch (e) {

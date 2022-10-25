@@ -6,7 +6,7 @@ const cartController = {
 
     index (req, res) {
         if(!req.session.cart){
-            res.render('shop/cart')
+            res.render('shop/cart/cart')
         } else {
             const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(req.session.cart);
             req.session.cart.totalHT = cartHT;

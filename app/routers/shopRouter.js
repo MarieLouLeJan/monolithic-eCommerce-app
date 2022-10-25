@@ -6,20 +6,21 @@ const cartController = require('../controllers/cartController');
 const checkoutController = require('../controllers/checkoutController');
 
 const auth = require('../middlewares/auth');
-const cart = require('../middlewares/cart')
+const authObligatory = require('../middlewares/authObligatory');
+const cart = require('../middlewares/cart');
 
-shopRouter.get('/', catalogController.index);
-shopRouter.get('/shop', catalogController.productsList);
-shopRouter.get('/shop/category/:id', catalogController.productsByCategory);
-shopRouter.get('/shop/product/:id', catalogController.productDetails);
+shopRouter.get('/', auth, catalogController.index);
+shopRouter.get('/shop', auth, catalogController.productsList);
+shopRouter.get('/shop/category/:id', auth, catalogController.productsByCategory);
+shopRouter.get('/shop/product/:id', auth, catalogController.productDetails);
 
-shopRouter.get('/cart', cartController.index);
-shopRouter.post('/cart/:productId', cartController.addOrUpdate);
-shopRouter.post('/cart/erase/:productId', cart, cartController.removeAllProducts);
-shopRouter.post('/cart/remove/:productId', cart, cartController.removeOneProduct);
-shopRouter.get('/cart/destroy', cart, cartController.destroyCart);
+shopRouter.get('/cart', auth, cartController.index);
+shopRouter.post('/cart/:productId', auth, cartController.addOrUpdate);
+shopRouter.post('/cart/erase/:productId', cart, auth, cartController.removeAllProducts);
+shopRouter.post('/cart/remove/:productId', cart, auth, cartController.removeOneProduct);
+shopRouter.get('/cart/destroy', cart, auth, cartController.destroyCart);
 
-shopRouter.get('/checkout', auth, cart, checkoutController.checkoutPage);
-shopRouter.get('/checkout/complete', auth, cart, checkoutController.checkoutAction);
+shopRouter.get('/checkout', cart, auth, checkoutController.checkoutPage);
+shopRouter.get('/checkout/complete', authObligatory, cart, checkoutController.checkoutAction);
 
 module.exports = shopRouter;

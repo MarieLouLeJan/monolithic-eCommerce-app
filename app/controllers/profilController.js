@@ -1,50 +1,52 @@
 const { User, Role, Order, Product, Order_has_product, Tva } = require("../models");
 const bcrypt = require('bcrypt');
-
+const validator = require('email-validator');
 
 const profilController = {
 
     async index (req, res) {
-        if(req.session.user){
-            res.render('dashboard/profil/profil', { user : req.session.user })
-        } 
+        res.render('dashboard/profil/profil' )
     },
 
     updateProfilPage: async (req, res) => {
-        res.render('dashboard/profil/updateProfil', { user : req.session.user })
+        res.render('dashboard/profil/updateProfil')
     },
 
     async updateProfilAction (req, res) {
         try {
-            const userToUpdate = await User.findOne({
+            const userFound = await User.findOne({
                 where: {
                     email: req.session.user.email,
                 },
+                include: 'role'
             });
-            let result = await bcrypt.compare(req.body.checkPassword, userToUpdate.password);
-            if(!result){
-                const error = "Mot de passe incorrect";
-                res.render('dashboard/complete', { error, user: req.session.user })
+            let passwordOk = await bcrypt.compare(req.body.checkPassword, userFound.password);
+            if(!passwordOk) {
+                delete req.body;
+                const error = "Mot de passe incorrect"
+                res.render('dashboard/profil/updateProfil', { error });
             }
-            for (const prop in req.body) {
-                if (!req.body[prop] || req.body.length === 0) {
-                    delete req.body[prop]; 
-                }
+            const emailOk = validator.validate(req.body.email);
+            if(!emailOk) { 
+                delete req.body
+                const error = "Email non valide"; 
+                res.render('dashboard/profil/updateProfil', { error })
             }
             if(req.body.modifPassword){
                 if(req.body.modifPassword === req.body.confirmPassword) {
                     req.body.password = await bcrypt.hash(req.body.modifPassword, 10);
                 } else {
+                    delete req.body
                     const error = "Les deux mots de passe ne correspondent pas"
-                    res.render('dashboard/complete', { error, user: req.session.user });
+                    res.render('dashboard/profil/updateProfil', { error });
                 }
             }
-            delete req.body.checkPassword
-            delete req.body.confirmPassword;
-            delete req.body.modifPassword;
-            await userToUpdate.update(req.body)
-            req.session.user = userToUpdate
-            res.render('dashboard/dashboard', { user: req.session.user })
+            const userToUpdate = userFound.get( {plain: true} )
+            Object.keys(req.body).forEach(key => !req.body[key] && delete req.body[key]);
+            const userUpdated = { ...userToUpdate, ...req.body}
+            await userFound.update(userUpdated)
+            req.session.user = userFound
+            res.redirect('/dashboard/profil')
         } catch (error) {
             console.log(error);
             res.locals.error = {
@@ -60,7 +62,7 @@ const profilController = {
                 where: { user_id: req.session.user.id},
                 raw: true,
             })
-            res.render('dashboard/profil/ordersHistory', { orders: userOrders, user: req.session.user })
+            res.render('dashboard/profil/ordersHistory', { orders: userOrders })
         } catch (error) {
             console.log(error);
             res.locals.error = {
@@ -82,7 +84,7 @@ const profilController = {
                     raw: true,
                     nest: true
                 });
-                res.render('dashboard/profil/orderHistoryDetails', { order, user: req.session.user })
+                res.render('dashboard/profil/orderHistoryDetails', { order })
             } catch (error) {
                 console.log(error);
                 res.locals.error = {

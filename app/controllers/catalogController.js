@@ -4,11 +4,7 @@ const pricesCalculation = require('../middlewares/pricesCalculation')
 const catalogController = {
 
     async index (req, res) {
-        if(req.session.user){
-            res.render('index', { user: req.session.user });
-        } else {
-            res.render('shop/index')
-        }
+        res.render('shop/index')
     },
 
     async productsList (req, res) {
@@ -23,7 +19,7 @@ const catalogController = {
                 product.priceTTC = pricesCalculation.calculProductTTC(product.priceHT, product.tva.value);
                 product.priceHT = product.priceHT.toFixed(2)
             }
-            res.render('shop/products/allProducts', { categories, products });
+            res.render('shop/product/allProducts', { categories, products });
         } catch (error) {
             console.log(error);
             res.locals.error = {
@@ -52,7 +48,7 @@ const catalogController = {
                     product.priceHT = product.priceHT.toFixed(2)
                 }
                 const categories = await Category.findAll()
-                res.render('shop/products/productByCategory', { category, categories });
+                res.render('shop/product/productByCategory', { category, categories });
             } catch (error) {
                 console.log(error);
                 res.locals.error = {
@@ -73,7 +69,7 @@ const catalogController = {
                     include: "tva"
                 })
                 const priceTTC = pricesCalculation.calculProductTTC(product.priceHT, product.tva.value)
-                res.render('shop/products/productDetails', { product, priceTTC });
+                res.render('shop/product/productDetails', { product, priceTTC });
             } catch (error) {
                 console.log(error);
                 res.locals.error = {

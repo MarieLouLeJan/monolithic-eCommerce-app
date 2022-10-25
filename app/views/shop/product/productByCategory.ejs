@@ -16,7 +16,7 @@
         <ul>
             <% for(cat of categories){ %>
              <li>
-                <a href="/category/<%= cat.id %>"><%= cat.name %></a>
+                <a href="/shop/category/<%= cat.id %>"><%= cat.name %></a>
             </li>
             <% } %>
         </ul>
@@ -27,10 +27,10 @@
 
             <% for(product of category.products) { %>
                 <div class="product">
-                    <a href="/product/<%= product.id%>">
+                    <a href="/shop/product/<%= product.id%>">
                         <img src="<%= product.image %>" alt="<%= product.title %>" />
                     </a>
-                    <a href="/product/<%= product.id %>">
+                    <a href="/shop/product/<%= product.id %>">
                         <div class="product-name"><%= product.title %></div>
                     </a>
                     <div class="product-price"><%= product.priceHT %>€ HT</div>

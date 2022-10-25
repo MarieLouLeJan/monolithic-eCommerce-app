@@ -8,7 +8,7 @@ const TVAController = {
                 include: 'products'
             });
             //TODO ajouter sur cette page le supprimer uniquement pour les TVA sans produits 
-            res.render('dashboard/admin/categories', { TVA, user: req.session.user})
+            res.render('dashboard/admin/categories', { TVA })
         } catch (error) {
             console.log(error);
             res.locals.error = {
@@ -36,7 +36,7 @@ const TVAController = {
     async updateTVAPage (req, res) {
         try {
             const TVA = await TVA.findAll();
-            res.render('dashboard/admin/updateTVA', { TVA, user: req.session.user })
+            res.render('dashboard/admin/updateTVA', { TVA })
         } catch (error) {
             console.log(error);
             res.locals.error = {
