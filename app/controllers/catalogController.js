@@ -1,5 +1,5 @@
 const { Category, Product, Tva } = require('../models');
-const pricesCalculation = require('../middlewares/pricesCalculation')
+const pricesCalculation = require('../helpers/pricesCalculation')
 
 const catalogController = {
 

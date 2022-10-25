@@ -1,6 +1,6 @@
 const { User, Role, Order, Product, Order_has_product, Tva } = require("../models");
 const { product } = require("./catalogController");
-const pricesCalculation = require('../middlewares/pricesCalculation')
+const pricesCalculation = require('../helpers/pricesCalculation')
 
 const cartController = {
 

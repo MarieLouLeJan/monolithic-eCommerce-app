@@ -11,24 +11,28 @@ const isAdmin = require('../middlewares/isAdmin');
 // categories
 adminRouter.get('/dashboard/admin/categories', authObligatory, isAdmin, categoryController.showAllCategories);
 adminRouter.post('/dashboard/admin/categories/addCategory', authObligatory, isAdmin, categoryController.addCategoriesAction);
-adminRouter.get('/dashboard/admin/categories/updateCategories', authObligatory, isAdmin, categoryController.updateCategoriesPage);
-adminRouter.post('/dashboard/admin/categories/updateCategories', authObligatory, isAdmin, categoryController.updateCategoriesAction);
+adminRouter.route('/dashboard/admin/categories/updateCategories')
+        .get(authObligatory, isAdmin, categoryController.updateCategoriesPage)
+        .post(authObligatory, isAdmin, categoryController.updateCategoriesAction);
 adminRouter.post('/dashboard/admin/categories/deleteCategory/:categoryId', authObligatory, isAdmin, categoryController.deleteCategory);
 
 // produits
 adminRouter.get('/dashboard/admin/products', authObligatory, isAdmin, productController.showAllProducts);
-adminRouter.get('/dashboard/admin/products/addProduct', authObligatory, isAdmin, productController.addProductPage);
-adminRouter.post('/dashboard/admin/products/addProduct', authObligatory, isAdmin, productController.addProductAction);
+adminRouter.route('/dashboard/admin/products/addProduct')
+        .get(authObligatory, isAdmin, productController.addProductPage)
+        .post(authObligatory, isAdmin, productController.addProductAction);
 adminRouter.get('/dashboard/admin/products/details/:productId', authObligatory, isAdmin, productController.showProductDetails);
 adminRouter.get('/dashboard/admin/products/details/:productId/delete', authObligatory, isAdmin, productController.deleteProductAction);
-adminRouter.get('/dashboard/admin/products/details/:productId/update', authObligatory, isAdmin, productController.updateProductPage);
-adminRouter.post('/dashboard/admin/products/details/:productId/update', authObligatory, isAdmin, productController.updateProductAction);
+adminRouter.route('/dashboard/admin/products/details/:productId/update')
+        .get(authObligatory, isAdmin, productController.deleteProductAction)
+        .post(authObligatory, isAdmin, productController.updateProductAction);
 
 // tva
 adminRouter.get('/dashboard/admin/TVA', authObligatory, isAdmin, TVAController.showAllTVA);
 adminRouter.post('/dashboard/admin/TVA/addTVA', authObligatory, isAdmin, TVAController.addTVAAction);
-adminRouter.get('/dashboard/admin/TVA/updateTVA', authObligatory, isAdmin, TVAController.updateTVAPage);
-adminRouter.post('/dashboard/admin/TVA/updateTVA', authObligatory, isAdmin, TVAController.updateTVAAction);
-adminRouter.post('/dashboard/admin/TVA/deleteTVA/:categoryId', authObligatory, isAdmin, TVAController.deleteTVA);
+adminRouter.route('/dashboard/admin/TVA/updateTVA')
+        .get(authObligatory, isAdmin, TVAController.updateTVAPage)
+        .post(authObligatory, isAdmin, TVAController.updateTVAAction);
+adminRouter.post('/dashboard/admin/TVA/deleteTVA/:TVAId', authObligatory, isAdmin, TVAController.deleteTVA);
 
 module.exports = adminRouter;

@@ -68,18 +68,22 @@ const TVAController = {
     },
 
     async deleteTVA (req, res) {
-        try {
-            const TVAId = parseInt(req.params.categoryId);
-            await TVA.destroy({
-                where: { id: TVAId }
-            })
-            res.redirect('/dashboard/admin/TVA')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
+        const TVAId = parseInt(req.params.TVAId);
+        if(!isNaN(TVAId)){
+            try {
+                await TVA.destroy({
+                    where: { id: TVAId }
+                })
+                res.redirect('/dashboard/admin/TVA')
+            } catch (error) {
+                console.log(error);
+                res.locals.error = {
+                  code: 500,
+                  text: "Query error"
+                }
             }
+        } else {
+            next()
         }
     },
 };

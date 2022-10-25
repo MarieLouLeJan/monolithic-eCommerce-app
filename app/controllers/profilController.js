@@ -1,4 +1,4 @@
-const { User, Role, Order, Product, Order_has_product, Tva } = require("../models");
+const { User, Order, Product, Order_has_product, Tva } = require("../models");
 const bcrypt = require('bcrypt');
 const validator = require('email-validator');
 

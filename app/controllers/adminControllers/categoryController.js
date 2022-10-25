@@ -1,4 +1,4 @@
-const { Category, Product, TVA } = require("../../models");
+const { Category, Product } = require("../../models");
 
 const categoryController = {
 
