@@ -14,6 +14,7 @@ Category.init(
     {
         sequelize,
         tableName: 'categories',
+        timestamps: false,
     }
 )
 

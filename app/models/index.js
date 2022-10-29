@@ -26,6 +26,26 @@ Product.belongsTo(Category, {
     as: 'categories'
 });
 
+User.hasMany(Category, {
+    foreignKey: 'created_by',
+    as: 'category'
+});
+
+Category.belongsTo(User, {
+    foreignKey: 'created_by',
+    as: 'user'
+});
+
+User.hasMany(Product, {
+    foreignKey: 'created_by',
+    as: 'product'
+});
+
+Product.belongsTo(User, {
+    foreignKey: 'created_by',
+    as: 'user'
+});
+
 User.hasMany(Order, {
     foreignKey: 'user_id',
     as: 'orders',

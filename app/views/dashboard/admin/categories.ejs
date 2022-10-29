@@ -18,9 +18,12 @@
         <% for(const cat of categories) { %>
             <div class="info-key">
                 <%= cat.name %> 
+                <%  if(cat.products.length === 0){ %>
                 <form action="/dashboard/admin/category/deleteCategory/<%= cat.id %>" method="POST">
-                    <input class="button-cart" value="Supprimer la catégorie et ses produits" type="submit">
+                    <input class="button-cart" value="Supprimer" type="submit">
                 </form> 
+                <% } else {} %>
+                Veuillez supprimer tous les produits de cette catégorie pour pouvoir la supprimer
             </div>
             <div class="info">                       
                 <%= cat.products.length%> produits 
@@ -28,14 +31,14 @@
         <% } %>
         </div>
 
-        <form class="form" method="POST" action="/dashboard/admin/category/addCategory">
+        <form class="form" method="POST" action="/dashboard/admin/categories/addCategory">
             <div class="form-group">
                 <input type="text" placeholder="Ajouter une catégorie" name="name" />
             </div>
             <input type="submit" class="btn btn-primary" value="Ajouter" />
         </form>
 
-        <div class="complete"><a  class="complete" href="/dashboard/admin/category/updateCategory">Modifiez les catégories</a></div>
+        <div class="complete"><a  class="complete" href="/dashboard/admin/categories/updateCategory">Modifiez les catégories</a></div>
 
     </div>
 </main>

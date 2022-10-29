@@ -12,10 +12,10 @@
     <h1 class="large text-primary">Completez vos informations</h1>
     <form class="form" method="POST" action="/dashboard/profil/update">
         <div class="form-group">
-            <input type="text" placeholder="<%= user.name %>" name="name" />
+            <input type="text" placeholder="<%= user.firstname %>" name="firstname" />
         </div>
         <div class="form-group">
-            <input type="email" placeholder="<%= user.email %>" name="email" />
+            <input type="text" placeholder="<%= user.lastname %>" name="lastname" />
         </div>
         <div class="form-group">
             <% if(user.phone){ %>
@@ -47,7 +47,8 @@
         </div>
 
         <div class="form-group">
-        <input type="password" placeholder="Confirmez avec votre mot de passe actuel" name="checkPassword"/>
+            Veuillez confirmer votre mot de passe pour enregistrer les modifications
+            <input type="password" placeholder="Confirmez avec votre mot de passe actuel" name="checkPassword"/>
         </div>
         <input type="submit" class="btn btn-primary" value="Complétez" />
     </form>

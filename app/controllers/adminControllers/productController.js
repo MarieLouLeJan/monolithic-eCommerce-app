@@ -1,120 +1,46 @@
 const { Category, Product, TVA } = require("../../models");
-
+const categoriesQuery = require("../../queries/categoriesQuery");
+const productsQuery = require("../../queries/productsQuery");
+const TVAQuery = require("../../queries/TVAQuery");
 
 const productController = {
 
-    async showAllProducts (req, res) {
-        try {
-            const allCategories = await Category.findAll({
-                include: [
-                    { 
-                        model : Product, as: 'products',
-                        attributes: ['ref', 'title', 'id']
-                    }
-                ],
-            });
-            const categories = allCategories.map(cat => cat.get( { plain: true } ))
-            res.render('dashboard/admin/allProducts', { categories })
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+    async showAllProducts (_, res) {
+        const allCategories = await categoriesQuery.getAllCategories();
+        const categories = allCategories.map(cat => cat.get( { plain: true } ))
+        res.render('dashboard/admin/allProducts', { categories })
     },
 
     async showProductDetails (req, res) {
         const productId = parseInt(req.params.productId)
         if(!isNaN(productId)){
-            try {
-                const product = await Product.findByPk(productId, {
-                    include: [
-                        'tva',
-                        'categories'
-                    ],
-                })
-                product.priceHT = product.priceHT.toFixed(2)
-                console.log(product.priceHT)
-                res.render('dashboard/admin/productDetails', { product })
-            } catch (error) {
-                console.log(error);
-                res.locals.error = {
-                  code: 500,
-                  text: "Query error"
-                }
-            }
+            const product = await productsQuery.getProductById(productId)
+            product.priceHT = product.priceHT.toFixed(2)
+            res.render('dashboard/admin/productDetails', { product })
         } else if (isNaN(productId)) {
             next()
         }
     },
 
-    async deleteProductAction (req, res){
-        const productId = parseInt(req.params.productId);
-        try {
-            const productToDelete = await Product.findByPk(productId);
-            await productToDelete.destroy();
-            res.redirect('/dashboard/admin/products')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
-    },
-
-    async addProductPage (req, res) {
-        try {
-            const categories = await Category.findAll()
-            const tva = await TVA.findAll()
-            res.render('dashboard/admin/addProduct', { categories, tva })
-
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+    async addProductPage (_, res) {
+        const categories = await categoriesQuery.getAllCategories();
+        const tva = await TVAQuery.getAllTVA();
+        res.render('dashboard/admin/addProduct', { categories, tva });
     },
 
     async addProductAction (req, res) {
-        try {
-            req.body.priceHT = parseFloat(req.body.priceHT)
-            const productCreated = await Product.create(req.body)
-            res.redirect(`/dashboard/admin/products/details/${productCreated.id}`)
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+        req.body.priceHT = parseFloat(req.body.priceHT);
+        await productsQuery.createProduct(req.body);
+        res.redirect(`/dashboard/admin/products/details/${productCreated.id}`);
     },
 
     async updateProductPage (req, res) {
         const productId = parseInt(req.params.productId)
         if(!isNaN(productId)){
-            try {
-                const product = await Product.findByPk(productId, {
-                    include: [
-                        'tva',
-                        'categories'
-                    ],
-                })
-                const tva = await TVA.findAll({
-                })
-                const categories = await Category.findAll({
-                })
-                res.render('dashboard/admin/updateProduct', { product, tva, categories })
-            } catch (error) {
-                console.log(error);
-                res.locals.error = {
-                  code: 500,
-                  text: "Query error"
-                }
-            }
+            const product = await productsQuery.getProductById(productId)
+            const tva = await TVAQuery.getAllTVA();
+            const categories = await categoriesQuery.getAllCategories();
+            res.render('dashboard/admin/updateProduct', { product, tva, categories })
         } else if (isNaN(productId)) {
             next()
         }
@@ -128,20 +54,20 @@ const productController = {
             }
         }
         if(req.body.priceHT){
-            req.body.priceHT = parseFloat(req.body.priceHT)
+            req.body.priceHT = parseFloat(req.body.priceHT);
         }
-        try {
-            const productToUpdate = await Product.findByPk(productId);
-            await productToUpdate.update(req.body);
-            res.redirect(`/dashboard/admin/products/details/${productId}`)
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
-    }
+        const productToUpdate = await productsQuery.getProductById(productId);
+        await productsQuery.updateProduct(req.body);
+        res.redirect(`/dashboard/admin/products/details/${productId}`);
+
+    },
+
+    async deleteProductAction (req, res){
+        const productId = parseInt(req.params.productId);
+        const productToDelete = await productsQuery.getProductById(productId);
+        await productsQuery.destroyProduct(productToDelete);
+        res.redirect('/dashboard/admin/products');
+    },
 };
 
 module.exports = productController

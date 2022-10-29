@@ -1,81 +1,38 @@
 const { Category, Product } = require("../../models");
+const categoriesQuery = require("../../queries/categoriesQuery")
 
 const categoryController = {
 
-    async showAllCategories (req, res) {
-        try {
-            const categories = await Category.findAll();
-            res.render('dashboard/admin/categories', { categories })
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+    async showAllCategories (_, res) {
+        const categories = await categoriesQuery.getAllCategories();
+        res.render('dashboard/admin/categories', { categories })
     },
 
     async addCategoriesAction (req, res) {
-        try {
-            const categoryCreated = await Category.create({
-                name: req.body.name
-            })
-            res.redirect('/dashboard/admin/categories')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+        req.body.created_by = req.session.user.role.id;
+        await categoriesQuery.createCategory(req.body)
+        res.redirect('/dashboard/admin/categories')
     },
 
-    async updateCategoriesPage (req, res) {
-        try {
-            const categories = await Category.findAll();
-            res.render('dashboard/admin/updateCategories', { categories })
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }    
+    async updateCategoriesPage (_, res) {
+        const categories = await categoriesQuery.getAllCategories();
+        res.render('dashboard/admin/updateCategories', { categories })
+ 
     },
 
     async updateCategoriesAction (req, res) {
         const categoryId = parseInt(req.body.categoryId);
-        try {
-            const categoryToUpdate = await Category.findByPk(categoryId);
-            categoryToUpdate.name = req.body.name;
-            await categoryToUpdate.save()
-            res.redirect('/dashboard/admin/categories')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+        const categoryToUpdate = await categoriesQuery.getCategoryById(categoryId);
+        await categoriesQuery.updateCategory(categoryToUpdate, req.body);
+        res.redirect('/dashboard/admin/categories')
+
     },
 
     async deleteCategory (req, res) {
-        try {
-            const categoryId = parseInt(req.params.categoryId);
-            await Product.destroy({
-                where: {category_id: categoryId}
-            })
-            await Category.destroy({
-                where: {id: categoryId}
-            })
-            res.redirect('/dashboard/admin/categories')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+        const categoryId = parseInt(req.params.categoryId);
+        const categoryToDestroy = await categoriesQuery.getCategoryById(categoryId);
+        await categoriesQuery.destroyCategory(categoryToDestroy)
+        res.redirect('/dashboard/admin/categories')
     },
 }
 

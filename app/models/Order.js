@@ -32,9 +32,14 @@ Order.init(
         quantity: {
             type: DataTypes.NUMBER,
             allowNull: false,
+        },
+        date: {
+            type: DataTypes.DATE,
+            allowNull: false,
         }
     },
     {
+        timestamps: false,
         sequelize,
         tableName: 'orders',
     }

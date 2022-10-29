@@ -1,5 +1,6 @@
 const { User, Role, Order, Product, Order_has_product, Tva } = require("../models");
-const pricesCalculation = require('../helpers/pricesCalculation')
+const pricesCalculation = require('../helpers/pricesCalculation');
+const productsQuery = require("../queries/productsQuery");
 
 const checkoutController = {
 
@@ -9,6 +10,7 @@ const checkoutController = {
             const message = "Veuillez vous connecter pour procéder au checkout"
             res.render('user/signin', { message })
         }
+        //TODO changer les fonctions ici & dans pricesCalculation
         const user = req.session.user;
         const cart = req.session.cart;
         const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(cart)
@@ -16,42 +18,33 @@ const checkoutController = {
     },
 
     async checkoutAction (req, res) {
-        const cart = req.session.cart;
-        const user = req.session.user
+        // const cart = req.session.cart;
+        // const user = req.session.user
         const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(cart)
-        console.log(cartHT, cartTTC, cartTax)
         let quantity = 0
         for(const p of cart){
             quantity = p.qty + quantity
         }
-        try {
-            const order = await Order.create({
-                totalHT: cartHT,
-                tax: cartTax,
-                totalTTC: cartTTC,
-                user_id: user.id,
-                adress: user.shipping,
-                state: "en cours de livraison",
-                quantity: quantity
-            });
-            for(const product of req.session.cart){
-                const productToAdd = await Product.findByPk(product.id)
-                await order.addProduct(productToAdd, 
-                    { through: { 
-                        quantity: product.qty, 
-                        priceHT: product.priceHT, 
-                        tva: product.tva.title, 
-                        state: "en cours de livraison" }})
-            };
-            delete req.session.cart;
-            res.render('shop/cart/checkoutConfirmation')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+        const order = await Order.create({
+            totalHT: cartHT,
+            tax: cartTax,
+            totalTTC: cartTTC,
+            user_id: user.id,
+            adress: user.shipping,
+            state: "en cours de livraison",
+            quantity: quantity
+        });
+        for(const product of req.session.cart){
+            const productToAdd = await productsQuery.getProductById(product.id)
+            await order.addProduct(productToAdd, 
+                { through: { 
+                    quantity: product.qty, 
+                    priceHT: product.priceHT, 
+                    tva: product.tva.title, 
+                    state: "en cours de livraison" }})
+        };
+        delete req.session.cart;
+        res.render('shop/cart/checkoutConfirmation')
     },
 }
 

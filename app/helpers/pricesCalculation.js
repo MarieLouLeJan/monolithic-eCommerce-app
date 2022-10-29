@@ -1,5 +1,5 @@
 const pricesCalculation = {
-    calculProductTTC: (HT, TVA) => {
+    getProductTTC: (HT, TVA) => {
         let totalTTC = (HT * TVA) + HT;
         totalTTC = Math.round(totalTTC * 100)/100;
         return totalTTC.toFixed(2)
@@ -14,7 +14,15 @@ const pricesCalculation = {
         return totalProduct
     },
 
-    calculCartTTC: (cart) => {
+    getCartHT: (cart) => {
+        let totalHT = 0
+        for(const product of cart){
+            totalHT = product.priceHT * product.qty + totalHT
+        }
+        return totalHT.toFixed(2)      
+    },
+
+    getCartTTC: (cart) => {
         let totalTTCProduct = 0
         for(const product of cart){
             totalTTCProduct = product.totalTTC + totalTTCProduct
@@ -23,15 +31,7 @@ const pricesCalculation = {
         return totalTTCProduct.toFixed(2)
     },
 
-    calculCartHT: (cart) => {
-        let totalHT = 0
-        for(const product of cart){
-            totalHT = product.priceHT * product.qty + totalHT
-        }
-        return totalHT.toFixed(2)      
-    },
-
-    calculCartTax: (TTC, HT) => {
+    getCartTaxes: (TTC, HT) => {
         let totalTVA = Math.round((TTC - HT))
         return totalTVA.toFixed(2)
     },

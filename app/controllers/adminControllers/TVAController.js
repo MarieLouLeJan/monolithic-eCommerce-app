@@ -1,87 +1,44 @@
 const { Category, Product, TVA } = require("../../models");
+const TVAQuery = require("../../queries/TVAQuery");
 
 const TVAController = {
 
-    async showAllTVA (req, res){
-        try {
-            const TVA = await TVA.findAll({
-                include: 'products'
-            });
-            //TODO ajouter sur cette page le supprimer uniquement pour les TVA sans produits 
-            res.render('dashboard/admin/categories', { TVA })
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+    async showAllTVA (_, res){
+        const TVA = await TVAQuery.getAllTVA();
+        //TODO ajouter sur cette page le supprimer uniquement pour les TVA sans produits 
+        res.render('dashboard/admin/categories', { TVA });
+
     },
 
     async addTVAAction (req, res) {
-        try {
-            const TVAcreated = await TVA.create({
-                name: req.body.name
-            })
-            res.redirect('/dashboard/admin/tva')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }
+        TVAQuery.createTVA(req.body);
+        res.redirect('/dashboard/admin/tva');
     },
 
-    async updateTVAPage (req, res) {
-        try {
-            const TVA = await TVA.findAll();
-            res.render('dashboard/admin/updateTVA', { TVA })
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
-            }
-        }    
+    async updateTVAPage (_, res) {
+        const TVA = await TVAQuery.getAllTVA();
+        res.render('dashboard/admin/updateTVA', { TVA })
     },
 
     //TODO page ejs, ajouter attention le calcul est fait avec la value
     async updateTVAAction (req, res) {
         const TVAId = parseInt(req.body.TVAId);
-        try {
-            for (const prop in req.body) {
-                if (!req.body[prop] || req.body.length === 0) {
-                    delete req.body[prop]; 
-                }
-            }
-            const TVAToUpdate = await TVA.findByPk(TVAId);
-            await TVAToUpdate.update(req.body)
-            res.redirect('/dashboard/admin/TVA')
-        } catch (error) {
-            console.log(error);
-            res.locals.error = {
-              code: 500,
-              text: "Query error"
+        for (const prop in req.body) {
+            if (!req.body[prop] || req.body.length === 0) {
+                delete req.body[prop]; 
             }
         }
+        const TVAToUpdate = await TVAQuery.getTVAById(TVAId);
+        await TVAQuery.updateTVA(TVAToUpdate)
+        res.redirect('/dashboard/admin/TVA')
     },
 
     async deleteTVA (req, res) {
         const TVAId = parseInt(req.params.TVAId);
         if(!isNaN(TVAId)){
-            try {
-                await TVA.destroy({
-                    where: { id: TVAId }
-                })
-                res.redirect('/dashboard/admin/TVA')
-            } catch (error) {
-                console.log(error);
-                res.locals.error = {
-                  code: 500,
-                  text: "Query error"
-                }
-            }
+            const TVAToDelete = await TVAQuery.getTVAById(TVAId);
+            await TVAQuery.destroyTVA(TVAToDelete);
+            res.redirect('/dashboard/admin/TVA');
         } else {
             next()
         }
