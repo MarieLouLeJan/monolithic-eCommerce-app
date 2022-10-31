@@ -1,4 +1,3 @@
-const { Category, Product, TVA } = require("../../models");
 const categoriesQuery = require("../../queries/categoriesQuery");
 const productsQuery = require("../../queries/productsQuery");
 const TVAQuery = require("../../queries/TVAQuery");

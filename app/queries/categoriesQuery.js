@@ -1,4 +1,4 @@
-const { Category, Product } = require("../../models");
+const { Category, Product } = require("../models");
 
 const categoriesQuery = {
 
@@ -10,7 +10,7 @@ const categoriesQuery = {
     },
 
     async getCategoryById (id) {
-        const category = await Category.findByPk(id{
+        const category = await Category.findByPk(id, {
             include: [
                 { 
                     model : Product, as: 'products',

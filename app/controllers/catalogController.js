@@ -1,8 +1,6 @@
-const { Category, Product, Tva } = require('../models');
 const pricesCalculation = require('../helpers/pricesCalculation');
 const productsQuery = require("../queries/productsQuery");
 const categoriesQuery = require("../queries/categoriesQuery")
-const TVAQuery = require("../queries/TVAQuery");
 
 const catalogController = {
 

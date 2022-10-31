@@ -1,4 +1,3 @@
-const { Category, Product, TVA } = require("../../models");
 const TVAQuery = require("../../queries/TVAQuery");
 
 const TVAController = {

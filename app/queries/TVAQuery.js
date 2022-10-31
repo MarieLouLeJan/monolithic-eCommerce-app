@@ -1,4 +1,4 @@
-const { Category, Product, Tva } = require("../../models");
+const { Tva } = require("../models");
 
 const TVAQuery = {
 

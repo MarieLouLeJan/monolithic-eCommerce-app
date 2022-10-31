@@ -1,4 +1,3 @@
-const { Category, Product } = require("../../models");
 const categoriesQuery = require("../../queries/categoriesQuery")
 
 const categoryController = {

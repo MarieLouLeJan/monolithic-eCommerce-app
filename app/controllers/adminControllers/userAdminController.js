@@ -1,20 +1,12 @@
 const { User, Role, Category, Product, TVA } = require("../../models");
+const rolesQuery = require("../../queries/rolesQuery");
+const usersQuery = require("../../queries/usersQuery");
 
 const userAdminController = {
 
     async showAllUsers (_, res) {
-        const adminRole = await Role.findAll({
-            where: {
-                name: 'admin',
-            },
-            include: 'users'
-        });
-        const userRole = await Role.findAll({
-            where: {
-                name: 'user',
-            },
-            include: 'users'
-        });
+        const adminRole = await rolesQuery.getRoleByRoleName('admin');
+        const userRole = await rolesQuery.getRoleByRoleName('user')
         console.log(adminRole, userRole)
         res.render('dashboard/admin/users/allUsers', { adminRole, userRole })
     },
@@ -24,9 +16,7 @@ const userAdminController = {
     },
 
     async createAdminAction (req, res) {
-        const allUser = await User.findAll({
-            raw: true
-        });
+        const allUser = await usersQuery.getAllUsers()
         const userFound = allUser.find(user => user.email === req.body.email)
         if(userFound){
             const error = "Compte déjà existant !"
@@ -40,7 +30,7 @@ const userAdminController = {
         };
         req.body.password = await bcrypt.hash(req.body.password, 10);
         req.body.role_id = 2;
-        const user = await User.create(req.body)
+        const user = await usersQuery.createUser(req.bdoy)
         res.redirect('dashboard/admin/users');
         return;
     }

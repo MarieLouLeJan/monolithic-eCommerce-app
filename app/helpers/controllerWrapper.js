@@ -1,5 +1,5 @@
 
-CW : (mdw) => {
+const CW = (mdw) => {
     return async (req, res) => {
       try {
         await mdw(req, res);
@@ -11,6 +11,6 @@ CW : (mdw) => {
         console.log(error);
       }
     };
-}
+};
 
 module.exports = CW;

@@ -1,6 +1,7 @@
-const { User, Order, Product, Order_has_product, Tva } = require("../models");
 const bcrypt = require('bcrypt');
-const validator = require('email-validator');
+const usersQuery = require("../queries/usersQuery");
+const ordersQuery = require("../queries/ordersQuery");
+
 
 const profilController = {
 
@@ -13,12 +14,7 @@ const profilController = {
     },
 
     async updateProfilAction (req, res) {
-        const userFound = await User.findOne({
-            where: {
-                email: req.session.user.email,
-            },
-            include: 'role'
-        });
+        const userFound = await usersQuery.getOneUserByEmail(body)
         let passwordOk = await bcrypt.compare(req.body.checkPassword, userFound.password);
         if(!passwordOk){
             const error = "Mot de passe incorrect"
@@ -42,24 +38,14 @@ const profilController = {
     },
 
     async ordersHistory (req, res) {
-        const userOrders = await Order.findAll({
-            where: { user_id: req.session.user.id},
-            raw: true,
-        })
+        const userOrders = await ordersQuery.getAllOrders();
         res.render('dashboard/profil/ordersHistory', { orders: userOrders })
     },
 
     async orderHistoryDetails (req, res, next) {
         const orderId = req.params.orderId;
         if(!isNaN(orderId)){
-            const order = await Order.findAll( {
-                where: { id: orderId},
-                include: [
-                    { model: Product, thought: Order_has_product, as: 'products'}   
-                ],
-                raw: true,
-                nest: true
-            });
+            const order = await ordersQuery.getOrderById(orderId)
             res.render('dashboard/profil/orderHistoryDetails', { order })
         } else if (isNaN(orderId)){
             next()

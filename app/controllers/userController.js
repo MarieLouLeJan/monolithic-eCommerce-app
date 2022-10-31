@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
-const { User, Role } = require('../models');
-
+const usersQuery = require("../queries/usersQuery");
 
 const userController = {
     signupPage (_, res) {
@@ -8,10 +7,8 @@ const userController = {
     },
 
     async signupAction (req, res) {
-        const allUser = await User.findAll({
-            raw: true
-        });
-        const userFound = allUser.find(user => user.email === req.body.email)
+        const allUser = await usersQuery.getAllUsers();
+        const userFound = allUser.find(user => user.email === req.body.email);
         if(userFound){
             const error = "Compte déjà existant !"
             res.render('user/signup', { error });
@@ -24,7 +21,7 @@ const userController = {
         };
         req.body.password = await bcrypt.hash(req.body.password, 10);
         req.body.role_id = 1;
-        const user = await User.create(req.body)
+        await usersQuery.createUser(req.body)
         const message = 'Vous pouvez maintenant vous connecter !';
         res.render('user/signin', { message });
     },
@@ -34,12 +31,7 @@ const userController = {
     },
 
     async loginAction (req, res) {
-        const user = await User.findOne({
-            where: {
-                email: req.body.email,
-            },
-            include: 'role'
-        });
+        const user = await usersQuery.getOneUserByEmail(body)
         if(!user){
             const message = "Utilisateur non existant";
             res.render('user/signin', { message });

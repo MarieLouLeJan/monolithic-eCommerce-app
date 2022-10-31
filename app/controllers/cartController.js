@@ -1,9 +1,5 @@
-const { User, Role, Order, Product, Order_has_product, Tva } = require("../models");
-const { product } = require("./catalogController");
 const pricesCalculation = require('../helpers/pricesCalculation');
 const productsQuery = require("../queries/productsQuery");
-
-
 
 const cartController = {
 
