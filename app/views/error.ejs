@@ -3,10 +3,7 @@
 
 <section class="container">
 
-    <h2><%= status %></h2>
-    <% if(status === 404) { %>
-        <img src="/img/404.gif" alt="Page Not Found">
-    <% } %>
-    <p><%= message %></p>
+    <h2><%= title %></h2>
+    <p><%= content %></p>
 </section>
 <%- include('partials/foot') %>

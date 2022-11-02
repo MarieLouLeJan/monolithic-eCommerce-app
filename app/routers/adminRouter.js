@@ -7,8 +7,8 @@ const productController = require('../controllers/adminControllers/productContro
 const TVAController = require('../controllers/adminControllers/TVAController');
 const userAdminController = require('../controllers/adminControllers/userAdminController');
 
-const authObligatory = require('../middlewares/authObligatory');
-const isAdmin = require('../middlewares/isAdmin');
+const authObligatory = require('../validation/authObligatory');
+const isAdmin = require('../validation/isAdmin');
 const CW = require('../helpers/controllerWrapper')
 
 

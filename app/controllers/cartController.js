@@ -1,4 +1,4 @@
-const pricesCalculation = require('../helpers/pricesCalculation');
+const pricesCalculation = require('../services/pricesCalculation');
 const productsQuery = require("../queries/productsQuery");
 
 const cartController = {
@@ -7,7 +7,6 @@ const cartController = {
         if(!req.session.cart){
             res.render('shop/cart/cart')
         } else {
-            //TODO Ici il faut 3 fonctions au lieu d'une dans pricesCalculation
             const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(req.session.cart);
             req.session.cart.totalHT = cartHT;
             req.session.cart.totalTTC = cartTTC;
@@ -31,7 +30,6 @@ const cartController = {
             } else {
                 const productToAdd = await productsQuery.getProductById(productId);
                 productToAdd.qty = 1;
-                //TODO Ici il faudrait faire 2 fonctions pour faire 2 lignes au lieu de 3
                 const { totalHT, totalTTC} = pricesCalculation.getAllProductsTotal(productToAdd.priceHT, productToAdd.qty, productToAdd.tva.value);
                 productToAdd.totalHT = totalHT;
                 productToAdd.totalTTC = totalTTC;

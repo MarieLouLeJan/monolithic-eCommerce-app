@@ -1,4 +1,4 @@
-const pricesCalculation = require('../helpers/pricesCalculation');
+const pricesCalculation = require('../services/pricesCalculation');
 const productsQuery = require("../queries/productsQuery");
 const categoriesQuery = require("../queries/categoriesQuery")
 

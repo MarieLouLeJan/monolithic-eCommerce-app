@@ -5,9 +5,9 @@ const catalogController = require('../controllers/catalogController');
 const cartController = require('../controllers/cartController');
 const checkoutController = require('../controllers/checkoutController');
 
-const auth = require('../middlewares/auth');
-const authObligatory = require('../middlewares/authObligatory');
-const cart = require('../middlewares/cart');
+const auth = require('../validation/auth');
+const authObligatory = require('../validation/authObligatory');
+const cart = require('../validation/cart');
 const CW = require('../helpers/controllerWrapper');
 
 shopRouter.get('/', auth, CW(catalogController.index));

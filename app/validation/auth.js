@@ -4,7 +4,7 @@ const auth = (req, res, next) => {
         res.locals.user = req.session.user
         return next();
     }
-    next()
+    return next()
 };
 
 module.exports = auth;

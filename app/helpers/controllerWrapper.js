@@ -1,14 +1,10 @@
 
-const CW = (mdw) => {
-    return async (req, res) => {
+const CW = (controller) => {
+    return async (req, res, next) => {
       try {
-        await mdw(req, res);
-      } catch (error) {
-        res.locals.error = {
-          code: 500,
-          text: "Query error"
-        };
-        console.log(error);
+        await controller(req, res, next);
+      } catch (err) {
+        next(err)
       }
     };
 };

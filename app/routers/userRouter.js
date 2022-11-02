@@ -4,7 +4,7 @@ const userRouter = express.Router();
 const userController = require('../controllers/userController');
 const profilController = require('../controllers/profilController');
 
-const authObligatory = require('../middlewares/authObligatory');
+const authObligatory = require('../validation/authObligatory');
 const CW = require('../helpers/controllerWrapper');
 
 userRouter.route('/login')
