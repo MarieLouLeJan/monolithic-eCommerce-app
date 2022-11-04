@@ -1,48 +1,54 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-class User extends Sequelize.Model {}
 
-User.init(
+const User = sequelize.define('users',
     {
         firstname: {
             type: DataTypes.STRING,
-            allowNull: true,
-            unicode: true,
+            allowNull: false,
+            validate: {
+                // Uniquement des lettre maj ou min
+                is: /^[a-zA-Z\-]+$/i,
+                min: 2,
+                max: 30
+            }
         },
         lastname: {
             type: DataTypes.STRING,
-            allowNull: true,
-            unicode: true,
+            allowNull: false,
+            validate: {
+                // Uniquement des lettre maj ou min
+                is: /^[a-zA-Z\-\']+$/i,
+                min: 2,
+                max: 30
+            },
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
-            unicode: true,
             unique: true,
+            validate: {
+                isEmail: true,
+            }
         },
         password: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        role_id: {
-            type: DataTypes.INTEGER,
+            // password: au moins 8 caractères, 1 lettre MAJ, 1 lettre min, 1 chiffre
+            validate: {
+                is: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i,
+            }
         },
         phone: {
             type: DataTypes.STRING,
             allowNull: true,
-        },
-        shipping: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        billing: {
-            type: DataTypes.STRING,
-            allowNull: true,
+            // Numéro francais commençant par +33 ou 0
+            is: /^(0|\+33)[1-9]\d{8}$/i,
         },
     },
     {
-        timestamps: false,
+        updatedAt: false,
         sequelize,
         tableName: 'users',
     }

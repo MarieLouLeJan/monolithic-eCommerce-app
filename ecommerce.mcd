@@ -1,0 +1,34 @@
+TVA: title, value, created_at
+:
+:
+:
+
+prod belongs to tva, 11 PRODUCTS, 0N TVA
+prod belongs to cat, 11 PRODUCTS, 0N CATEGORIES
+CATEGORIES: title, created_at
+:
+
+PRODUCTS: ref, title, description, image, priceHT, created_at
+tva created by, 11 PRODUCTS, 0N USERS
+cat created by, 11 CATEGORIES, 0N USERS
+ROLES: title, created_at
+
+ORDER_PRODUCT, 11 ORDERS, 11 PRODUCTS: products_id, order_id, quantity, priceHT, tva
+prod created by, 11 PRODUCTS, 0N USERS
+USERS: firstname, lastname, email, password, phone, created_at
+has role, 0N ROLES, 11 USERS
+
+:
+ORDERS: totalTTC, totalHT, tax, quantity, shipping, created_at
+ordered, 0N USERS, 11 ORDERS
+has adress, ON USERS, 01 ADRESSES
+
+:
+has state, 11 ORDERS, 0N ORDER_STATES
+ORDER_ADRESS_TYPE, 11 ORDERS, 11 ADRESSES, 11 ADRESS_TYPE: orders_id, adresses_id, adress_type_id
+ADRESSES: entitled, number, number_complement, street, postal_code, city, country, complement, active, created_at
+
+:
+ORDER_STATES: title, created_at
+ADRESS_TYPE: title, created_at
+:

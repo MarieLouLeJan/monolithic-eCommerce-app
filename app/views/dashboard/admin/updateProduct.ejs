@@ -16,10 +16,10 @@
 
         <form class="form" method="POST" action="/dashboard/admin/products/details/<%=product.id%>/update">
             <div class="form-group">
-                <input type="text" placeholder="<%= product.title %>" name="title" />
+                <%= product.ref %>
             </div>
             <div class="form-group">
-                <input type="text" placeholder="<%= product.ref %>" name="ref" />
+                <input type="text" placeholder="<%= product.title %>" name="title" />
             </div>
             <div class="form-group">
                 <input type="textarea" placeholder="<%= product.description %>" name="description" />

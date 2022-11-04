@@ -1,5 +1,5 @@
 const bcrypt = require('bcrypt');
-const usersQuery = require("../queries/usersQuery");
+const usersQuery = require("../../queries/usersQuery");
 
 const userController = {
     signupPage (_, res) {

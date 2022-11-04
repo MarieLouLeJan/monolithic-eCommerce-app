@@ -1,13 +1,28 @@
 BEGIN; 
 
-DROP TABLE IF EXISTS "categories", "products", "roles", "users", "orders", "order_has_product", "tva";
 
-CREATE TABLE "roles" (
+DROP TABLE IF EXISTS "categories", "products", "roles", "adress", "users", "orders", "order_has_product", "tva";
+
+
+CREATE TABLE "role" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "name"              TEXT NOT NULL UNIQUE
 );
 
-CREATE TABLE "users" (
+
+CREATE TABLE "adress" (
+    "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    "number"            INTEGER NOT NULL,
+    "number_complement" TEXT,
+    "street"            TEXT NOT NULL,
+    "postal_code"       INTEGER NOT NULL,
+    "city"              TEXT NOT NULL,
+    "country"           TEXT NOT NULL,
+    "complement"        TEXT
+);
+
+
+CREATE TABLE "user" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "firstname"         TEXT NOT NULL,
     "lastname"          TEXT NOT NULL,
@@ -15,15 +30,16 @@ CREATE TABLE "users" (
     "password"          TEXT NOT NULL,
     "role_id"           INTEGER NOT NULL REFERENCES roles("id"),
     "phone"             TEXT,
-    "shipping"          TEXT,
-    "billing"           TEXT
+    "shipping"          INTEGER NOT NULL REFERENCES adress("id")
 );
 
-CREATE TABLE "categories" (
+
+CREATE TABLE "category" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "name"              TEXT NOT NULL UNIQUE,
     "created_by"        INTEGER NOT NULL REFERENCES users("id")
 );
+
 
 CREATE TABLE "tva" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -31,7 +47,8 @@ CREATE TABLE "tva" (
     "value"             FLOAT NOT NULL
 );
 
-CREATE TABLE "products" (
+
+CREATE TABLE "product" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "ref"               TEXT NOT NULL UNIQUE,
     "title"             TEXT NOT NULL,
@@ -44,18 +61,17 @@ CREATE TABLE "products" (
 );
 
 
-CREATE TABLE "orders" (
+CREATE TABLE "order" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "totalTTC"          FLOAT NOT NULL,
     "totalHT"           FLOAT NOT NULL,
     "tax"               FLOAT NOT NULL,
     "user_id"           INTEGER NOT NULL REFERENCES users("id"),
-    "adress"            TEXT NOT NULL,
     "quantity"          INT NOT NULL NOT NULL,
     "state"             TEXT NOT NULL,
-    "date"              DATE NOT NULL DEFAULT NOW()
+    "date"              DATE NOT NULL DEFAULT NOW(),
+    "shipping"          INTEGER NOT NULL REFERENCES adress("id")
 );
-
 
 
 CREATE TABLE "order_has_product" (
@@ -66,6 +82,7 @@ CREATE TABLE "order_has_product" (
     "tva"               TEXT NOT NULL,
     "state"             TEXT
 );
+
 
 COMMIT;
 

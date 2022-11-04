@@ -1,7 +1,7 @@
 // Un middleware de gestion d'erreur doit FORCEMENT avoir 4 paramètres pour qu'express comprenne que c'est un middleware d'erreur
 
 
-const errorHandlers = (err, _, res, _) => {
+const errorHandlers = (err, req, res, _) => {
     let status = 500;
 
     if(err.status){
@@ -15,4 +15,6 @@ const errorHandlers = (err, _, res, _) => {
         logger.error(err);
     };
     res.status(status).render('error', { title: `Error status ${status}`, content: message });
-}
+};
+
+module.exports = errorHandlers;

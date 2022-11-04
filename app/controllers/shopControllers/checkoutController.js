@@ -1,6 +1,6 @@
-const pricesCalculation = require('../services/pricesCalculation');
-const productsQuery = require("../queries/productsQuery");
-const ordersQuery = require("../queries/ordersQuery");
+const pricesCalculation = require('../../services/pricesCalculation');
+const productsQuery = require("../../queries/productsQuery");
+const ordersQuery = require("../../queries/ordersQuery");
 
 const checkoutController = {
 
@@ -9,7 +9,6 @@ const checkoutController = {
             const message = "Veuillez vous connecter pour procéder au checkout"
             res.render('user/signin', { message })
         }
-        //TODO changer les fonctions ici & dans pricesCalculation
         const user = req.session.user;
         const cart = req.session.cart;
         const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(cart)
@@ -17,8 +16,6 @@ const checkoutController = {
     },
 
     async checkoutAction (req, res) {
-        // const cart = req.session.cart;
-        // const user = req.session.user
         const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(cart)
         let quantity = 0
         for(const p of cart){

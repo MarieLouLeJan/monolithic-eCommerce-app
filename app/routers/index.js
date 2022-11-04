@@ -2,25 +2,39 @@ const express = require('express');
 
 const router = express.Router();
 
-const shopRouter = require('./app/routers/shopRouter');
-const userRouter = require('./app/routers/userRouter');
-const categoryAdminRouter = require('./app/routers/adminRouter/categoryAdminRouter');
-const productAdminRouter = require('./app/routers/adminRouter/productAdminRouter');
-const TVAAdminRouter = require('./app/routers/adminRouter/TVAAdminRouter');
-const userAdminRouter = require('./app/routers/adminRouter/userAdminRouter');
-const errorHandlers = require('./app/helpers/errorHandlers');
+const adressTypeRouter = require('./adminRouters/adressTypeRouter');
+const categoryRouter = require('./adminRouters/categoryRouter');
+const orderStateRouter = require('./adminRouters/adressTypeRouter');
+const productRouter = require('./adminRouters/productRouter');
+const TVARouter = require('./adminRouters/TVARouter');
+const userAdminRouter = require('./adminRouters/userAdminRouter');
+
+const catalogRouter = require('./shopRouters/catalogRouter');
+const cartRouter = require('./shopRouters/cartRouter');
+const checkoutRouter = require('./shopRouters/checkoutRouter');
+
+const userRouter = require('./userRouters/userRouter');
+const profilRouter = require('./userRouters/profilRouter');
+
+const errorHandlers = require('../helpers/errorHandlers');
 const NotFoundError = require('../helpers/notFoundError');
 
-router.use(shopRouter)
-router.use(userRouter);
-router.use(categoryAdminRouter);
-router.use(productAdminRouter);
-router.user(TVAAdminRouter);
-router.use(userAdminRouter);
+router.use('/', adressTypeRouter);
+router.use('/', categoryRouter);
+router.use('/', orderStateRouter);
+router.use('/', productRouter);
+router.use('/', TVARouter);
+router.use('/', userAdminRouter);
 
-router.use((_, _, next) => {
-    // En argument on envoi le message de l'erreur, au niveau de l'instance on pourra le retrouver à
-    // travers la propriété "message"
+router.use('/', catalogRouter);
+router.use('/', cartRouter);
+router.use('/', checkoutRouter);
+
+router.use('/', userRouter);
+router.use('/', profilRouter);
+
+
+router.use((req, res, next) => {
     next(new NotFoundError('Resource not found'));
 });
 

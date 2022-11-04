@@ -46,7 +46,9 @@
                     <% } %>
                 </select>
             </div>
-
+            <% if(locals.message){%>
+                <%= message %>
+            <%}%>
             <input type="submit" class="btn btn-primary" value="Ajoutez le produit" />
         </form>
 

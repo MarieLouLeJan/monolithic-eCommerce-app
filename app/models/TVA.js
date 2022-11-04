@@ -1,27 +1,32 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-class TVA extends Sequelize.Model {}
 
-TVA.init(
+const TVA = sequelize.define('tva',
     {
         title: {
             type: DataTypes.TEXT,
             allowNull: false,
-            unicode: true,
             unique: true,
+            validate: {
+                // De 1% à 99%
+                is: /^([1-9]|[1-9][0-9])%$/
+            }
         },
         value: {
             type: DataTypes.NUMBER,
             allowNull: false,
-            unicode: true,
             unique: true,
+            validate: {
+                // de 0.01 à 0.99
+                is: /^0\.[0-9]{2}$/
+            }
         },
     },
     {
         sequelize,
         tableName: 'tva',
-        timestamps: false
+        updatedAt: false
     }
 );
 

@@ -21,9 +21,11 @@
                 <input type="submit" class="btn btn-primary" value="Modifier" />
             </form>
             <hr>
-
         <% } %>
-        </div>
+        <% if(locals.message){%>
+        <%= message %>
+        <%}%>
+    </div>
 
         <div class="complete"><a  class="complete" href="/dashboard/admin/category">Retour aux catégories</a></div>
 

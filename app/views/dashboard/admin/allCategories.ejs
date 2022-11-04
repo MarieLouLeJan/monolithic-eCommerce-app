@@ -22,14 +22,19 @@
                 <form action="/dashboard/admin/category/deleteCategory/<%= cat.id %>" method="POST">
                     <input class="button-cart" value="Supprimer" type="submit">
                 </form> 
-                <% } else {} %>
+                <% } else { %>
                 Veuillez supprimer tous les produits de cette catégorie pour pouvoir la supprimer
+                <%}%>
             </div>
             <div class="info">                       
                 <%= cat.products.length%> produits 
             </div>
         <% } %>
         </div>
+
+        <% if(locals.message){ %>
+            <%= message %>
+        <%}%>
 
         <form class="form" method="POST" action="/dashboard/admin/categories/addCategory">
             <div class="form-group">

@@ -28,21 +28,24 @@ const productController = {
     },
 
     async addProductAction (req, res) {
+        const products = productsQuery.getAllProducts();
+        const productFound = products.find(product => product.ref === req.body.ref);
+        if(productFound){
+            const message = "Ce produit existe déjà";
+            res.render('dashboard/admin/addProduct', { categories, tva, message });
+        }
         req.body.priceHT = parseFloat(req.body.priceHT);
         await productsQuery.createProduct(req.body);
         res.redirect(`/dashboard/admin/products/details/${productCreated.id}`);
     },
 
     async updateProductPage (req, res) {
-        const productId = parseInt(req.params.productId)
-        if(!isNaN(productId)){
-            const product = await productsQuery.getProductById(productId)
-            const tva = await TVAQuery.getAllTVA();
-            const categories = await categoriesQuery.getAllCategories();
-            res.render('dashboard/admin/updateProduct', { product, tva, categories })
-        } else if (isNaN(productId)) {
-            next()
-        }
+        const productId = parseInt(req.params.productId);
+        const product = await productsQuery.getProductById(productId);
+        const tva = await TVAQuery.getAllTVA();
+        const categories = await categoriesQuery.getAllCategories();
+        res.render('dashboard/admin/updateProduct', { product, tva, categories })
+
     },
 
     async updateProductAction (req, res) {
@@ -56,9 +59,8 @@ const productController = {
             req.body.priceHT = parseFloat(req.body.priceHT);
         }
         const productToUpdate = await productsQuery.getProductById(productId);
-        await productsQuery.updateProduct(req.body);
+        await productsQuery.updateProduct(productToUpdate, req.body);
         res.redirect(`/dashboard/admin/products/details/${productId}`);
-
     },
 
     async deleteProductAction (req, res){

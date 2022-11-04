@@ -1,45 +1,41 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-class Order extends Sequelize.Model {}
 
-Order.init(
+const Order = sequelize.define('orders',
     {
-        totalTTC: {
-            type: DataTypes.NUMBER,
-            allowNull: false,
-        },
         totalHT: {
             type: DataTypes.NUMBER,
             allowNull: false,
+            validate:{
+                is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,
+            }
         },
         tax: {
             type: DataTypes.NUMBER,
             allowNull: false,
+            validate:{
+                is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,
+            }
         },
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
-        },
-        adress: {
-            type: DataTypes.STRING,
+        totalTTC: {
+            type: DataTypes.NUMBER,
             allowNull: false,
-        },
-        state: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            validate:{
+                is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,
+            }
         },
         quantity: {
             type: DataTypes.NUMBER,
             allowNull: false,
+            validate:{
+                isNumeric: true,
+                isInt: true,
+            }
         },
-        date: {
-            type: DataTypes.DATE,
-            allowNull: false,
-        }
     },
     {
-        timestamps: false,
+        updatedAt: false,
         sequelize,
         tableName: 'orders',
     }

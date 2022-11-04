@@ -3,16 +3,15 @@ const { Category, Product } = require('../models');
 const productsQuery = {
 
     async getAllProducts () {
-        const products = await Product.findAll({
+        return await Product.findAll({
             include: 'tva',
             raw: true,
             nest: true
         });
-        return products;
     },
 
     async getProductById (id) {
-        const product = await Product.findByPk(id, {
+        return await Product.findByPk(id, {
             include: [
                 'tva',
                 'categories'
@@ -20,7 +19,6 @@ const productsQuery = {
             raw: true,
             nest: true
         });
-        return product;
     },
 
     async createProduct (body) {

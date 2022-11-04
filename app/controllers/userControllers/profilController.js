@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
-const usersQuery = require("../queries/usersQuery");
-const ordersQuery = require("../queries/ordersQuery");
+const usersQuery = require("../../queries/usersQuery");
+const ordersQuery = require("../../queries/ordersQuery");
+const adressQuery = require("../../queries/adressQuery");
 
 
 const profilController = {
@@ -35,6 +36,26 @@ const profilController = {
         await userFound.update(userUpdated)
         req.session.user = userFound
         res.redirect('/dashboard/profil')
+    },
+
+    async showAdressPage (req, res) {
+        const adresses = await adressQuery.getAllAdressesByUser(req.session.user.id)
+        res.render('/dashboard/profil/adress', { adresses })
+    },
+
+    async deleteAdressAction (req, res) {
+        const adressId = req.params.id;
+        await adressQuery.destroyAdress(adressId);
+        res.redirect('/dashboard/profil/adresses')
+    },
+
+    addAdressPage (req, res) {
+        res.render('/dashboard/profil/addAdress')
+    },
+
+    async addAdressAction (req, res) {
+        await adressQuery.createAdress(req.body);
+        res.redirect('/dashboard/profil/adresses');
     },
 
     async ordersHistory (req, res) {

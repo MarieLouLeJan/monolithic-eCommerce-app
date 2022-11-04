@@ -1,10 +1,20 @@
-const User = require('./User');
+const Adress_type = require('./Adress_type');
+const Adress = require('./Adress');
 const Category = require('./Category');
+const Order_adress_type = require('./Order_adress_type');
+const Order_product = require('./Order_product');
+const Order_state = require('./Order_state');
+const Order = require('./Order');
 const Product = require('./Product');
 const Role = require('./Role');
-const Order = require('./Order');
 const TVA = require('./TVA');
-const Order_has_product = require('./Order_has_product')
+const User = require('./User');
+
+
+// ASSOCIATIONS
+
+
+/************ ONE TO MANY *************/
 
 Role.hasMany(User, {
     foreignKey: 'role_id',
@@ -13,8 +23,52 @@ Role.hasMany(User, {
 
 User.belongsTo(Role, {
     foreignKey: 'role_id',
-    as: 'role',
+    as: 'roles',
 });
+
+
+User.hasMany(Adress, {
+    foreignKey: 'user_id',
+    as: 'adresses',
+});
+
+Adress.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'users',
+});
+
+
+User.hasMany(Category, {
+    foreignKey: 'created_by',
+    as: 'categories'
+});
+
+Category.belongsTo(User, {
+    foreignKey: 'created_by',
+    as: 'users'
+});
+
+User.hasMany(TVA, {
+    foreignKey: 'created_by',
+    as: 'tva'
+});
+
+TVA.belongsTo(User, {
+    foreignKey: 'created_by',
+    as: 'users'
+});
+
+
+User.hasMany(Product, {
+    foreignKey: 'created_by',
+    as: 'products'
+});
+
+Product.belongsTo(User, {
+    foreignKey: 'created_by',
+    as: 'users'
+});
+
 
 Category.hasMany(Product, {
     foreignKey: 'category_id',
@@ -26,35 +80,6 @@ Product.belongsTo(Category, {
     as: 'categories'
 });
 
-User.hasMany(Category, {
-    foreignKey: 'created_by',
-    as: 'category'
-});
-
-Category.belongsTo(User, {
-    foreignKey: 'created_by',
-    as: 'user'
-});
-
-User.hasMany(Product, {
-    foreignKey: 'created_by',
-    as: 'product'
-});
-
-Product.belongsTo(User, {
-    foreignKey: 'created_by',
-    as: 'user'
-});
-
-User.hasMany(Order, {
-    foreignKey: 'user_id',
-    as: 'orders',
-});
-
-Order.belongsTo(User, {
-    foreignKey: 'user_id',
-    as: 'users',
-});
 
 TVA.hasMany(Product, {
     foreignKey: 'tva_id',
@@ -66,22 +91,91 @@ Product.belongsTo(TVA, {
     as: 'tva',
 });
 
+
+User.hasMany(Order, {
+    foreignKey: 'user_id',
+    as: 'orders',
+});
+
+Order.belongsTo(User, {
+    foreignKey: 'user_id',
+    as: 'users',
+});
+
+
+Order_state.hasMany(Order, {
+    foreignKey: 'state_id',
+    as: 'orders',
+});
+
+Order.belongsTo(Order_state{
+    foreignKey: 'state_id',
+    as: 'order_states'
+})
+
+
+/************ MANY TO MANY *************/
+
+
 Product.belongsToMany(Order, {
     as: 'orders',
     // la table de liaison
-    through: Order_has_product,
+    through: Order_product,
     foreignKey: 'product_id',
     otherKey: 'order_id'
-
-  });
+});
   
-  // un tag peur avoir plusieurs cartes
+
 Order.belongsToMany(Product, {
     as: 'products',
-    through: Order_has_product,
+    through: Order_product,
     foreignKey: 'order_id',
     otherKey: 'product_id'
-
 });
 
-module.exports = { User, Category, Product, Role, Order, TVA };
+
+
+Order.belongsToMany(Adress, {
+    as: 'adresses',
+    through: Order_adress_type,
+    foreignKey: 'order_id',
+    otherKey: 'adress_id'
+});
+
+Order.belongsToMany(Adress_type, {
+    as: 'adress_types',
+    through: Order_adress_type,
+    foreignKey: 'order_id',
+    otherKey: 'type_id'
+});
+  
+Adress.belongsToMany(Order, {
+    as: 'orders',
+    through: Order_adress_type,
+    foreignKey: 'adress_id',
+    otherKey: 'order_id'
+});
+
+Adress.belongsToMany(Adress_type, {
+    as: 'adress_types',
+    through: Order_adress_type,
+    foreignKey: 'adress_id',
+    otherKey: 'type_id'
+});
+
+Adress_type.belongsToMany(Order, {
+    as: 'orders',
+    through: Order_adress_type,
+    foreignKey: 'type_id',
+    otherKey: 'order_id'
+});
+
+Adress_type.belongsToMany(Adress, {
+    as: 'adresses',
+    through: Order_adress_type,
+    foreignKey: 'type_id',
+    otherKey: 'adress_id'
+});
+
+
+module.exports = { Adress_type, Adress, Category, Order_adress_type, Order_product, Order_state, Order, Product, Role, TVA, User };

@@ -5,43 +5,27 @@ const TVAController = {
     async showAllTVA (_, res){
         const TVA = await TVAQuery.getAllTVA();
         //TODO ajouter sur cette page le supprimer uniquement pour les TVA sans produits 
-        res.render('dashboard/admin/categories', { TVA });
-
+        res.render('dashboard/admin/tva', { TVA });
     },
 
     async addTVAAction (req, res) {
+        const TVAs = TVAQuery.getAllTVA();
+        const TVAFound = TVAs.find(tva => tva.value === req.body.value);
+        if(TVAFound){
+            const message = 'TVA déjà existante';
+            res.render('dashboard/admin/tva', { TVAs, message });
+            return;
+        }
         TVAQuery.createTVA(req.body);
         res.redirect('/dashboard/admin/tva');
     },
 
-    async updateTVAPage (_, res) {
-        const TVA = await TVAQuery.getAllTVA();
-        res.render('dashboard/admin/updateTVA', { TVA })
-    },
-
-    //TODO page ejs, ajouter attention le calcul est fait avec la value
-    async updateTVAAction (req, res) {
-        const TVAId = parseInt(req.body.TVAId);
-        for (const prop in req.body) {
-            if (!req.body[prop] || req.body.length === 0) {
-                delete req.body[prop]; 
-            }
-        }
-        const TVAToUpdate = await TVAQuery.getTVAById(TVAId);
-        await TVAQuery.updateTVA(TVAToUpdate)
-        res.redirect('/dashboard/admin/TVA')
-    },
-
     async deleteTVA (req, res) {
         const TVAId = parseInt(req.params.TVAId);
-        if(!isNaN(TVAId)){
-            const TVAToDelete = await TVAQuery.getTVAById(TVAId);
-            await TVAQuery.destroyTVA(TVAToDelete);
-            res.redirect('/dashboard/admin/TVA');
-        } else {
-            next()
-        }
-    },
+        const TVAToDelete = await TVAQuery.getTVAById(TVAId);
+        await TVAQuery.destroyTVA(TVAToDelete);
+        res.redirect('/dashboard/admin/TVA');
+    }
 };
 
 module.exports = TVAController;

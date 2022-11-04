@@ -3,14 +3,13 @@ const { Category, Product } = require("../models");
 const categoriesQuery = {
 
     async getAllCategories () {
-        const categories = await Category.findAll({
+        return await Category.findAll({
             include: 'products'
         });
-        return categories;
     },
 
     async getCategoryById (id) {
-        const category = await Category.findByPk(id, {
+        return await Category.findByPk(id, {
             include: [
                 { 
                     model : Product, as: 'products',
@@ -20,7 +19,6 @@ const categoriesQuery = {
                 }
             ]
         });
-        return category;
     },
 
     async createCategory (body) {

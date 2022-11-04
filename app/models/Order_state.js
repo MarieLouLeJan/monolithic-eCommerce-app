@@ -2,23 +2,23 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
 
-const Role = sequelize.define('roles',
+const Order_state = sequelize.define('order_states',
     {
         title: {
-            type: DataTypes.STRING,
+            type: DataTypes.NUMBER,
             allowNull: false,
-            unicode: true,
             unique: true,
             validate: {
-                is: /^[a-zA-Z ]+$/i,
+                is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i
             }
         },
     },
     {
         sequelize,
+        tableName: 'order_states',
         updatedAt: false,
-        tableName: 'roles',
     }
 );
 
-module.exports = Role;
+
+module.exports = Order_state;

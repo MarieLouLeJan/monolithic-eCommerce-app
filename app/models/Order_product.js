@@ -1,9 +1,8 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
-class Order_has_product extends Sequelize.Model {}
 
-Order_has_product.init(
+const Order_product = sequelize.define('order_product',
     {
         product_id: {
             type: DataTypes.NUMBER,
@@ -16,27 +15,31 @@ Order_has_product.init(
         quantity: {
             type: DataTypes.NUMBER,
             allowNull: false,
+            validate:{
+                isNumeric: true,
+                isInt: true,
+            }
         },
         priceHT: {
             type: DataTypes.NUMBER,
             allowNull: false,
+            validate:{
+                is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,
+            }
         },
         tva: {
             type: DataTypes.STRING,
             allowNull: false,
-        },
-        state: {
-            type: DataTypes.STRING,
-            allowNull: false,
+            validate:{
+                is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,
+            }
         },
     },
     {
         timestamps: false,
         sequelize,
-        tableName: 'order_has_product',
+        tableName: 'order_product',
     }
 );
 
-Order_has_product.removeAttribute('id')
-
-module.exports = Order_has_product;
+module.exports = Order_product;

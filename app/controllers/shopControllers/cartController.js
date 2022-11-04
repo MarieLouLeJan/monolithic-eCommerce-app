@@ -1,5 +1,5 @@
-const pricesCalculation = require('../services/pricesCalculation');
-const productsQuery = require("../queries/productsQuery");
+const pricesCalculation = require('../../services/pricesCalculation');
+const productsQuery = require("../../queries/productsQuery");
 
 const cartController = {
 
