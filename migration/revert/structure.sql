@@ -2,6 +2,6 @@
 
 BEGIN;
 
-DROP TABLE IF EXISTS "order_adress_type", "adress_type", "categories", "products", "roles", "adresses", "users", "orders", "order_product", "tva";
+DROP TABLE "roles", "adress_types", "users", "adresses", "categories", "tva", "products", "order_states", "orders", "order_adress_type", "order_product";
 
 COMMIT;

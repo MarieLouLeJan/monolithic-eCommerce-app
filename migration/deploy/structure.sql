@@ -96,7 +96,7 @@ CREATE TABLE "orders" (
 CREATE TABLE "order_adress_type" (
     "order_id"          INTEGER NOT NULL REFERENCES orders("id"),
     "adress_id"         INTEGER NOT NULL REFERENCES adresses("id"),
-    "type_id"           INTEGER NOT NULL REFERENCES adress_type("id")
+    "type_id"           INTEGER NOT NULL REFERENCES adress_types("id")
 );
 
 

@@ -7,7 +7,6 @@ const userAdminController = {
     async showAllUsers (_, res) {
         const adminRole = await rolesQuery.getRoleByRoleName('admin');
         const userRole = await rolesQuery.getRoleByRoleName('user')
-        console.log(adminRole, userRole)
         res.render('dashboard/admin/users/allUsers', { adminRole, userRole })
     },
 
