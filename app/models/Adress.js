@@ -21,9 +21,9 @@ const Adress = sequelize.define('adresses',
         number_complement: {
             type: DataTypes.STRING,
             allowNull: true,
-            validate:{
-                is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i,
-            }
+            // validate:{
+            //     is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i,
+            // }
         },
         street: {
             type: DataTypes.STRING,
@@ -34,7 +34,7 @@ const Adress = sequelize.define('adresses',
                 max: 100
             }
         },
-        postale_code: {
+        postal_code: {
             type: DataTypes.INTEGER,
             allowNull: false,
             validate:{
@@ -58,9 +58,13 @@ const Adress = sequelize.define('adresses',
         complement: {
             type: DataTypes.STRING,
             allowNull: true,
-            validate:{
-                is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i,
-            }
+            // validate:{
+            //     is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i,
+            // }
+        },
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
         },
     },
     {

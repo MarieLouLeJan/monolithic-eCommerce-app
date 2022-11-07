@@ -61,6 +61,12 @@ form input {
     border: 1px solid grey;
 }
 
+.checkbox {
+    border: 1px solid grey;
+    width: 2rem;
+    height: 2rem;
+}
+
 
 .clearfix::after {
     clear: both;
@@ -1194,8 +1200,7 @@ button {
     appearance: none;
     outline: none;
     border-style: none;
-}
-
+};
 
 
 .AppWrapper {

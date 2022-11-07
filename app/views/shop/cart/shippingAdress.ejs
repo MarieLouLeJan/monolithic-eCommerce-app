@@ -1,0 +1,47 @@
+
+<%- include ('../../partials/nav') %>
+
+
+<div class="breadcrumbs">
+  <div class="container">
+    <a href="/shop">Home</a>
+    <i class="fa fa-chevron-right breadcrumb-separator" ></i>
+    <span>Shopping Cart</span>
+    <i class="fa fa-chevron-right breadcrumb-separator" ></i>
+    <span>Checkout</span>
+  </div>
+</div>
+
+
+
+<div class="cart-section container">
+  <div class="cart-table">
+    <h2>
+      Choisissez votre adresse de livraison
+    </h2> 
+
+  <% if(locals.adresses) {%>
+
+    <form class="form" method="POST" action="/checkout/shipping">
+    <% for(const adress of adresses){%>
+      <input class="checkbox" type="checkbox" id="<%=adress.id%>" name="shipping" value="<%=adress.id%>">
+      <label for="<%=adress.id%>">
+        <%= adress.entitled%>, 
+        <%= adress.number%> <%= adress.number_complement%>, 
+        <%= adress.street%>, 
+        <%= adress.postal_code%> <%= adress.city%> <%= adress.complement%>, 
+        <%= adress.country%>
+      </label>
+      <hr>
+    <% } %>
+    <input type="submit" class="btn btn-primary" value="Choisir" />
+    </form>
+  </div>
+  <% } %>
+    <div>
+      <a href="/dashboard/profil/addAdress">Ajoutez une adresse</a>
+    </div>
+</div>
+
+
+<%- include ('../../partials/foot') %>

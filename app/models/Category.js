@@ -4,7 +4,7 @@ const sequelize = require('../database');
 
 const Category = sequelize.define('categories',
     {
-        name: {
+        title: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,

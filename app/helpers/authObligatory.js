@@ -1,13 +1,21 @@
-const authObligatory = (err, req, res, next) => {
+const ForbiddenError = require("./ForbiddenError");
 
-    if (req.session.user) {
-        res.locals.user = req.session.user
-        return next();
+const authObligatory = (req, res, next) => {
+    
+    // req.session.user = {
+    //     id: 3,
+    //     firstname: 'lilou',
+    //     lastname: 'lilou',
+    //     email: 'lilou@gmail.com',
+    //     role_id: 1,
+    //     roles: { id: 1, title: 'customer'}
+    // };
+
+    if (!req.session.user) {
+        next(new ForbiddenError(`Veuillez vous connecter pour accéder à cette page !`));
     }
-
-    req.status = 403;
-    // console.log(Error)
-    return next(new Error('Forbidden'));
+    res.locals.user = req.session.user
+    return next();
 };
 
 module.exports = authObligatory;

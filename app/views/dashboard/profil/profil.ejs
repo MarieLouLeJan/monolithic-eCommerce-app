@@ -6,50 +6,23 @@
     <%- include ('../partials/quickActions') %>
     <div class="row">
         <h1>
-            <% if (!locals.user){ %>
-                Vous n'êtes pas connecté ! 
-                Cliquez <a href="/login">ici</a> pour vous connecter !
-            <% } else if(locals.user){%>
-                Mon profil
-            <% } %>
+            Mon profil
         </h1> 
         
         <hr>
 
-        <% if(locals.user){ %>
         <h3  class="info-perso">Mes informations personnelles</h3>
 
         <hr>    
 
         <div class="info-div">
-            <div class="info-key"> Nom complet </div>
-            <div class="info"> <%= user.name %> </div>
+            <div class="info-key"> Prénom  </div>
+            <div class="info"> <%= user.firstname %> </div>
+            <div class="info-key"> Nom  </div>
+            <div class="info"> <%= user.lastname %> </div>
             <div class="info-key"> Email </div>
             <div class="info"> <%= user.email %> </div>
-            <div class="info-key"> Numero de téléphone </div>
-            <% if(user.phone){ %>
-                <div class="info"> <%= user.phone %> </div>
-            <% } else { %>
-                <div class="info">Non renseigné</div>
-            <% } %>
-            <div class="info-key"> Adresse de livraison </div>
-            <% if(user.shipping){ %>
-                <div class="info"> <%= user.shipping %> </div>
-            <% } else { %>
-                <div class="info">Non renseigné</div>
-            <% } %>
-            <div class="info-key"> Adresse de facturation </div>
-            <% if(user.billing){ %>
-                <div class="info"> <%= user.billing %> </div>
-            <% } else { %>
-                <div class="info">Non renseigné</div>
-            <% } %>
         </div>
-        <div class="complete"><a  class="complete" href="/dashboard/profil/update">Complétez / modifiez votre profil</a></div>
-
-
-
-        <% } %>
 
     </div>
 </main>

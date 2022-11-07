@@ -1,0 +1,55 @@
+<%- include ('../partials/head.ejs') %>
+<%- include ('../partials/header') %>
+<%- include ('../partials/sidebar') %>
+
+<main >
+<section class="container ">
+
+    <h1>
+        Mon profil
+    </h1> 
+    
+    <hr>
+
+    <h3  class="info-perso">Ajouter une adresse</h3>
+
+    <hr>  
+
+    <form class="form" method="POST" action="/dashboard/profil/addAdress">
+
+        <div class="form-group">
+            <input type="text" placeholder="Nom complet / Société" name="entitled" />
+        </div>
+        <div class="form-group">
+            <input type="number" placeholder="000" name="number" />
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="bis/ter" name="number_complement" />
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="Rue + nom de rue" name="street" />
+        </div>
+        <div class="form-group">
+            <input type="number" placeholder="75000" name="postal_code" />
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="Paris" name="city" />
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="France" name="country" />
+        </div>
+        <div class="form-group">
+            <input type="text" placeholder="Complément d'adresse" name="complement" />
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="active" value="true" />
+        </div>
+        <div class="form-group">
+            <input type="hidden" name="user_id" value="<%= user.id %>" />
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Complétez" />
+    </form>
+</section>
+</main>
+</body>

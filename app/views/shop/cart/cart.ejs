@@ -103,11 +103,15 @@
             <a href="/shop" class="button">
               Continue Shopping
             </a>
-              <% if(locals.cart?.length > 0){ %>
+              <% if(locals.cart?.length > 0 && locals.user){ %>
                 <a href="/checkout" class="button-primary">
                   Proceed to Checkout
                 </a>
-              <% } %>
+              <% } else if(locals.cart?.length > 0 && !locals.user){%>
+                <a href="/login" class="button-primary">
+                  Connecter vous pour finaliser !
+                </a>
+              <% } %> 
           </div>
         </div>
       </div>

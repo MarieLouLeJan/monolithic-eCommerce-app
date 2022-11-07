@@ -21,6 +21,10 @@ const productsQuery = {
         });
     },
 
+    async getProductByIdCheckout (id) {
+        return await Product.findByPk(id);
+    },
+
     async createProduct (body) {
         await Product.create(body)
     },

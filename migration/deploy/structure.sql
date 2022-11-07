@@ -23,7 +23,6 @@ CREATE TABLE "users" (
     "lastname"          TEXT NOT NULL,
     "email"             TEXT NOT NULL UNIQUE,
     "password"          TEXT NOT NULL,
-    "phone"             TEXT,
     "role_id"           INTEGER NOT NULL REFERENCES roles("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 
@@ -89,14 +88,21 @@ CREATE TABLE "orders" (
     "totalTTC"          FLOAT NOT NULL,
     "quantity"          INT NOT NULL NOT NULL,
     "user_id"           INTEGER NOT NULL REFERENCES users("id"),
-    "state_id"          INTEGER NOT NULL REFERENCES order_states("id"),
+    "order_states_id"   INTEGER NOT NULL REFERENCES order_states("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE TABLE "order_adress_type" (
-    "order_id"          INTEGER NOT NULL REFERENCES orders("id"),
+
+CREATE TABLE "adress_type_adress" (
+    "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "adress_id"         INTEGER NOT NULL REFERENCES adresses("id"),
-    "type_id"           INTEGER NOT NULL REFERENCES adress_types("id")
+    "adress_type_id"    INTEGER NOT NULL REFERENCES adress_types("id")
+);
+
+
+CREATE TABLE "order_adress_type" (
+    "order_id"              INTEGER NOT NULL REFERENCES orders("id"),
+    "adress_type_adress_id" INTEGER NOT NULL REFERENCES adress_type_adress("id")
 );
 
 

@@ -31,7 +31,7 @@ const userController = {
     },
 
     async loginAction (req, res) {
-        const user = await usersQuery.getOneUserByEmail(body)
+        const user = await usersQuery.getOneUserByEmail(req.body.email)
         if(!user){
             const message = "Utilisateur non existant";
             res.render('user/signin', { message });

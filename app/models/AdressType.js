@@ -2,12 +2,11 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
 
-const Order_state = sequelize.define('order_states',
+const AdressType = sequelize.define('adress_types',
     {
         title: {
-            type: DataTypes.NUMBER,
+            type: DataTypes.TEXT,
             allowNull: false,
-            unique: true,
             validate: {
                 is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i
             }
@@ -15,10 +14,10 @@ const Order_state = sequelize.define('order_states',
     },
     {
         sequelize,
-        tableName: 'order_states',
+        tableName: 'adress_types',
         updatedAt: false,
     }
-);
+)
 
 
-module.exports = Order_state;
+module.exports = AdressType;

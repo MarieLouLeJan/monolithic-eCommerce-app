@@ -29,7 +29,7 @@ const userAdminController = {
         };
         req.body.password = await bcrypt.hash(req.body.password, 10);
         req.body.role_id = 2;
-        const user = await usersQuery.createUser(req.bdoy)
+        const user = await usersQuery.createUser(req.body)
         res.redirect('dashboard/admin/users');
         return;
     }

@@ -1,9 +1,10 @@
-const Adress_type = require('./Adress_type');
+const AdressType = require('./AdressType');
+const AdressType_adress = require('./AdressType_adress');
 const Adress = require('./Adress');
 const Category = require('./Category');
-const Order_adress_type = require('./Order_adress_type');
+const Order_adressType = require('./Order_adressType');
 const Order_product = require('./Order_product');
-const Order_state = require('./Order_state');
+const OrderState = require('./OrderState');
 const Order = require('./Order');
 const Product = require('./Product');
 const Role = require('./Role');
@@ -103,13 +104,13 @@ Order.belongsTo(User, {
 });
 
 
-Order_state.hasMany(Order, {
-    foreignKey: 'state_id',
+OrderState.hasMany(Order, {
+    foreignKey: 'order_states_id',
     as: 'orders',
 });
 
-Order.belongsTo(Order_state{
-    foreignKey: 'state_id',
+Order.belongsTo(OrderState, {
+    foreignKey: 'order_states_id',
     as: 'order_states'
 })
 
@@ -135,47 +136,35 @@ Order.belongsToMany(Product, {
 
 
 
-Order.belongsToMany(Adress, {
+AdressType.belongsToMany(Adress, {
     as: 'adresses',
-    through: Order_adress_type,
-    foreignKey: 'order_id',
+    through: AdressType_adress,
+    foreignKey: 'adress_type_id',
     otherKey: 'adress_id'
 });
 
-Order.belongsToMany(Adress_type, {
+Adress.belongsToMany(AdressType, {
     as: 'adress_types',
-    through: Order_adress_type,
-    foreignKey: 'order_id',
-    otherKey: 'type_id'
+    through: AdressType_adress,
+    foreignKey: 'adress_id',
+    otherKey: 'adress_type_id'
 });
+
+
   
-Adress.belongsToMany(Order, {
+AdressType_adress.belongsToMany(Order, {
     as: 'orders',
-    through: Order_adress_type,
-    foreignKey: 'adress_id',
+    through: Order_adressType,
+    foreignKey: 'adress_type_adress_id',
     otherKey: 'order_id'
 });
 
-Adress.belongsToMany(Adress_type, {
-    as: 'adress_types',
-    through: Order_adress_type,
-    foreignKey: 'adress_id',
-    otherKey: 'type_id'
+
+Order.belongsToMany(AdressType_adress, {
+    as: 'adress_type_adress',
+    through: Order_adressType,
+    foreignKey: 'order_id',
+    otherKey: 'adress_type_adress_id'
 });
 
-Adress_type.belongsToMany(Order, {
-    as: 'orders',
-    through: Order_adress_type,
-    foreignKey: 'type_id',
-    otherKey: 'order_id'
-});
-
-Adress_type.belongsToMany(Adress, {
-    as: 'adresses',
-    through: Order_adress_type,
-    foreignKey: 'type_id',
-    otherKey: 'adress_id'
-});
-
-
-module.exports = { Adress_type, Adress, Category, Order_adress_type, Order_product, Order_state, Order, Product, Role, TVA, User };
+module.exports = { AdressType, AdressType_adress, Adress, Category, Order_adressType, Order_product, OrderState, Order, Product, Role, TVA, User };

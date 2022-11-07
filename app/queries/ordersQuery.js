@@ -20,13 +20,18 @@ const ordersQuery = {
     },
 
     async createOrder (body) {
-        await Order.create(body);
+        return await Order.create(body);
     },
 
     async addProductToOrder (order, productToAdd, body) {
-        await order.addProduct(productToAdd, 
-            { through: { body }})
-    } 
+        await order.addProducts(productToAdd, 
+            { through: body })
+    },
+
+    async addAdressToOrder (adressTypeToAdd, order) {
+        return await adressTypeToAdd.addOrder(order);
+        // await order.addAdressType(adressTypeToAdd)
+    }, 
 }
 
 module.exports = ordersQuery;

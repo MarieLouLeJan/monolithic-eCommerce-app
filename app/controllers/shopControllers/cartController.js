@@ -4,15 +4,8 @@ const productsQuery = require("../../queries/productsQuery");
 const cartController = {
 
     index (req, res) {
-        if(!req.session.cart){
-            res.render('shop/cart/cart')
-        } else {
-            const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(req.session.cart);
-            req.session.cart.totalHT = cartHT;
-            req.session.cart.totalTTC = cartTTC;
-            req.session.cart.totalTax = cartTax;
-            res.render('shop/cart/cart', { cart: req.session.cart }); 
-        }
+        // console.log(req.session.cart)
+        res.render('shop/cart/cart'); 
     },
 
     async addOrUpdate (req, res, next) {
@@ -26,7 +19,6 @@ const cartController = {
                 const { totalHT, totalTTC } = pricesCalculation.getAllProductsTotal(found.priceHT, found.qty, found.tva.value);
                 found.totalHT = totalHT;
                 found.totalTTC = totalTTC;
-                console.log(found)
             } else {
                 const productToAdd = await productsQuery.getProductById(productId);
                 productToAdd.qty = 1;
@@ -37,7 +29,7 @@ const cartController = {
             }
             res.redirect('/cart')
         } else if (isNaN(productId)) {
-            next()
+            next(err)
         }
     },
 
@@ -55,11 +47,10 @@ const cartController = {
                 const { totalHT, totalTTC} = pricesCalculation.getAllProductsTotal(found.priceHT, found.qty, found.tva.value);
                 found.totalHT = totalHT;
                 found.totalTTC = totalTTC;
-                console.log(found);
             }
             res.redirect('/cart');
         } else if (isNaN(productId)) {
-            next()
+            next(err)
         }        
     },
 

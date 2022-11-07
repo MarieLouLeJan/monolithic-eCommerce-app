@@ -36,16 +36,17 @@ const User = sequelize.define('users',
             type: DataTypes.STRING,
             allowNull: false,
             // password: au moins 8 caractères, 1 lettre MAJ, 1 lettre min, 1 chiffre
-            validate: {
-                is: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i,
-            }
+            // Enlevé a cause de bcrypt qui renvoie un password crypté
+            // validate: {
+            //     is: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i,
+            // }
         },
-        phone: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            // Numéro francais commençant par +33 ou 0
-            is: /^(0|\+33)[1-9]\d{8}$/i,
-        },
+        // phone: {
+        //     type: DataTypes.STRING,
+        //     allowNull: true,
+        //     // Numéro francais commençant par +33 ou 0
+        //     is: /^(0|\+33)[1-9]\d{8}$/i,
+        // },
     },
     {
         updatedAt: false,

@@ -6,20 +6,16 @@
     <%- include ('../partials/quickActions') %>
     <div class="row">
         <h1>
-            <% if (!locals.user){ %>
-                Vous n'êtes pas connecté ! 
-                Cliquez <a href="/login">ici</a> pour vous connecter !
-            <% } else if(locals.user){%>
-                Mes commandes
-            <% } %>
-        </h1>      
+            Mon profil
+        </h1> 
         <hr>
-        <h3 class="info-perso">
+        <h3  class="info-perso">Mes commandes</h3>
+        <hr>
         <% if(orders.length === 0){ %>
-            Aucun commande passée !
-        <%} else {%>
-            <%= user.name %>, voici vos commandes passées
-        </h3>
+            <div class="info-perso">
+                Aucune commande passée !
+            </div>
+        <%}
 
         <hr>    
 
@@ -30,7 +26,6 @@
             <% } %>
         </div>
 
-        <% } %>
 
     </div>
 </main>

@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Role, Adress } = require('../models');
 
 const usersQuery = {
 
@@ -13,13 +13,17 @@ const usersQuery = {
             where: {
                 email: condition,
             },
-            include: 'role'
+            include: [
+                {
+                    model: Role, as: 'roles',
+                }
+            ],
         });
     },
 
     async createUser (body) {
         await User.create(body);
-    }
+    },
 
 };
 

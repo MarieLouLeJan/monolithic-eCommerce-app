@@ -12,8 +12,7 @@ const catalogController = {
         const products = await productsQuery.getAllProducts();
         const categories = await categoriesQuery.getAllCategories();
         for(const product of products){
-            console.log(product)
-            product.priceTTC = pricesCalculation.calculProductTTC(product.priceHT, product.tva.value);
+            product.priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value);
             product.priceHT = product.priceHT.toFixed(2)
         }
         res.render('shop/product/allProducts', { categories, products });
@@ -24,14 +23,13 @@ const catalogController = {
         if(!isNaN(categoryId)){
             const category = await categoriesQuery.getCategoryById(categoryId)
             for(const product of category.products){
-                product.priceTTC = pricesCalculation.calculProductTTC(product.priceHT, product.tva.value);
+                product.priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value);
                 product.priceHT = product.priceHT.toFixed(2)
             }
             const categories = await categoriesQuery.getAllCategories();
             res.render('shop/product/productByCategory', { category, categories });
-
         } else if (isNaN(categoryId)) {
-            next()
+            next();
         }
     },
 
@@ -39,7 +37,7 @@ const catalogController = {
         const productId = parseInt(req.params.id);
         if(!isNaN(productId)){
             const product = await productsQuery.getProductById(productId)
-            const priceTTC = pricesCalculation.calculProductTTC(product.priceHT, product.tva.value)
+            const priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value)
             res.render('shop/product/productDetails', { product, priceTTC });
         } else if (isNaN(productId)) {
             next()

@@ -15,7 +15,7 @@ const categoryController = {
             const message = 'Cette catégorie existe déjà';
             res.render('dashboard/admin/allCategories', { categories, message });
             return;
-        }
+        };
         await categoriesQuery.createCategory(req.body)
         res.redirect('/dashboard/admin/categories')
     },
@@ -23,7 +23,6 @@ const categoryController = {
     async updateCategoriesPage (_, res) {
         const categories = await categoriesQuery.getAllCategories();
         res.render('dashboard/admin/updateCategories', { categories })
- 
     },
 
     async updateCategoriesAction (req, res) {

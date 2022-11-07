@@ -28,7 +28,7 @@ const Order_product = sequelize.define('order_product',
             }
         },
         tva: {
-            type: DataTypes.STRING,
+            type: DataTypes.NUMBER,
             allowNull: false,
             validate:{
                 is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,

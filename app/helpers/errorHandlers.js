@@ -12,8 +12,8 @@ const errorHandlers = (err, req, res, _) => {
 
     if (status === 500) {
         message = 'Internal Server Error, please retry again later…';
-        logger.error(err);
     };
+    console.log(err)
     res.status(status).render('error', { title: `Error status ${status}`, content: message });
 };
 
