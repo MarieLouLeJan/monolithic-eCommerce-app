@@ -16,7 +16,6 @@ CREATE TABLE "adress_types" (
 
 );
 
-
 CREATE TABLE "users" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "firstname"         TEXT NOT NULL,
@@ -24,6 +23,7 @@ CREATE TABLE "users" (
     "email"             TEXT NOT NULL UNIQUE,
     "password"          TEXT NOT NULL,
     "role_id"           INTEGER NOT NULL REFERENCES roles("id"),
+    "active"            BOOLEAN NOT NULL DEFAULT true,
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
@@ -38,7 +38,7 @@ CREATE TABLE "adresses" (
     "city"              TEXT NOT NULL,
     "country"           TEXT NOT NULL,
     "complement"        TEXT,
-    "active"            BOOLEAN NOT NULL,
+    "active"            BOOLEAN NOT NULL DEFAULT true,
     "user_id"           INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -47,6 +47,7 @@ CREATE TABLE "adresses" (
 CREATE TABLE "categories" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "title"              TEXT NOT NULL UNIQUE,
+    "active"            BOOLEAN NOT NULL DEFAULT true,
     "created_by"        INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -56,6 +57,7 @@ CREATE TABLE "tva" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     "title"             TEXT NOT NULL UNIQUE,
     "value"             FLOAT NOT NULL,
+    "active"            BOOLEAN NOT NULL DEFAULT true,
     "created_by"        INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -68,6 +70,7 @@ CREATE TABLE "products" (
     "description"       TEXT NOT NULL,
     "image"             TEXT NOT NULL,
     "priceHT"           FLOAT NOT NULL,
+    "active"            BOOLEAN NOT NULL DEFAULT true,
     "category_id"       INTEGER NOT NULL REFERENCES categories("id"),
     "tva_id"            INTEGER NOT NULL REFERENCES tva("id"),
     "created_by"        INTEGER NOT NULL REFERENCES users("id"),

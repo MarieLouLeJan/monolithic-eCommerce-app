@@ -1,7 +1,7 @@
 const { Sequelize } = require('sequelize');
 
 
-const sequelize = new Sequelize(process.env.PG_URL, {
+const sequelize = new Sequelize('postgres://ecommerce:ecommerce@localhost/ecommerce', {
     // logging false pour ne pas polluer le terminal avec les requêtes
     // si on veut voir les requêtes, il faut enlever cette ligne
     // logging: false,

@@ -1,8 +1,8 @@
-const { Order } = require('../models');
+const { Order, Order_type_adress, AdressType, Product, Adress, Order_product } = require('../models');
 
 const ordersQuery = {
 
-    async getAllOrders () {
+    async getAllOrdersByUser () {
         return await Order.findAll({
             where: { user_id: req.session.user.id},
             raw: true,
@@ -10,9 +10,25 @@ const ordersQuery = {
     },
 
     async getOrderById (id) {
-        return await Order.findByPk( {id,
+        return await Order.findByPk(id, {
             include: [
-                { model: Product, thought: Order_has_product, as: 'products'}   
+                { 
+                    model: Product, 
+                    through: Order_product,
+                    as: 'products'
+                },{
+                    model: Order_type_adress,
+                    as: 'order_type_adress',
+                    include:[
+                        {
+                            model: AdressType,
+                            as: 'adress_type'
+                        },{
+                            model: Adress,
+                            as: 'adresses'
+                        }
+                    ]
+                }   
             ],
             raw: true,
             nest: true
