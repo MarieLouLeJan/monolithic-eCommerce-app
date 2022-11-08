@@ -2,7 +2,7 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = require('../database');
 
 
-const AdressType_adress = sequelize.define('adress_type_adress',
+const Order_type_adress = sequelize.define('order_type_adress',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -10,8 +10,16 @@ const AdressType_adress = sequelize.define('adress_type_adress',
             autoIncrement: true,
             allowNull: false
         },
+        order_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                isNumeric: true,
+                isInt: true
+            }
+        },
         adress_id: {
-            type: DataTypes.TEXT,
+            type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
                 isNumeric: true,
@@ -19,7 +27,7 @@ const AdressType_adress = sequelize.define('adress_type_adress',
             }
         },
         adress_type_id: {
-            type: DataTypes.TEXT,
+            type: DataTypes.INTEGER,
             allowNull: false,
             validate: {
                 isNumeric: true,
@@ -29,10 +37,10 @@ const AdressType_adress = sequelize.define('adress_type_adress',
     },
     {
         sequelize,
-        tableName: 'adress_type_adress',
+        tableName: 'order_type_adress',
         timestamps: false,
     }
 )
 
 
-module.exports = AdressType_adress;
+module.exports = Order_type_adress;

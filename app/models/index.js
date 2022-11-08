@@ -1,8 +1,8 @@
 const AdressType = require('./AdressType');
-const AdressType_adress = require('./AdressType_adress');
+const Order_type_adress = require('./Order_type_adress');
 const Adress = require('./Adress');
 const Category = require('./Category');
-const Order_adressType = require('./Order_adressType');
+// const Order_adressType = require('./Order_adressType');
 const Order_product = require('./Order_product');
 const OrderState = require('./OrderState');
 const Order = require('./Order');
@@ -16,6 +16,39 @@ const User = require('./User');
 
 
 /************ ONE TO MANY *************/
+
+Order.hasMany(Order_type_adress, {
+    foreignKey: 'order_id',
+    as: 'order_type_adress'
+});
+
+Order_type_adress.belongsTo(Order, {
+    foreignKey: 'order_id',
+    as: 'orders'
+});
+
+Adress.hasMany(Order_type_adress, {
+    foreignKey: 'adress_id',
+    as: 'order_type_adress'
+});
+
+Order_type_adress.belongsTo(Adress, {
+    foreignKey: 'adress_id',
+    as: 'adresses'
+});
+
+AdressType.hasMany(Order_type_adress, {
+    foreignKey: 'adress_type_id',
+    as: 'order_type_adress'
+});
+
+Order_type_adress.belongsTo(AdressType, {
+    foreignKey: 'adress_type_id',
+    as: 'adress_type'
+});
+
+
+
 
 Role.hasMany(User, {
     foreignKey: 'role_id',
@@ -136,35 +169,35 @@ Order.belongsToMany(Product, {
 
 
 
-AdressType.belongsToMany(Adress, {
-    as: 'adresses',
-    through: AdressType_adress,
-    foreignKey: 'adress_type_id',
-    otherKey: 'adress_id'
-});
+// AdressType.belongsToMany(Adress, {
+//     as: 'adresses',
+//     through: AdressType_adress,
+//     foreignKey: 'adress_type_id',
+//     otherKey: 'adress_id'
+// });
 
-Adress.belongsToMany(AdressType, {
-    as: 'adress_types',
-    through: AdressType_adress,
-    foreignKey: 'adress_id',
-    otherKey: 'adress_type_id'
-});
+// Adress.belongsToMany(AdressType, {
+//     as: 'adress_types',
+//     through: AdressType_adress,
+//     foreignKey: 'adress_id',
+//     otherKey: 'adress_type_id'
+// });
 
 
   
-AdressType_adress.belongsToMany(Order, {
-    as: 'orders',
-    through: Order_adressType,
-    foreignKey: 'adress_type_adress_id',
-    otherKey: 'order_id'
-});
+// AdressType_adress.belongsToMany(Order, {
+//     as: 'orders',
+//     through: Order_adressType,
+//     foreignKey: 'adress_type_adress_id',
+//     otherKey: 'order_id'
+// });
 
 
-Order.belongsToMany(AdressType_adress, {
-    as: 'adress_type_adress',
-    through: Order_adressType,
-    foreignKey: 'order_id',
-    otherKey: 'adress_type_adress_id'
-});
+// Order.belongsToMany(AdressType_adress, {
+//     as: 'adress_type_adress',
+//     through: Order_adressType,
+//     foreignKey: 'order_id',
+//     otherKey: 'adress_type_adress_id'
+// });
 
-module.exports = { AdressType, AdressType_adress, Adress, Category, Order_adressType, Order_product, OrderState, Order, Product, Role, TVA, User };
+module.exports = { AdressType, Order_type_adress, Adress, Category, Order_product, OrderState, Order, Product, Role, TVA, User };

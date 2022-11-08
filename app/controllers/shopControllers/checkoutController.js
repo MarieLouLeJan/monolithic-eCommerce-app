@@ -4,6 +4,7 @@ const ordersQuery = require("../../queries/ordersQuery");
 const adressQuery = require("../../queries/adressQuery");
 const adressTypeQuery = require('../../queries/adressTypeQuery');
 const { AdressType } = require('../../models');
+const OrderTypeAdress = require('../../queries/orderTypeAdressQuery');
 
 
 const checkoutController = {
@@ -46,24 +47,44 @@ const checkoutController = {
             await ordersQuery.addProductToOrder(myOrder, productToAdd, thought);
         };
 
-        const shippingAdress = await adressQuery.getAdressById(parseInt(req.body.shipping_id));
-        const billingAdress = await adressQuery.getAdressById(parseInt(req.body.billing_id));
+        // const shippingAdress = await adressQuery.getAdressById(parseInt(req.body.shipping_id));
+        // const billingAdress = await adressQuery.getAdressById(parseInt(req.body.billing_id));
+
+
+
+
+        // let adressToShipping = await adressQuery.getAdressTypeAdress(shippingAdress.id, shippingType[0].id)
+        // if(adressToShipping.length === 0){
+        //     adressToShipping = await adressQuery.addTypeToAdress(shippingType, shippingAdress);
+        // }                     
+        // let adressToBilling = await adressQuery.getAdressTypeAdress(billingAdress.id, billingType[0].id)
+        // if(adressToBilling.length === 0){
+        //     adressToBilling = await adressQuery.addTypeToAdress(billingType, billingAdress);
+        // }
+
+        // await ordersQuery.addAdressToOrder(adressToShipping[0], myOrder);
+        // await ordersQuery.addAdressToOrder(adressToBilling[0], myOrder);
 
         const shippingType = await adressTypeQuery.getAdressTypeWhere('shipping');
-        const billingType = await adressTypeQuery.getAdressTypeWhere('billing');    
+        const billingType = await adressTypeQuery.getAdressTypeWhere('billing');
 
+        console.log(req.body)
 
-        let adressToShipping = await adressQuery.getAdressTypeAdress(shippingAdress.id, shippingType[0].id)
-        if(adressToShipping.length === 0){
-            adressToShipping = await adressQuery.addTypeToAdress(shippingType, shippingAdress);
-        }                     
-        let adressToBilling = await adressQuery.getAdressTypeAdress(billingAdress.id, billingType[0].id)
-        if(adressToBilling.length === 0){
-            adressToBilling = await adressQuery.addTypeToAdress(billingType, billingAdress);
-        }
+        const shippingBody = {
+            order_id: myOrder.id,
+            adress_id: parseInt(req.body.shipping_id),
+            adress_type_id: shippingType[0].id
+        };
 
-        await ordersQuery.addAdressToOrder(adressToShipping[0], myOrder);
-        await ordersQuery.addAdressToOrder(adressToBilling[0], myOrder);
+        const billingBody = {
+            order_id: myOrder.id,
+            adress_id: parseInt(req.body.billing_id),
+            adress_type_id: billingType[0].id
+        };
+        
+        console.log(await OrderTypeAdress.addOrderTypeAdress(shippingBody));
+        console.log(await OrderTypeAdress.addOrderTypeAdress(billingBody))
+
 
         delete req.session.cart;
         res.render('shop/cart/checkoutConfirmation')
