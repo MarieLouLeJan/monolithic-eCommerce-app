@@ -8,17 +8,13 @@ export default {
         res.render('dashboard/profil/profil' )
     },
 
-    async updateProfilPage (_, res) {
-        res.render('dashboard/profil/updateProfil')
-    },
-
     async showAdressPage (req, res) {
-        const adresses = await adressQuery.getAllAdressesByUser(req.session.user.id)
-        res.render('dashboard/profil/adress', { adresses })
+        res.render('dashboard/profil/adress')
     },
 
     async unactiveAdressAction (req, res) {
         const adressId = parseInt(req.params.id);
+        if(isNaN(adressId))
         await adressQuery.unactiveAdress(adressId);
         res.redirect('/dashboard/profil/adresses')
     },
@@ -33,17 +29,13 @@ export default {
     },
 
     async ordersHistory (req, res) {
-        const userOrders = await ordersQuery.getAllOrders();
-        res.render('dashboard/profil/ordersHistory', { orders: userOrders })
+        res.render('dashboard/profil/ordersHistory')
     },
 
     async orderHistoryDetails (req, res, next) {
         const orderId = req.params.orderId;
-        if(!isNaN(orderId)){
-            const order = await ordersQuery.getOrderById(orderId)
-            res.render('dashboard/profil/orderHistoryDetails', { order })
-        } else if (isNaN(orderId)){
-            next()
-        }
+        if(isNaN(orderId)) next()
+        const order = await ordersQuery.getOrderById(orderId)
+        res.render('dashboard/profil/orderHistoryDetails', { order })
     }
 };

@@ -22,7 +22,7 @@
         <div class="info-div">
             <% for(order of orders) { %>
             <div class="info-key"> <a href="/dashboard/orders/details/<%=order.id%>">Commande du <%= order.date %></a>  </div>
-            <div class="info"><%= order.totalTTC %> € - <%= order.quantity%> produits - <%= order.state%></div>
+            <div class="info"><%= order.totalTTC %> € - <%= order.quantity%> produits - <%= order.state %></div>
             <% } %>
         </div>
 

@@ -2,9 +2,9 @@ import { Order, Order_type_adress, AdressType, Product, Adress, Order_product } 
 
 export default {
 
-    async getAllOrdersByUser () {
+    async getAllOrdersByUser (userId) {
         return await Order.findAll({
-            where: { user_id: req.session.user.id},
+            where: { user_id: userId},
             raw: true,
         });
     },

@@ -1,19 +1,16 @@
 import ForbiddenError from '../helpers/ForbiddenError.js';
+import adressQuery from '../queries/adressQuery.js';
+import ordersQuery from '../queries/ordersQuery.js';
 
-export default (req, res, next) => {
-    
-    req.session.user = {
-        id: 3,
-        firstname: 'lilou',
-        lastname: 'lilou',
-        email: 'lilou@gmail.com',
-        role_id: 1,
-        roles: { id: 1, title: 'customer'}
-    };
+
+export default async (req, res, next) => {
 
     if (!req.session.user) {
         next(new ForbiddenError(`Veuillez vous connecter pour accéder à cette page !`));
     }
     res.locals.user = req.session.user
+    res.locals.user.adresses = await adressQuery.getAllAdressesByUser(res.locals.user.id);
+    res.locals.user.orders = await ordersQuery.getAllOrdersByUser(res.locals.user.id);
+
     return next();
 };

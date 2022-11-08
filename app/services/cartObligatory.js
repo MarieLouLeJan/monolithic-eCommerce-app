@@ -17,10 +17,9 @@ export default async (req, res, next) => {
     let quantity = 0;
     for(const products of req.session.cart){
         quantity += products.qty;
-    }
-    req.session.cart.quantity = quantity
-    res.locals.cart = req.session.cart
-    res.locals.user.adresses = await adressQuery.getAllAdressesByUser(req.session.user.id);
+    };
+    req.session.cart.quantity = quantity;
+    res.locals.cart = req.session.cart;
     
     return next();
 };
