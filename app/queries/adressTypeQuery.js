@@ -1,6 +1,6 @@
-const { AdressType } = require("../models");
+import { AdressType } from '../models/index.js';
 
-const adressTypeQuery = {
+export default {
 
     async getAllAdressTypes () {
         return await AdressType.findAll();
@@ -28,5 +28,3 @@ const adressTypeQuery = {
     },
 
 };
-
-module.exports = adressTypeQuery;

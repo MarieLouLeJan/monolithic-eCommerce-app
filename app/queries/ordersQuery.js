@@ -1,6 +1,6 @@
-const { Order, Order_type_adress, AdressType, Product, Adress, Order_product } = require('../models');
+import { Order, Order_type_adress, AdressType, Product, Adress, Order_product } from '../models/index.js';
 
-const ordersQuery = {
+export default {
 
     async getAllOrdersByUser () {
         return await Order.findAll({
@@ -11,8 +11,7 @@ const ordersQuery = {
 
     async getOrderById (id) {
         return await Order.findByPk(id, {
-            include: [
-                { 
+            include: [{ 
                     model: Product, 
                     through: Order_product,
                     as: 'products'
@@ -28,8 +27,7 @@ const ordersQuery = {
                             as: 'adresses'
                         }
                     ]
-                }   
-            ],
+            }],
             raw: true,
             nest: true
         });
@@ -49,5 +47,3 @@ const ordersQuery = {
         // await order.addAdressType(adressTypeToAdd)
     }, 
 }
-
-module.exports = ordersQuery;

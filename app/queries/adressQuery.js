@@ -1,6 +1,6 @@
-const { Adress, AdressType_adress } = require("../models");
+import { Adress } from '../models/index.js';
 
-const adressQuery = {
+export default {
 
     async getAllAdressesByUser (userId) {
         return await Adress.findAll({
@@ -37,7 +37,4 @@ const adressQuery = {
             }
         })
     }
-
 };
-
-module.exports = adressQuery;

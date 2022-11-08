@@ -1,9 +1,9 @@
-const express = require('express');
+import express from 'express';
 const userRouter = express.Router();
 
-const userController = require('../../controllers/userControllers/userController');
+import userController from '../../controllers/userControllers/userController.js';
 
-const CW = require('../../helpers/controllerWrapper');
+import CW from '../../helpers/controllerWrapper.js';
 
 userRouter.route('/login')
         .get(CW(userController.loginPage))
@@ -14,5 +14,4 @@ userRouter.route('/register')
         .get(CW(userController.signupPage))
         .post(CW(userController.signupAction));
 
-
-module.exports = userRouter;
+export default userRouter;

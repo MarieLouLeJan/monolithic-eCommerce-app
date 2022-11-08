@@ -1,6 +1,6 @@
-const { Category, Product } = require('../models');
+import { Product } from '../models/index.js';
 
-const productsQuery = {
+export default {
 
     async getAllProducts () {
         return await Product.findAll({
@@ -29,14 +29,15 @@ const productsQuery = {
         await Product.create(body)
     },
 
-    async updateProduct (product, body){
-        await product.update(body);
+    async updateProduct (productId, body){
+        const product = await this.getProductById(productId);
+        product.update(body)
     },
 
-    async destroyProduct (product) {
-        await product.destroy();
+    async unactiveProduct (productId) {
+        const product = await this.getProductById(productId);
+        product.actice = false;
+        product.save();
     },
 
 };
-
-module.exports = productsQuery;

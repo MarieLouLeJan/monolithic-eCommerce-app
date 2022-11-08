@@ -1,66 +1,47 @@
-const pricesCalculation = require('../../services/pricesCalculation');
-const productsQuery = require("../../queries/productsQuery");
+import productsQuery from '../../queries/productsQuery.js';
 
-const cartController = {
+export default {
 
     index (req, res) {
-        // console.log(req.session.cart)
         res.render('shop/cart/cart'); 
     },
 
     async addOrUpdate (req, res, next) {
         const productId = parseInt(req.params.productId);
-        if(!isNaN(productId)){
-            const found = req.session.cart.find(
-                prod => prod.id === productId
-            );
-            if (found) {
-                found.qty += 1;
-                const { totalHT, totalTTC } = pricesCalculation.getAllProductsTotal(found.priceHT, found.qty, found.tva.value);
-                found.totalHT = totalHT;
-                found.totalTTC = totalTTC;
-            } else {
-                const productToAdd = await productsQuery.getProductById(productId);
-                productToAdd.qty = 1;
-                const { totalHT, totalTTC} = pricesCalculation.getAllProductsTotal(productToAdd.priceHT, productToAdd.qty, productToAdd.tva.value);
-                productToAdd.totalHT = totalHT;
-                productToAdd.totalTTC = totalTTC;
-                req.session.cart.push(productToAdd);
-            }
-            res.redirect('/cart')
-        } else if (isNaN(productId)) {
-            next(err)
+        if(isNaN(productId)) next();
+        const product = req.session.cart.find(
+            prod => prod.id === productId
+        );
+        if (!product) {
+            const product = await productsQuery.getProductById(productId);
+            product.qty = 1;
+            req.session.cart.push(product);
+        } else {
+            product.qty += 1;
         }
+        res.redirect('/cart')
     },
 
     async removeOneProduct (req, res, next) {
         const productId = parseInt(req.params.productId);
-        if(!isNaN(productId)){
-            const found = req.session.cart.find(
-                prod => parseInt(prod.id) === productId
-            );
-            if (found.qty === 1) {
-                const index = req.session.cart.indexOf(found);
-                req.session.cart.splice(index, 1)
-            } else {
-                found.qty -= 1;
-                const { totalHT, totalTTC} = pricesCalculation.getAllProductsTotal(found.priceHT, found.qty, found.tva.value);
-                found.totalHT = totalHT;
-                found.totalTTC = totalTTC;
-            }
-            res.redirect('/cart');
-        } else if (isNaN(productId)) {
-            next(err)
-        }        
+        if(isNaN(productId)) next()
+        const product = req.session.cart.find(
+            prod => parseInt(prod.id) === productId
+        );
+        if (product.qty === 1) {
+            const index = req.session.cart.indexOf(product);
+            req.session.cart.splice(index, 1)
+        } else {
+            product.qty -= 1;
+        }
+        res.redirect('/cart');
     },
 
     async removeAllProducts (req, res, next) {
         const productId = parseInt(req.params.productId);
         if(!isNaN(productId)){
-            const found = req.session.cart.find(
-                prod => parseInt(prod.id) === productId
-            );
-            const index = req.session.cart.indexOf(found);
+            const product = req.session.cart.find( prod => parseInt(product.id) === productId );
+            const index = req.session.cart.indexOf(product);
             req.session.cart.splice(index, 1)
             res.redirect('/cart');
         } else if (isNaN(productId)) {
@@ -73,5 +54,3 @@ const cartController = {
         res.redirect('/shop');
     },
 };
-
-module.exports = cartController;

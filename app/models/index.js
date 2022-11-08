@@ -1,15 +1,14 @@
-const AdressType = require('./AdressType');
-const Order_type_adress = require('./Order_type_adress');
-const Adress = require('./Adress');
-const Category = require('./Category');
-// const Order_adressType = require('./Order_adressType');
-const Order_product = require('./Order_product');
-const OrderState = require('./OrderState');
-const Order = require('./Order');
-const Product = require('./Product');
-const Role = require('./Role');
-const TVA = require('./TVA');
-const User = require('./User');
+import AdressType from './AdressType.js';
+import Order_type_adress from './Order_type_adress.js';
+import Adress from './Adress.js';
+import Category from './Category.js';
+import Order_product from './Order_product.js';
+import OrderState from './OrderState.js';
+import Order from './Order.js';
+import Product from './Product.js';
+import Role from './Role.js';
+import TVA from './TVA.js';
+import User from './User.js';
 
 
 // ASSOCIATIONS
@@ -167,37 +166,4 @@ Order.belongsToMany(Product, {
     otherKey: 'product_id'
 });
 
-
-
-// AdressType.belongsToMany(Adress, {
-//     as: 'adresses',
-//     through: AdressType_adress,
-//     foreignKey: 'adress_type_id',
-//     otherKey: 'adress_id'
-// });
-
-// Adress.belongsToMany(AdressType, {
-//     as: 'adress_types',
-//     through: AdressType_adress,
-//     foreignKey: 'adress_id',
-//     otherKey: 'adress_type_id'
-// });
-
-
-  
-// AdressType_adress.belongsToMany(Order, {
-//     as: 'orders',
-//     through: Order_adressType,
-//     foreignKey: 'adress_type_adress_id',
-//     otherKey: 'order_id'
-// });
-
-
-// Order.belongsToMany(AdressType_adress, {
-//     as: 'adress_type_adress',
-//     through: Order_adressType,
-//     foreignKey: 'order_id',
-//     otherKey: 'adress_type_adress_id'
-// });
-
-module.exports = { AdressType, Order_type_adress, Adress, Category, Order_product, OrderState, Order, Product, Role, TVA, User };
+export { AdressType, Order_type_adress, Adress, Category, Order_product, OrderState, Order, Product, Role, TVA, User };

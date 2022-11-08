@@ -1,11 +1,12 @@
-const express = require('express');
+import express from 'express';
 const productRouter = express.Router();
 
-const productController = require('../../controllers/adminControllers/productController');
+import productController from '../../controllers/adminControllers/productController.js';
 
-const authObligatory = require('../../helpers/authObligatory');
-const isAdmin = require('../../helpers/isAdmin');
-const CW = require('../../helpers/controllerWrapper')
+import authObligatory from '../../services/authObligatory.js';
+import isAdmin from '../../services/isAdmin.js';
+
+import CW from '../../helpers/controllerWrapper.js';
 
 productRouter.get('/dashboard/admin/products', authObligatory, isAdmin, CW(productController.showAllProducts));
 
@@ -15,11 +16,10 @@ productRouter.route('/dashboard/admin/products/add')
 
 productRouter.get('/dashboard/admin/products/details/:productId', authObligatory, isAdmin, CW(productController.showProductDetails));
 
-productRouter.get('/dashboard/admin/products/details/:productId/delete', authObligatory, isAdmin, CW(productController.deleteProductAction));
-
 productRouter.route('/dashboard/admin/products/details/:productId/update')
-        .get(authObligatory, isAdmin, CW(productController.deleteProductAction))
+        .get(authObligatory, isAdmin, CW(productController.updateProductPage))
         .post(authObligatory, isAdmin, CW(productController.updateProductAction));
 
+productRouter.get('/dashboard/admin/products/details/:productId/delete', authObligatory, isAdmin, CW(productController.unactiveProduct));
 
-module.exports = productRouter;
+export default productRouter;

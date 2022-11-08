@@ -1,15 +1,17 @@
-const express = require('express');
+import express from 'express';
 const catalogRouter = express.Router();
 
-const catalogController = require('../../controllers/shopControllers/catalogController');
+import catalogController from '../../controllers/shopControllers/catalogController.js';
 
-const auth = require('../../helpers/auth');
-const CW = require('../../helpers/controllerWrapper');
+import catalog from '../../services/catalog.js'
+import auth from '../../services/auth.js';
 
-catalogRouter.get('/', auth, CW(catalogController.index));
-catalogRouter.get('/shop', auth, CW(catalogController.productsList));
-catalogRouter.get('/shop/category/:id', auth, CW(catalogController.productsByCategory));
-catalogRouter.get('/shop/product/:id', auth, CW(catalogController.productDetails));
+import CW from '../../helpers/controllerWrapper.js';
+
+catalogRouter.get('/', auth, catalog, CW(catalogController.index));
+catalogRouter.get('/shop', auth, catalog, CW(catalogController.productsList));
+catalogRouter.get('/shop/category/:categoryId', auth, catalog, CW(catalogController.productsByCategory));
+catalogRouter.get('/shop/product/:productId', auth, catalog, CW(catalogController.productDetails));
 
 
-module.exports = catalogRouter;
+export default catalogRouter;

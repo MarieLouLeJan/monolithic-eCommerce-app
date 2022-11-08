@@ -1,8 +1,7 @@
-const { User, Role, Category, Product, TVA } = require("../../models");
-const rolesQuery = require("../../queries/rolesQuery");
-const usersQuery = require("../../queries/usersQuery");
+import rolesQuery from '../../queries/rolesQuery.js';
+import usersQuery from '../../queries/usersQuery.js';
 
-const userAdminController = {
+export default {
 
     async showAllUsers (_, res) {
         const adminRole = await rolesQuery.getRoleByRoleName('admin');
@@ -31,9 +30,5 @@ const userAdminController = {
         req.body.role_id = 2;
         const user = await usersQuery.createUser(req.body)
         res.redirect('dashboard/admin/users');
-        return;
     }
-
 }
-
-module.exports = userAdminController;

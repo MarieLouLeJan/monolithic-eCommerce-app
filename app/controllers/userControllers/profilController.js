@@ -1,10 +1,8 @@
-const bcrypt = require('bcrypt');
-const usersQuery = require("../../queries/usersQuery");
-const ordersQuery = require("../../queries/ordersQuery");
-const adressQuery = require("../../queries/adressQuery");
+import ordersQuery from '../../queries/ordersQuery.js';
+import adressQuery from '../../queries/adressQuery.js';
 
 
-const profilController = {
+export default {
 
     async index (req, res) {
         res.render('dashboard/profil/profil' )
@@ -20,8 +18,6 @@ const profilController = {
     },
 
     async unactiveAdressAction (req, res) {
-        // Ici on ne supprime pas les adresses de la BDD, on swith le active à false
-        // Car les adresses ont potentiellement pu etre utilisées pour des orders
         const adressId = parseInt(req.params.id);
         await adressQuery.unactiveAdress(adressId);
         res.redirect('/dashboard/profil/adresses')
@@ -35,8 +31,6 @@ const profilController = {
         await adressQuery.createAdress(req.body);
         res.redirect('/dashboard/profil/adresses');
     },
-
-    // !! OK JUSQU'ICI
 
     async ordersHistory (req, res) {
         const userOrders = await ordersQuery.getAllOrders();
@@ -53,5 +47,3 @@ const profilController = {
         }
     }
 };
-
-module.exports = profilController;

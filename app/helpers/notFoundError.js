@@ -1,4 +1,4 @@
-class NotFoundError extends Error {
+export default class NotFoundError extends Error {
     
     constructor(message){
         // Constructeur de la classe mère, ici Error
@@ -10,5 +10,3 @@ class NotFoundError extends Error {
         this.status = 404
     }
 };
-
-module.exports = NotFoundError;

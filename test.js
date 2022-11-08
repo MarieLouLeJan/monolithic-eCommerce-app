@@ -1,9 +1,4 @@
-const ordersQuery = require("./app/queries/ordersQuery");
-const productsQuery = require("./app/queries/productsQuery");
+const joujou = 'poupée'
 
-async function getorder () {
-    const products = await ordersQuery.getOrderById(7);
-    console.log(products)
-}
+if(joujou === 'poupée') console.log(joujou)
 
-getorder()

@@ -1,10 +1,15 @@
-require('dotenv').config();
-const express = require('express');
-const router = require('./app/routers/index');
-const path = require('path');
-const expressJSDocSwagger = require('express-jsdoc-swagger');
+import dotenv from 'dotenv'
+dotenv.config();
+import express from 'express';
+import router from './app/routers/index.js';
+import path from 'path';
+import expressJSDocSwagger from 'express-jsdoc-swagger';
 
-const session = require('express-session');
+import * as url from 'url';
+
+const dirname = url.fileURLToPath(new URL('.', import.meta.url));
+
+import session from 'express-session';
 const app = express();
 
 const port = process.env.PORT || 3000;
@@ -16,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 app.set('views', './app/views');
 
-app.use(express.static(path.join(__dirname, './assets')));
+app.use(express.static(path.join(dirname, './assets')));
 
 app.use(
     session({
@@ -32,7 +37,7 @@ const options = {
         title: 'eCommerce',
         description: "Application eCommerce",
     },
-    baseDir: __dirname,
+    baseDir: dirname,
     // Tous les fichier JS du projects
     // ** : tous les dossiers et leurs sous-dossier
     filesPattern: ['./app/routers/**/*.js', './app/services/**/*.js', './app/queries/**/*.js', './app/validations/**/*.js'],

@@ -1,5 +1,4 @@
-const { Sequelize } = require('sequelize');
-
+import { Sequelize } from 'sequelize';
 
 const sequelize = new Sequelize('postgres://ecommerce:ecommerce@localhost/ecommerce', {
     // logging false pour ne pas polluer le terminal avec les requêtes
@@ -22,5 +21,4 @@ const sequelize = new Sequelize('postgres://ecommerce:ecommerce@localhost/ecomme
     // }
 })
 
-
-module.exports = sequelize;
+export default sequelize;

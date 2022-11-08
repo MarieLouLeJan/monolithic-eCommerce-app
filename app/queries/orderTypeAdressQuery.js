@@ -1,11 +1,8 @@
-const { Order_type_adress } = require('../models');
+import { Order_type_adress } from '../models/index.js';
 
-const OrderTypeAdress = {
+export default {
 
     async addOrderTypeAdress (body) {
         return await Order_type_adress.create(body);
     },
-
-}
-
-module.exports = OrderTypeAdress;
+};

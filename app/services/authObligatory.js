@@ -1,6 +1,6 @@
-const ForbiddenError = require("./ForbiddenError");
+import ForbiddenError from '../helpers/ForbiddenError.js';
 
-const authObligatory = (req, res, next) => {
+export default (req, res, next) => {
     
     req.session.user = {
         id: 3,
@@ -17,5 +17,3 @@ const authObligatory = (req, res, next) => {
     res.locals.user = req.session.user
     return next();
 };
-
-module.exports = authObligatory;

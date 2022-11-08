@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt');
-const usersQuery = require("../../queries/usersQuery");
+import bcrypt from 'bcrypt';
+import usersQuery from '../../queries/usersQuery.js';
 
-const userController = {
+export default {
     signupPage (_, res) {
         res.render('user/signup');
     },
@@ -53,5 +53,3 @@ const userController = {
         res.redirect('/');
     },
 };
-
-module.exports = userController;
