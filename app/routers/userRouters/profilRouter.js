@@ -1,19 +1,16 @@
-const express = require('express');
+import express from 'express';
 const profilRouter = express.Router();
 
-const profilController = require('../../controllers/userControllers/profilController');
+import profilController from '../../controllers/userControllers/profilController.js';
 
-const authObligatory = require('../../services/authObligatory');
-const auth = require('../../services/auth');
+import authObligatory from '../../services/authObligatory.js';
 
-const CW = require('../../helpers/controllerWrapper');
-
+import CW from '../../helpers/controllerWrapper.js';
 
 profilRouter.get('/dashboard/profil', authObligatory, CW(profilController.index));
 
-// profilRouter.route('/dashboard/profil/update')
-//         .get(authObligatory, CW(profilController.updateProfilPage))
-        // .post(authObligatory, CW(profilController.updateProfilAction));
+profilRouter.route('/dashboard/profil/update')
+        .get(authObligatory, CW(profilController.updateProfilPage))
 
 profilRouter.get('/dashboard/profil/ordersHistory', authObligatory, CW(profilController.ordersHistory));
 profilRouter.get('/dashboard/profil/ordersHistory/details/:orderId', authObligatory, CW(profilController.orderHistoryDetails));
@@ -23,5 +20,4 @@ profilRouter.route('/dashboard/profil/addAdress')
         .post(authObligatory, CW(profilController.addAdressAction));
 profilRouter.get('/dashboard/profil/unactiveAdress/:id', CW(profilController.unactiveAdressAction));
 
-
-module.exports = profilRouter;
+export default profilRouter;

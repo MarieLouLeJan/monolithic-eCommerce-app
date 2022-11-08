@@ -1,4 +1,5 @@
 const pricesCalculation = {
+
     getProductTTC: (HT, TVA) => {
         let totalTTC = (HT * TVA) + HT;
         totalTTC = Math.round(totalTTC * 100)/100;
@@ -38,6 +39,7 @@ const pricesCalculation = {
 
     getAllCartTotals: (cart) => {
         const myTotals = {};
+        console.log(pricesCalculation.getCartHT(cart))
         myTotals.cartHT = pricesCalculation.getCartHT(cart);
         myTotals.cartTTC = pricesCalculation.getCartTTC(cart);
         myTotals.cartTax = pricesCalculation.getCartTaxes(myTotals.cartTTC, myTotals.cartHT);
@@ -45,4 +47,4 @@ const pricesCalculation = {
     }
 };
 
-module.exports = pricesCalculation
+export default pricesCalculation

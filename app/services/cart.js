@@ -1,8 +1,13 @@
-const pricesCalculation = require('../services/pricesCalculation');
+import pricesCalculation from './pricesCalculation.js';
 
-const cart = (req, res, next) => {
+export default (req, res, next) => {
     
     req.session.cart = req.session.cart || [];
+    req.session.cart.forEach(prod => {
+        const {totalHT, totalTTC} = pricesCalculation.getAllProductsTotal(prod.priceHT, prod.qty, prod.tva.value);
+        prod.totalHT = totalHT;
+        prod.totalTTC = totalTTC;
+    });
     const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(req.session.cart);
     req.session.cart.totalHT = cartHT;
     req.session.cart.totalTTC = cartTTC;
@@ -10,5 +15,3 @@ const cart = (req, res, next) => {
     res.locals.cart = req.session.cart;
     return next()
 };
-
-module.exports = cart;

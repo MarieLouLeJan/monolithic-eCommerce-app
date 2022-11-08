@@ -1,6 +1,6 @@
-const categoriesQuery = require("../../queries/categoriesQuery")
+import categoriesQuery from '../../queries/categoriesQuery.js';
 
-const categoryController = {
+export default {
 
     async showAllCategories (_, res) {
         const categories = await categoriesQuery.getAllCategories();
@@ -30,22 +30,18 @@ const categoryController = {
         const categories = categoriesQuery.getAllCategories();
         const categoryFound = categories.find(cat => cat.name === req.body.name);
         if(categoryFound){
-            const message = 'Cette catégorie existe déjà';
+            const message = 'Ce nom de catégorie est déjà utilisé';
             res.render('dashboard/admin/updateCategories', { categories, message });
             return;
         }
         const categoryToUpdate = await categoriesQuery.getCategoryById(categoryId);
         await categoriesQuery.updateCategory(categoryToUpdate, req.body);
         res.redirect('/dashboard/admin/categories')
-
     },
 
-    async deleteCategory (req, res) {
+    async unactiveCategory (req, res) {
         const categoryId = parseInt(req.params.categoryId);
-        const categoryToDestroy = await categoriesQuery.getCategoryById(categoryId);
-        await categoriesQuery.destroyCategory(categoryToDestroy)
+        const categoryToDestroy = await categoriesQuery.unactiveCategory(categoryId);
         res.redirect('/dashboard/admin/categories')
     },
 }
-
-module.exports = categoryController

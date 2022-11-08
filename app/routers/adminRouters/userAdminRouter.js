@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const userAdminRouter = express.Router();
 
-const userAdminController = require('../../controllers/adminControllers/userAdminController');
+import userAdminController from '../../controllers/adminControllers/userAdminController.js';
 
-const authObligatory = require('../../services/authObligatory');
-const isAdmin = require('../../services/isAdmin');
+import authObligatory from '../../services/authObligatory.js';
+import isAdmin from '../../services/isAdmin.js';
 
-const CW = require('../../helpers/controllerWrapper');
+import CW from '../../helpers/controllerWrapper.js';
 
 
 userAdminRouter.get('/dashboard/admin/users', authObligatory, isAdmin, CW(userAdminController.showAllUsers));
@@ -15,5 +15,4 @@ userAdminRouter.route('/dashboard/admin/users/createAdmin')
                 .get(authObligatory, isAdmin, CW(userAdminController.createAdminPage))
                 .post(authObligatory, isAdmin, CW(userAdminController.createAdminAction));
 
-
-module.exports = userAdminRouter;
+export default userAdminRouter;

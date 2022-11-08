@@ -1,5 +1,4 @@
-
-const CW = (controller) => {
+export default (controller) => {
     return async (req, res, next) => {
       try {
         await controller(req, res, next);
@@ -8,5 +7,3 @@ const CW = (controller) => {
       }
     };
 };
-
-module.exports = CW;

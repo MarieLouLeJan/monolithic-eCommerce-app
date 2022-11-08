@@ -1,5 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database');
+import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from '../database.js';
 
 
 const TVA = sequelize.define('tva',
@@ -34,4 +34,4 @@ const TVA = sequelize.define('tva',
     }
 );
 
-module.exports = TVA;
+export default TVA;

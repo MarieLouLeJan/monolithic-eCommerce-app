@@ -1,10 +1,9 @@
-const TVAQuery = require("../../queries/TVAQuery");
+import TVAQuery from '../../queries/TVAQuery.js';
 
-const TVAController = {
+export default {
 
     async showAllTVA (_, res){
         const TVA = await TVAQuery.getAllTVA();
-        //TODO ajouter sur cette page le supprimer uniquement pour les TVA sans produits 
         res.render('dashboard/admin/tva', { TVA });
     },
 
@@ -20,12 +19,9 @@ const TVAController = {
         res.redirect('/dashboard/admin/tva');
     },
 
-    async deleteTVA (req, res) {
+    async unactiveTVA (req, res) {
         const TVAId = parseInt(req.params.TVAId);
-        const TVAToDelete = await TVAQuery.getTVAById(TVAId);
-        await TVAQuery.destroyTVA(TVAToDelete);
+        await TVAQuery.unactiveTVA(TVAId);
         res.redirect('/dashboard/admin/TVA');
     }
 };
-
-module.exports = TVAController;

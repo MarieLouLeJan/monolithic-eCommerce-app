@@ -5,7 +5,7 @@ const adressQuery = require("../../queries/adressQuery");
 const { dateFormat } = require('../../services/dateFormat');
 
 
-const profilController = {
+export default {
 
     async index (req, res) {
         res.render('dashboard/profil/profil' )
@@ -21,8 +21,6 @@ const profilController = {
     },
 
     async unactiveAdressAction (req, res) {
-        // Ici on ne supprime pas les adresses de la BDD, on swith le active à false
-        // Car les adresses ont potentiellement pu etre utilisées pour des orders
         const adressId = parseInt(req.params.id);
         await adressQuery.unactiveAdress(adressId);
         res.redirect('/dashboard/profil/adresses')
@@ -36,7 +34,6 @@ const profilController = {
         await adressQuery.createAdress(req.body);
         res.redirect('/dashboard/profil/adresses');
     },
-
 
     async ordersHistory (req, res) {
         const userOrders = await ordersQuery.getAllOrdersByUser(res.locals.user.id);
@@ -64,5 +61,3 @@ const profilController = {
         }
     }
 };
-
-module.exports = profilController;

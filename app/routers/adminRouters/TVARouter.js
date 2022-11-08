@@ -1,17 +1,15 @@
-const express = require('express');
+import express from 'express';
 const TVARouter = express.Router();
 
-const TVAController = require('../../controllers/adminControllers/TVAController');
+import TVAController from '../../controllers/adminControllers/TVAController.js';
 
-const authObligatory = require('../../services/authObligatory');
-const isAdmin = require('../../services/isAdmin');
+import authObligatory from '../../services/authObligatory.js';
+import isAdmin from '../../services/isAdmin.js';
 
-const CW = require('../../helpers/controllerWrapper')
-
+import CW from '../../helpers/controllerWrapper.js';
 
 TVARouter.get('/dashboard/admin/TVA', authObligatory, isAdmin, CW(TVAController.showAllTVA));
 TVARouter.post('/dashboard/admin/TVA/add', authObligatory, isAdmin, CW(TVAController.addTVAAction));
 TVARouter.post('/dashboard/admin/TVA/delete/:TVAId', authObligatory, isAdmin, CW(TVAController.deleteTVA));
 
-
-module.exports = TVARouter;
+export default TVARouter;

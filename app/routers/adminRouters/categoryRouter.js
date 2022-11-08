@@ -1,12 +1,12 @@
-const express = require('express');
+import express from 'express';
 const categoryRouter = express.Router();
 
-const categoryController = require('../../controllers/adminControllers/categoryController');
+import categoryController from '../../controllers/adminControllers/categoryController.js';
 
-const authObligatory = require('../../services/authObligatory');
-const isAdmin = require('../../services/isAdmin');
+import authObligatory from '../../services/authObligatory.js';
+import isAdmin from '../../services/isAdmin.js';
 
-const CW = require('../../helpers/controllerWrapper')
+import CW from '../../helpers/controllerWrapper.js';
 
 categoryRouter.get('/dashboard/admin/categories', authObligatory, isAdmin, CW(categoryController.showAllCategories));
 
@@ -15,7 +15,7 @@ categoryRouter.post('/dashboard/admin/categories/add', authObligatory, isAdmin, 
 categoryRouter.route('/dashboard/admin/categories/update')
         .get(authObligatory, isAdmin, CW(categoryController.updateCategoriesPage))
         .post(authObligatory, isAdmin, CW(categoryController.updateCategoriesAction));
-categoryRouter.post('/dashboard/admin/categories/delete/:categoryId', authObligatory, isAdmin, CW(categoryController.deleteCategory));
+categoryRouter.post('/dashboard/admin/categories/delete/:categoryId', authObligatory, isAdmin, CW(categoryController.unactiveCategory));
 
 
-module.exports = categoryRouter;
+export default categoryRouter;

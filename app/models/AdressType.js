@@ -1,5 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database');
+import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from '../database.js';
 
 
 const AdressType = sequelize.define('adress_types',
@@ -19,5 +19,4 @@ const AdressType = sequelize.define('adress_types',
     }
 )
 
-
-module.exports = AdressType;
+export default AdressType;

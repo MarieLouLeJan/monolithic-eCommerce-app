@@ -1,6 +1,6 @@
-const { User, Role } = require('../models');
+import { User, Role } from '../models/index.js';
 
-const usersQuery = {
+export default {
 
     async getAllUsers () {
         return await User.findAll({
@@ -37,7 +37,4 @@ const usersQuery = {
     async createUser (body) {
         await User.create(body);
     },
-
 };
-
-module.exports = usersQuery;

@@ -1,15 +1,16 @@
-const { OrderState } = require("../models");
+import { OrderState } from '../models/index.js';
 
-const orderStateQuery = {
+export default {
 
     async getAllOrderStates () {
         return await OrderState.findAll();
     },
 
     async createOderState (body) {
-        return await OrderState.create(body)
+        await OrderState.create(body)
     },
 
+    async destroyAdressType (orderState) {
+        await orderState.destroy();
+    },
 };
-
-module.exports = orderStateQuery;

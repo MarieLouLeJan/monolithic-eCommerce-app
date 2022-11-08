@@ -1,6 +1,6 @@
-const { Role } = require('../models');
+import { Role } from '../models/index.js';
 
-const rolesQuery = {
+export default {
 
     async getAllRole () {
         return await Role.findAll({
@@ -18,7 +18,4 @@ const rolesQuery = {
             include: 'users'
         });
     },
-
 };
-
-module.exports = rolesQuery;

@@ -1,20 +1,16 @@
-const express = require('express');
+import express from 'express';
 const checkoutRouter = express.Router();
 
-const checkoutController = require('../../controllers/shopControllers/checkoutController');
+import checkoutController from '../../controllers/shopControllers/checkoutController.js';
 
-const auth = require('../../services/auth');
-const authObligatory = require('../../services/authObligatory');
-const cartObligatory = require('../../services/cartObligatory');
+import auth from '../../services/auth.js';
+import authObligatory from '../../services/authObligatory.js';
+import cartObligatory from '../../services/cartObligatory.js';
 
-const CW = require('../../helpers/controllerWrapper');
+import CW from '../../helpers/controllerWrapper.js';
 
-checkoutRouter.get('/checkout', cartObligatory, auth, CW(checkoutController.checkoutPage));
+checkoutRouter.get('/checkout', auth, cartObligatory, CW(checkoutController.checkoutPage));
 
-checkoutRouter.get('/checkout/shipping', cartObligatory, authObligatory, CW(checkoutController.getShippingAdressPage));
-checkoutRouter.post('/checkout/shipping', cartObligatory, authObligatory, CW(checkoutController.getShippingAdressPage))
+checkoutRouter.post('/checkout/complete', authObligatory, cartObligatory, CW(checkoutController.checkoutAction));
 
-checkoutRouter.post('/checkout/complete', cartObligatory, authObligatory, CW(checkoutController.checkoutAction));
-
-
-module.exports = checkoutRouter;
+export default checkoutRouter;

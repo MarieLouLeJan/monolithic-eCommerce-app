@@ -1,5 +1,5 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../database');
+import { Sequelize, DataTypes } from 'sequelize';
+import sequelize from '../database.js';
 
 
 const User = sequelize.define('users',
@@ -45,12 +45,7 @@ const User = sequelize.define('users',
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        // phone: {
-        //     type: DataTypes.STRING,
-        //     allowNull: true,
-        //     // Numéro francais commençant par +33 ou 0
-        //     is: /^(0|\+33)[1-9]\d{8}$/i,
-        // },
+
     },
     {
         updatedAt: false,
@@ -59,4 +54,4 @@ const User = sequelize.define('users',
     }
 );
 
-module.exports = User;
+export default User;

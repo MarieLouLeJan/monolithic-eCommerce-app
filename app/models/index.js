@@ -1,15 +1,14 @@
-const AdressType = require('./AdressType');
-const Order_type_adress = require('./Order_type_adress');
-const Adress = require('./Adress');
-const Category = require('./Category');
-// const Order_adressType = require('./Order_adressType');
-const Order_product = require('./Order_product');
-const OrderState = require('./OrderState');
-const Order = require('./Order');
-const Product = require('./Product');
-const Role = require('./Role');
-const TVA = require('./TVA');
-const User = require('./User');
+import AdressType from './AdressType.js';
+import Order_type_adress from './Order_type_adress.js';
+import Adress from './Adress.js';
+import Category from './Category.js';
+import Order_product from './Order_product.js';
+import OrderState from './OrderState.js';
+import Order from './Order.js';
+import Product from './Product.js';
+import Role from './Role.js';
+import TVA from './TVA.js';
+import User from './User.js';
 
 
 // ASSOCIATIONS

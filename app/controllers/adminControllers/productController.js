@@ -1,8 +1,8 @@
-const categoriesQuery = require("../../queries/categoriesQuery");
-const productsQuery = require("../../queries/productsQuery");
-const TVAQuery = require("../../queries/TVAQuery");
+import categoriesQuery from '../../queries/categoriesQuery.js';
+import productsQuery from '../../queries/productsQuery.js';
+import TVAQuery from '../../queries/TVAQuery.js';
 
-const productController = {
+export default {
 
     async showAllProducts (_, res) {
         const allCategories = await categoriesQuery.getAllCategories();
@@ -12,13 +12,11 @@ const productController = {
 
     async showProductDetails (req, res) {
         const productId = parseInt(req.params.productId)
-        if(!isNaN(productId)){
-            const product = await productsQuery.getProductById(productId)
-            product.priceHT = product.priceHT.toFixed(2)
-            res.render('dashboard/admin/productDetails', { product })
-        } else if (isNaN(productId)) {
-            next()
-        }
+        if(isNaN(productId)) next();         
+        const product = await productsQuery.getProductById(productId)
+        product.priceHT = product.priceHT.toFixed(2)
+        res.render('dashboard/admin/productDetails', { product });
+        return;
     },
 
     async addProductPage (_, res) {
@@ -32,7 +30,7 @@ const productController = {
         const productFound = products.find(product => product.ref === req.body.ref);
         if(productFound){
             const message = "Ce produit existe déjà";
-            res.render('dashboard/admin/addProduct', { categories, tva, message });
+            res.render('dashboard/admin/addProduct', { message });
         }
         req.body.priceHT = parseFloat(req.body.priceHT);
         await productsQuery.createProduct(req.body);
@@ -41,10 +39,12 @@ const productController = {
 
     async updateProductPage (req, res) {
         const productId = parseInt(req.params.productId);
+        if(isNaN(productId)) next();
         const product = await productsQuery.getProductById(productId);
-        const tva = await TVAQuery.getAllTVA();
-        const categories = await categoriesQuery.getAllCategories();
-        res.render('dashboard/admin/updateProduct', { product, tva, categories })
+            const tva = await TVAQuery.getAllTVA();
+            const categories = await categoriesQuery.getAllCategories();
+            res.render('dashboard/admin/updateProduct', { product, tva, categories })
+            return
 
     },
 
@@ -58,17 +58,15 @@ const productController = {
         if(req.body.priceHT){
             req.body.priceHT = parseFloat(req.body.priceHT);
         }
-        const productToUpdate = await productsQuery.getProductById(productId);
-        await productsQuery.updateProduct(productToUpdate, req.body);
+        await productsQuery.updateProduct(productId, req.body);
         res.redirect(`/dashboard/admin/products/details/${productId}`);
     },
 
-    async deleteProductAction (req, res){
+    async unactiveProduct (req, res){
         const productId = parseInt(req.params.productId);
+        if(isNaN(productId)) next();
         const productToDelete = await productsQuery.getProductById(productId);
         await productsQuery.destroyProduct(productToDelete);
         res.redirect('/dashboard/admin/products');
     },
 };
-
-module.exports = productController
