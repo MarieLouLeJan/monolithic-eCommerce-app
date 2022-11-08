@@ -77,53 +77,57 @@
           </div>
         <% } %>
         <div class="cart-section container">
-          <div class="cart-table">
-          <form  method="POST" action="/checkout/complete">
-            <div class="cart-table-row">
-            <div class="cart-table-row-left">
-              Adresse de livraison
-            </div> 
-            <div class="cart-table-row-right">   
-              <label for="shipping_selection"></label>
-              <select name="shipping_id" id="shipping_selection">
-                <% if(locals.user?.adresses){ %>
-                  <% for(adress of user.adresses){ %>
-                      <option value="<%=adress.id%>">
-                        <%= adress.entitled%>, 
-                        <%= adress.number%> <%= adress.number_complement%>, 
-                        <%= adress.street%>, 
-                        <%= adress.postal_code%> <%= adress.city%> <%= adress.complement%>, 
-                        <%= adress.country%> %>
-                      </option>
-                  <% }} %>
-              </select>
-            </div>
-            </div>
-            <div class="cart-table-row">
-            <div class="cart-table-row-left">
-              Adresse de facturation
-            </div> 
-            <div class="cart-table-row-right">   
-              <label for="billing_selection"></label>
-              <select name="billing_id" id="billing_selection">
-                <% if(locals.user?.adresses){ %>
-                  <% for(adress of user.adresses){ %>
-                      <option value="<%=adress.id%>">
-                        <%= adress.entitled%>, 
-                        <%= adress.number%> <%= adress.number_complement%>, 
-                        <%= adress.street%>, 
-                        <%= adress.postal_code%> <%= adress.city%> <%= adress.complement%>, 
-                        <%= adress.country%> %>
-                      </option>
-                  <% };} %>
 
-              </select>
+          <% if(locals.user?.adresses.length > 0){ %>
+            <div class="cart-table">
+            <form  method="POST" action="/checkout/complete">
+              <div class="cart-table-row">
+              <div class="cart-table-row-left">
+                Adresse de livraison
+              </div> 
+              <div class="cart-table-row-right">   
+                <label for="shipping_selection"></label>
+                <select name="shipping_id" id="shipping_selection">
+                  <% for(adress of user.adresses){ %>
+                    <option value="<%=adress.id%>">
+                      <%= adress.entitled%>, 
+                      <%= adress.number%> <%= adress.number_complement%>, 
+                      <%= adress.street%>, 
+                      <%= adress.postal_code%> <%= adress.city%> <%= adress.complement%>, 
+                      <%= adress.country%> %>
+                    </option>
+                  <% } %>
+                </select>
+              </div>
+              </div>
+              <div class="cart-table-row">
+              <div class="cart-table-row-left">
+                Adresse de facturation
+              </div> 
+              <div class="cart-table-row-right">   
+                <label for="billing_selection"></label>
+                <select name="billing_id" id="billing_selection">
+                  <% for(adress of user.adresses){ %>
+                    <option value="<%=adress.id%>">
+                      <%= adress.entitled%>, 
+                      <%= adress.number%> <%= adress.number_complement%>, 
+                      <%= adress.street%>, 
+                      <%= adress.postal_code%> <%= adress.city%> <%= adress.complement%>, 
+                      <%= adress.country%> %>
+                    </option>
+                    <% } %>
+                </select>
+              </div>
+              </div>
+              <input type="submit" class="btn btn-primary" value="Procéder au paiement" />
+            </form>
             </div>
-          </div>
-          <a href="/dashboard/profil/adresses">Ajouter une adresse</a>
-          <input type="submit" class="btn btn-primary" value="Procéder au paiement" />
-        </form>
-        </div>
+              <% } %>
+
+
+            <%if(locals.user.adresses.length === 0){%>
+              <a href="/dashboard/profil/adresses">Ajouter une adresse pour finaliser votre commande</a>
+            <% } %>
         </div>
 
     <%- include ('../../partials/foot') %>

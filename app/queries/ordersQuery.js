@@ -29,7 +29,7 @@ const ordersQuery = {
     },
 
     async addAdressToOrder (adressTypeToAdd, order) {
-        return await adressTypeToAdd.addOrder(order);
+        return await adressTypeToAdd.addOrders(order);
         // await order.addAdressType(adressTypeToAdd)
     }, 
 }

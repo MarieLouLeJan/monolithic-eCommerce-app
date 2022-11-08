@@ -1,4 +1,4 @@
-const { Adress } = require("../models");
+const { Adress, AdressType_adress } = require("../models");
 
 const adressQuery = {
 
@@ -25,8 +25,17 @@ const adressQuery = {
         await adress.save();
     },
 
-    async addTypeToAdress (adress, adressType) {
-        return await adressType.addAdress(adress);
+    async addTypeToAdress (adressType, adress) {
+        return await adress.addAdress_types(adressType);
+    },
+
+    async getAdressTypeAdress (adressId, typeId) {
+        return await AdressType_adress.findAll({
+            where: {
+                adress_id: adressId,
+                adress_type_id: typeId
+            }
+        })
     }
 
 };

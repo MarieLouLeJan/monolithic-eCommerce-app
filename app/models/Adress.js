@@ -45,7 +45,7 @@ const Adress = sequelize.define('adresses',
             type: DataTypes.STRING,
             allowNull: false,
             validate:{
-                is: /^[a-zA-Z\-\']+$/i,
+                is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i,
             }
         },
         country: {

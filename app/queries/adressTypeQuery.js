@@ -15,7 +15,6 @@ const adressTypeQuery = {
             where: {
                 title: condition,
             }
-            // raw: true,
         });
     },
 

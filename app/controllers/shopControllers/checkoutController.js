@@ -46,53 +46,28 @@ const checkoutController = {
             await ordersQuery.addProductToOrder(myOrder, productToAdd, thought);
         };
 
-        // const shippingAdressId = parseInt(req.body.shipping_id);
-        // const billingAdressId = parseInt(req.body.billing_id);
-
         const shippingAdress = await adressQuery.getAdressById(parseInt(req.body.shipping_id));
         const billingAdress = await adressQuery.getAdressById(parseInt(req.body.billing_id));
 
-        console.log('BILLING', billingBody);
-        console.log("SHIPPING", shippingBody)
+        const shippingType = await adressTypeQuery.getAdressTypeWhere('shipping');
+        const billingType = await adressTypeQuery.getAdressTypeWhere('billing');    
 
 
-        const shippingType = await adressTypeQuery.getAdressTypeWhere(shipping);
-        const billingType = await adressTypeQuery.getAdressTypeWhere(billing);
+        let adressToShipping = await adressQuery.getAdressTypeAdress(shippingAdress.id, shippingType[0].id)
+        if(adressToShipping.length === 0){
+            adressToShipping = await adressQuery.addTypeToAdress(shippingType, shippingAdress);
+        }                     
+        let adressToBilling = await adressQuery.getAdressTypeAdress(billingAdress.id, billingType[0].id)
+        if(adressToBilling.length === 0){
+            adressToBilling = await adressQuery.addTypeToAdress(billingType, billingAdress);
+        }
 
-        const adressToShipping =  await adressQuery.addAdressToType(shippingAdress, shippingType);
-        const adressToBilling =  await adressQuery.addAdressToType(billingAdress, billingType);
-
-        console.log("adressToShipping", adressToShipping);
-        console.log("adressToBilling", adressToBilling);
-
-        await ordersQuery.addAdressToOrder(adressToShipping, myOrder);
-        await ordersQuery.addAdressToOrder(adressToBilling, myOrder);
+        await ordersQuery.addAdressToOrder(adressToShipping[0], myOrder);
+        await ordersQuery.addAdressToOrder(adressToBilling[0], myOrder);
 
         delete req.session.cart;
         res.render('shop/cart/checkoutConfirmation')
     },
-
-    // async getShippingAdressPage (req, res) {
-    //     const adresses = await adressQuery.getAllAdressesByUser(req.session.user.id);
-    //     if(adresses){
-    //         res.render('shop/cart/shippingAdress', { adresses })
-    //     } else {
-    //         res.render('shop/cart/shippingAdress')
-    //     }
-    // },
-
-    // async getShippingAdressAction (res, req) {
-    //     console.log(req.body);
-    //     const shippingAdressId = parseInt(req.body);
-    //     const shippingAdress = await adressQuery.getAdressById(req.body);
-    //     const condition = "title: shipping"
-    //     const adressType = await adressTypeQuery.getAdressTypeWhere(condition);
-    //     req.session.shippingId = adressType.id;
-    //     req.session.shipping = shippingAdress.id;
-    //     console.log(adressType);
-    //     console.log(shippingAdress);
-    //     res.redirect('/checkout')
-    // },
 }
 
 module.exports = checkoutController;
