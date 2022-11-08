@@ -1,6 +1,5 @@
 import productsQuery from '../../queries/productsQuery.js';
 import ordersQuery from '../../queries/ordersQuery.js';
-import adressQuery from '../../queries/adressQuery.js';
 import adressTypeQuery from '../../queries/adressTypeQuery.js';
 import OrderTypeAdress from '../../queries/orderTypeAdressQuery.js';
 
