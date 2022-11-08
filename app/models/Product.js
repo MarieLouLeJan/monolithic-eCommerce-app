@@ -46,6 +46,10 @@ const Product = sequelize.define('products',
                 is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,
             }
         },
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
     },
     {
         sequelize,

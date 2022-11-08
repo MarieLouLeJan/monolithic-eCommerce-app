@@ -22,6 +22,10 @@ const TVA = sequelize.define('tva',
                 is: /^0\.[0-9]{2}$/
             }
         },
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
     },
     {
         sequelize,

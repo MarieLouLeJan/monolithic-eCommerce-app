@@ -3,8 +3,9 @@ const userAdminRouter = express.Router();
 
 const userAdminController = require('../../controllers/adminControllers/userAdminController');
 
-const authObligatory = require('../../helpers/authObligatory');
-const isAdmin = require('../../helpers/isAdmin');
+const authObligatory = require('../../services/authObligatory');
+const isAdmin = require('../../services/isAdmin');
+
 const CW = require('../../helpers/controllerWrapper');
 
 

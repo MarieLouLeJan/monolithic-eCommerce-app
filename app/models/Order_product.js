@@ -42,4 +42,7 @@ const Order_product = sequelize.define('order_product',
     }
 );
 
+Order_product.removeAttribute('id');
+
+
 module.exports = Order_product;

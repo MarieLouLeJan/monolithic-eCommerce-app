@@ -3,8 +3,9 @@ const productRouter = express.Router();
 
 const productController = require('../../controllers/adminControllers/productController');
 
-const authObligatory = require('../../helpers/authObligatory');
-const isAdmin = require('../../helpers/isAdmin');
+const authObligatory = require('../../services/authObligatory');
+const isAdmin = require('../../services/isAdmin');
+
 const CW = require('../../helpers/controllerWrapper')
 
 productRouter.get('/dashboard/admin/products', authObligatory, isAdmin, CW(productController.showAllProducts));

@@ -18,7 +18,7 @@
         <% if(locals.user && !locals.order){ %>
             Aucun commande passée !
         <%} %>
-            Commande du <%=order[0].date%>
+            Commande du <%=order.date%>
         </h3>
 
         <hr>
@@ -28,38 +28,39 @@
             
 
             <div class="info-key">Livrée à</div>
-            <div class="info"><%= user.name%> <%order[0].adress %></div>
+            <div class="info">
+                <%= shipping.entitled%>, 
+                <%= shipping.number %> <%= shipping.number_complement %> <%= shipping.street %>, 
+                <%= shipping.postal_code %> <%= shipping.city %> <%= shipping.complement %>,
+                <%= shipping.country %></div>
 
             <div class="info-key">Nombre de produits:</div>
-            <div class="info"><%= order[0].quantity %></div>
+            <div class="info"><%= order.quantity %></div>
 
             <div class="info-key">Total HT</div>
-            <div class="info"><%= order[0].totalHT %>€</div>
+            <div class="info"><%= order.totalHT %>€</div>
 
             <div class="info-key">Total TVA</div>
-            <div class="info"><%= order[0].tax %>€</div>
+            <div class="info"><%= order.tax %>€</div>
 
             <div class="info-key">Total TTC</div>
-            <div class="info"><%= order[0].totalTTC %>€</div>
+            <div class="info"><%= order.totalTTC %>€</div>
 
             <div class="info-key">Etat</div>
-            <div class="info"><%= order[0].state %></div>
+            <div class="info"><%= order.order_states.title %></div>
         </div>
 
         <hr>
-        
-        <% for(const p of order) { %>
+        <% for(const prod of products) { %>
             <div class="info-div">
                 <div class="info-key">Produit</div>
-                <div class="info"> <a href="/product/<%=p.products.id%>"><%= p.products.title %></a></div>
+                <div class="info"> <a href="/product/<%=prod.id%>"><%= prod.product.title %></a></div>
                 <div class="info-key">Prix HT</div>
-                <div class="info"><%= p.products.Order_has_product.priceHT %>€</div>
+                <div class="info"><%= prod.priceHT %>€</div>
                 <div class="info-key">Montant TVA</div>
-                <div class="info"><%= p.products.Order_has_product.tva %></div>
+                <div class="info"><%= prod.tva %></div>
                 <div class="info-key">Quantité</div>
-                <div class="info"><%= p.products.Order_has_product.quantity %></div>
-                <div class="info-key">Statut</div>
-                <div class="info"><%= p.products.Order_has_product.state %></div>
+                <div class="info"><%= prod.quantity %></div>
             </div>
             <hr>    
         <%} %>

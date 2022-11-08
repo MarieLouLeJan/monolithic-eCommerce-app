@@ -3,10 +3,12 @@ const cartRouter = express.Router();
 
 const cartController = require('../../controllers/shopControllers/cartController');
 
-const auth = require('../../helpers/auth');
-const cartObligatory = require('../../helpers/cartObligatory');
+const auth = require('../../services/auth');
+const cartObligatory = require('../../services/cartObligatory');
+const cart = require('../../services/cart');
+
 const CW = require('../../helpers/controllerWrapper');
-const cart = require('../../helpers/cart');;
+
 
 cartRouter.get('/cart', auth, cart, CW(cartController.index));
 cartRouter.post('/cart/:productId', auth, cart, CW(cartController.addOrUpdate));

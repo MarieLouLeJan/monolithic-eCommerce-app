@@ -7,12 +7,7 @@ const orderStateQuery = {
     },
 
     async createOderState (body) {
-        await OrderState.create(body)
-    },
-
-
-    async destroyAdressType (orderState) {
-        await orderState.destroy();
+        return await OrderState.create(body)
     },
 
 };

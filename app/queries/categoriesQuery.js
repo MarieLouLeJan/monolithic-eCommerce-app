@@ -4,7 +4,10 @@ const categoriesQuery = {
 
     async getAllCategories () {
         return await Category.findAll({
-            include: 'products'
+            include: 'products',
+            where: {
+                active: true
+            }
         });
     },
 
@@ -29,8 +32,14 @@ const categoriesQuery = {
         await category.update(body);
     },
 
-    async destroyCategory (category) {
-        await category.destroy();
+    async unactiveCategory (category) {
+        await category.update({
+            active: false
+        });
+        // OU
+        // const category = await adressQuery.getAdressById(categoryId);
+        // adress.active = false;
+        // await category.save();
     },
 
 };

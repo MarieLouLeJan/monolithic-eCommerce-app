@@ -4,6 +4,9 @@ const productsQuery = {
 
     async getAllProducts () {
         return await Product.findAll({
+            where: {
+                active: true,
+            },
             include: 'tva',
             raw: true,
             nest: true
@@ -33,8 +36,10 @@ const productsQuery = {
         await product.update(body);
     },
 
-    async destroyProduct (product) {
-        await product.destroy();
+    async unactiveProduct (product) {
+        await product.update({
+            active: false
+        });
     },
 
 };

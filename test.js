@@ -1,9 +1,11 @@
-const ordersQuery = require("./app/queries/ordersQuery");
-const productsQuery = require("./app/queries/productsQuery");
+const usersQuery = require('./app/queries/usersQuery');
 
-async function getorder () {
-    const products = await ordersQuery.getOrderById(7);
-    console.log(products)
+const getRole = {
+
+    async  getusers () {
+        const users = await usersQuery.getAllUsersByRole("admin")
+        console.log(users)
+    },
 }
 
-getorder()
+console.log(getRole.getusers())

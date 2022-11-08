@@ -3,7 +3,8 @@ const catalogRouter = express.Router();
 
 const catalogController = require('../../controllers/shopControllers/catalogController');
 
-const auth = require('../../helpers/auth');
+const auth = require('../../services/auth');
+
 const CW = require('../../helpers/controllerWrapper');
 
 catalogRouter.get('/', auth, CW(catalogController.index));

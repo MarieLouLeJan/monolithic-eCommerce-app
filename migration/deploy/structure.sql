@@ -46,7 +46,7 @@ CREATE TABLE "adresses" (
 
 CREATE TABLE "categories" (
     "id"                INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    "title"              TEXT NOT NULL UNIQUE,
+    "title"             TEXT NOT NULL UNIQUE,
     "active"            BOOLEAN NOT NULL DEFAULT true,
     "created_by"        INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()

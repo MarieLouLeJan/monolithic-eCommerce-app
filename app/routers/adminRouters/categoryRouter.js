@@ -3,8 +3,9 @@ const categoryRouter = express.Router();
 
 const categoryController = require('../../controllers/adminControllers/categoryController');
 
-const authObligatory = require('../../helpers/authObligatory');
-const isAdmin = require('../../helpers/isAdmin');
+const authObligatory = require('../../services/authObligatory');
+const isAdmin = require('../../services/isAdmin');
+
 const CW = require('../../helpers/controllerWrapper')
 
 categoryRouter.get('/dashboard/admin/categories', authObligatory, isAdmin, CW(categoryController.showAllCategories));

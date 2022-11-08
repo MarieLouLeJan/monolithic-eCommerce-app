@@ -1,5 +1,5 @@
 const pricesCalculation = require('../services/pricesCalculation');
-const ForbiddenError = require("./ForbiddenError");
+const ForbiddenError = require("../helpers/ForbiddenError");
 
 
 const cartObligatory = (req, res, next) => {

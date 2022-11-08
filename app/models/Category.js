@@ -11,7 +11,11 @@ const Category = sequelize.define('categories',
             validate: {
                 is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i
             }
-        }
+        },
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
     },
     {
         sequelize,

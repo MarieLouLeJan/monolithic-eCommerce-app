@@ -41,6 +41,10 @@ const User = sequelize.define('users',
             //     is: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/i,
             // }
         },
+        active: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
         // phone: {
         //     type: DataTypes.STRING,
         //     allowNull: true,

@@ -1,4 +1,3 @@
-const pricesCalculation = require('../../services/pricesCalculation');
 const productsQuery = require("../../queries/productsQuery");
 const ordersQuery = require("../../queries/ordersQuery");
 const adressQuery = require("../../queries/adressQuery");
@@ -68,8 +67,6 @@ const checkoutController = {
         const shippingType = await adressTypeQuery.getAdressTypeWhere('shipping');
         const billingType = await adressTypeQuery.getAdressTypeWhere('billing');
 
-        console.log(req.body)
-
         const shippingBody = {
             order_id: myOrder.id,
             adress_id: parseInt(req.body.shipping_id),
@@ -82,9 +79,8 @@ const checkoutController = {
             adress_type_id: billingType[0].id
         };
         
-        console.log(await OrderTypeAdress.addOrderTypeAdress(shippingBody));
-        console.log(await OrderTypeAdress.addOrderTypeAdress(billingBody))
-
+        await OrderTypeAdress.createOrderTypeAdress(shippingBody);
+        await OrderTypeAdress.createOrderTypeAdress(billingBody)
 
         delete req.session.cart;
         res.render('shop/cart/checkoutConfirmation')

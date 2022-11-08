@@ -1,35 +1,34 @@
-:
-CATEGORIES: title, active, created_by, created_at
-cat created by, 11 CATEGORIES, 0N USERS
-:
 ROLES: title, created_at
-
 :
-prod belongs to cat, 11 PRODUCTS, 0N CATEGORIES
-tva created by, 11 PRODUCTS, 0N USERS
-USERS: firstname, lastname, email, password, active, created_at
+:
+:
+:
+:
+
 has role, 0N ROLES, 11 USERS
+USERS: firstname, lastname, email, password, active, created_at
+ordered, 0N USERS, 11 ORDERS
+has state, 11 ORDERS, 0N ORDER_STATES
+ORDER_STATES: title, created_at
+:
+
+cat created by, 11 CATEGORIES, 0N USERS
+tva created by, 11 PRODUCTS, 0N USERS
+prod created by, 11 PRODUCTS, 0N USERS
+ORDERS: totalTTC, tax, totalHT, quantity, created_at
+ORDER_TYPE_ADRESS, 11 ORDERS, 11 ADRESSES, 11 ADRESS_TYPE: orders_id, adress_id, adress_type_id
+ADRESS_TYPE: title, created_at
+
+CATEGORIES: title, active, created_by, created_at
+prod belongs to cat, 11 PRODUCTS, 0N CATEGORIES
+PRODUCTS: ref, title, description, image, priceHT, active, created_by created_at
+ORDER_PRODUCT, 11 ORDERS, 11 PRODUCTS: products_id, order_id, quantity, priceHT, tva
+ADRESSES: entitled, number, number_complement, street, postal_code, city, country, complement, active, created_at
+:
 
 :
-PRODUCTS: ref, title, description, image, priceHT, active, created_at
-prod created by, 11 PRODUCTS, 0N USERS
-ordered, 0N USERS, 11 ORDERS
-ORDER_STATES: title, created_at
-
 TVA: title, value, active, created_by, created_at
 prod belongs to tva, 11 PRODUCTS, 0N TVA
-ORDER_PRODUCT, 11 ORDERS, 11 PRODUCTS: products_id, order_id, quantity, priceHT, tva
-ORDERS: totalTTC, tax, totalHT, quantity, created_at
-has state, 11 ORDERS, 0N ORDER_STATES
-
 :
 :
-ADRESS_TYPE: title, created_at
-ORDER_TYPE_ADRESS, 11 ORDERS, 11 ADRESSES, 11 ADRESS_TYPE: orders_id, adress_id, adress_type_id
-:
-
-:
-:
-:
-ADRESSES: entitled, number, number_complement, street, postal_code, city, country, complement, active, created_at
 :

@@ -4,7 +4,10 @@ const TVAQuery = {
 
     async getAllTVA () {
         return await Tva.findAll({
-            include: 'products'
+            include: 'products',
+            where: {
+                active: true
+            }
         });
     },
 
@@ -22,8 +25,10 @@ const TVAQuery = {
         await TVA.update(body);
     },
 
-    async destroyTVA (TVA) {
-        await TVA.destroy();
+    async unativeTVA (TVA) {
+        await TVA.update({
+            active: false
+        });
     },
     
 };

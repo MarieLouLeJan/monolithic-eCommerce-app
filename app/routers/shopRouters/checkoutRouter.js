@@ -3,9 +3,10 @@ const checkoutRouter = express.Router();
 
 const checkoutController = require('../../controllers/shopControllers/checkoutController');
 
-const auth = require('../../helpers/auth');
-const authObligatory = require('../../helpers/authObligatory');
-const cartObligatory = require('../../helpers/cartObligatory');
+const auth = require('../../services/auth');
+const authObligatory = require('../../services/authObligatory');
+const cartObligatory = require('../../services/cartObligatory');
+
 const CW = require('../../helpers/controllerWrapper');
 
 checkoutRouter.get('/checkout', cartObligatory, auth, CW(checkoutController.checkoutPage));

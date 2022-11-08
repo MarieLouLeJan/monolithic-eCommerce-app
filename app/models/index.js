@@ -145,7 +145,25 @@ OrderState.hasMany(Order, {
 Order.belongsTo(OrderState, {
     foreignKey: 'order_states_id',
     as: 'order_states'
-})
+});
+
+Product.hasMany(Order_product, {
+    foreignKey: 'product_id',
+});
+
+Order_product.belongsTo(Product, {
+    foreignKey: 'product_id',
+});
+
+Order.hasMany(Order_product, {
+    foreignKey: 'order_id',
+});
+
+Order_product.belongsTo(Order, {
+    foreignKey: 'order_id',
+});
+
+
 
 
 /************ MANY TO MANY *************/
@@ -168,36 +186,4 @@ Order.belongsToMany(Product, {
 });
 
 
-
-// AdressType.belongsToMany(Adress, {
-//     as: 'adresses',
-//     through: AdressType_adress,
-//     foreignKey: 'adress_type_id',
-//     otherKey: 'adress_id'
-// });
-
-// Adress.belongsToMany(AdressType, {
-//     as: 'adress_types',
-//     through: AdressType_adress,
-//     foreignKey: 'adress_id',
-//     otherKey: 'adress_type_id'
-// });
-
-
-  
-// AdressType_adress.belongsToMany(Order, {
-//     as: 'orders',
-//     through: Order_adressType,
-//     foreignKey: 'adress_type_adress_id',
-//     otherKey: 'order_id'
-// });
-
-
-// Order.belongsToMany(AdressType_adress, {
-//     as: 'adress_type_adress',
-//     through: Order_adressType,
-//     foreignKey: 'order_id',
-//     otherKey: 'adress_type_adress_id'
-// });
-
-module.exports = { AdressType, Order_type_adress, Adress, Category, Order_product, OrderState, Order, Product, Role, TVA, User };
+module.exports = { Adress, AdressType, Category, Order_product, Order_type_adress, Order, OrderState, Product, Role, TVA, User}

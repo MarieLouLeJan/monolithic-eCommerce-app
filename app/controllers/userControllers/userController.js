@@ -45,6 +45,7 @@ const userController = {
         }
         const {password, ...newUser} = user.get({plain: true});
         req.session.user = newUser;
+        console.log(newUser)
         res.redirect('/');
     },
 
