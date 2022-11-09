@@ -52,19 +52,10 @@ export default {
             adress_type_id: billingType[0].id
         };
         
-<<<<<<< HEAD
-<<<<<<< HEAD
-        await OrderTypeAdress.createOrderTypeAdress(shippingBody);
-        await OrderTypeAdress.createOrderTypeAdress(billingBody)
-=======
-        await OrderTypeAdress.addOrderTypeAdress(shippingBody);
-        await OrderTypeAdress.addOrderTypeAdress(billingBody);
-=======
+
         await OrderTypeAdressQuery.addOrderTypeAdress(shippingBody);
         await OrderTypeAdressQuery.addOrderTypeAdress(billingBody);
->>>>>>> dev
 
->>>>>>> ed12e05c8f024af079734d3d0fae436a40cb1123
 
         delete req.session.cart;
         res.render('shop/cart/checkoutConfirmation')
