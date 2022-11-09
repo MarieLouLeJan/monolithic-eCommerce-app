@@ -177,4 +177,4 @@ Order.belongsToMany(Product, {
 });
 
 
-module.exports = { Adress, AdressType, Category, Order_product, Order_type_adress, Order, OrderState, Product, Role, TVA, User}
+export default { Adress, AdressType, Category, Order_product, Order_type_adress, Order, OrderState, Product, Role, TVA, User }

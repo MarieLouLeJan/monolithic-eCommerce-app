@@ -23,4 +23,4 @@ const cartObligatory = (req, res, next) => {
     return next();
 };
 
-module.exports = cartObligatory;
+export default cartObligatory;
