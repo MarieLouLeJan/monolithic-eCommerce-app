@@ -11,7 +11,7 @@ export default {
         });
     },
 
-    async getCategoryById (id) {
+    async getById (id) {
         return await Category.findByPk(id, {
             include: [
                 { 
@@ -28,7 +28,8 @@ export default {
         await Category.create(body)
     },
 
-    async updateCategory (category, body){
+    async updateCategory (body){
+        const category = await this.getCategoryById(id);
         await category.update(body);
     },
 

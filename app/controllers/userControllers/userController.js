@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import usersQuery from '../../queries/usersQuery.js';
+import userQuery from '../../queries/userQuery.js';
 
 export default {
     signupPage (_, res) {
@@ -7,7 +7,7 @@ export default {
     },
 
     async signupAction (req, res) {
-        const allUser = await usersQuery.getAllUsers();
+        const allUser = await userQuery.getAllUsers();
         const userFound = allUser.find(user => user.email === req.body.email);
         if(userFound){
             const error = "Compte déjà existant !"
@@ -21,7 +21,7 @@ export default {
         };
         req.body.password = await bcrypt.hash(req.body.password, 10);
         req.body.role_id = 1;
-        await usersQuery.createUser(req.body)
+        await userQuery.createUser(req.body)
         const message = 'Vous pouvez maintenant vous connecter !';
         res.render('user/signin', { message });
     },
@@ -31,16 +31,14 @@ export default {
     },
 
     async loginAction (req, res) {
-        const user = await usersQuery.getOneUserByEmail(req.body.email)
+        const user = await userQuery.getOneUserByEmail(req.body.email)
         if(!user){
-            const message = "Utilisateur non existant";
-            res.render('user/signin', { message });
+            res.render('user/signin', { message: 'Utilisateur non existant' });
             return;
         }
         const result = await bcrypt.compare(req.body.password, user.password);
         if(!result){
-            const message = "Mot de passe incorrect";
-            res.render('user/signin', { message });
+            res.render('user/signin', { message: 'Mot de passe incorrect' });
             return;
         }
         const {password, ...newUser} = user.get({plain: true});

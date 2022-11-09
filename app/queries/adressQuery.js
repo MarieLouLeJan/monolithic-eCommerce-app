@@ -11,7 +11,7 @@ export default {
         });
     },
 
-    async getAdressById (adressId) {
+    async getById (adressId) {
         return await Adress.findByPk(adressId)
     },
 
@@ -19,8 +19,7 @@ export default {
         await Adress.create(body)
     },
 
-    async unactiveAdress (adressId) {
-        const adress = await adressQuery.getAdressById(adressId);
+    async unactiveAdress (adress) {
         adress.active = false;
         await adress.save();
     },

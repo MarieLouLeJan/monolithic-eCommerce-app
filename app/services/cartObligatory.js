@@ -1,18 +1,25 @@
-const pricesCalculation = require('../services/pricesCalculation');
-const ForbiddenError = require("../helpers/ForbiddenError");
+import pricesCalculation from './pricesCalculation.js';
+import ForbiddenError from '../helpers/ForbiddenError.js';
 
 
 const cartObligatory = (req, res, next) => {
 
-    if (!req.session.cart) {
-        next(new ForbiddenError(`Vous n'êtes pas autorisé(e) à accéder à cette page`));
-    }
+    if (!req.session.cart) next(new ForbiddenError(`Vous n'êtes pas autorisé(e) à accéder à cette page`));
+    console.log(req.session.cart);
     const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(req.session.cart);
     req.session.cart.totalHT = cartHT;
     req.session.cart.totalTTC = cartTTC;
     req.session.cart.totalTax = cartTax;
     res.locals.cart = req.session.cart;
-    const quantity = 0;
+
+    let quantity = 0;
+
+    for(const products of req.session.cart) quantity += products.qty;
+
+    req.session.cart.quantity = quantity;
+
+    res.locals.cart = req.session.cart;
+    
     return next();
 };
 

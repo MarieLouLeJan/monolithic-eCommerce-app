@@ -38,12 +38,12 @@ Order_type_adress.belongsTo(Adress, {
 
 AdressType.hasMany(Order_type_adress, {
     foreignKey: 'adress_type_id',
-    as: 'order_type_adress'
+    // as: 'order_type_adress'
 });
 
 Order_type_adress.belongsTo(AdressType, {
     foreignKey: 'adress_type_id',
-    as: 'adress_type'
+    // as: 'adress_types'
 });
 
 
@@ -148,21 +148,13 @@ Order.belongsTo(OrderState, {
 
 Product.hasMany(Order_product, {
     foreignKey: 'product_id',
+    // as: 'order_product',
 });
 
 Order_product.belongsTo(Product, {
     foreignKey: 'product_id',
-});
-
-Order.hasMany(Order_product, {
-    foreignKey: 'order_id',
-});
-
-Order_product.belongsTo(Order, {
-    foreignKey: 'order_id',
-});
-
-
+    // as: 'products'
+})
 
 
 /************ MANY TO MANY *************/

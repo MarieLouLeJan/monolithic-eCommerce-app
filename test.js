@@ -1,6 +1,9 @@
-const usersQuery = require('./app/queries/usersQuery');
+import orderQuery from './app/queries/orderQuery.js';
 
-const getRole = {
+
+const products = await orderQuery.getAllProductsByOrder(1);
+
+console.log(products)
 
     async  getusers () {
         const users = await usersQuery.getAllUsersByRole("admin")

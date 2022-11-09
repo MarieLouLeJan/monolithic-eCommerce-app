@@ -3,23 +3,23 @@ const productRouter = express.Router();
 
 import productController from '../../controllers/adminControllers/productController.js';
 
-import authObligatory from '../../services/authObligatory.js';
-import isAdmin from '../../services/isAdmin.js';
-
 import CW from '../../helpers/controllerWrapper.js';
 
-productRouter.get('/dashboard/admin/products', authObligatory, isAdmin, CW(productController.showAllProducts));
+import param from '../../helpers/paramsIsNumber.js';
+import catalog from '../../services/catalog.js'
+
+productRouter.get('/dashboard/admin/products', CW(productController.showAllProducts));
 
 productRouter.route('/dashboard/admin/products/add')
-        .get(authObligatory, isAdmin, productController.addProductPage)
-        .post(authObligatory, isAdmin, productController.addProductAction);
+        .get(productController.addProductPage)
+        .post(productController.addProductAction);
 
-productRouter.get('/dashboard/admin/products/details/:productId', authObligatory, isAdmin, CW(productController.showProductDetails));
+productRouter.get('/dashboard/admin/products/details/:product', param, catalog, CW(productController.showProductDetails));
 
-productRouter.route('/dashboard/admin/products/details/:productId/update')
-        .get(authObligatory, isAdmin, CW(productController.updateProductPage))
-        .post(authObligatory, isAdmin, CW(productController.updateProductAction));
+productRouter.route('/dashboard/admin/products/details/:id/update')
+        .get(param, catalog, CW(productController.updateProductPage))
+        .post(param, catalog, CW(productController.updateProductAction));
 
-productRouter.get('/dashboard/admin/products/details/:productId/delete', authObligatory, isAdmin, CW(productController.unactiveProduct));
+productRouter.get('/dashboard/admin/products/details/:product/delete', CW(productController.unactiveProduct));
 
 export default productRouter;

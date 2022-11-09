@@ -8,12 +8,10 @@ export default {
                 active: true,
             },
             include: 'tva',
-            raw: true,
-            nest: true
         });
     },
 
-    async getProductById (id) {
+    async getById (id) {
         return await Product.findByPk(id, {
             include: [
                 'tva',

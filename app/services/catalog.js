@@ -1,33 +1,44 @@
 import pricesCalculation from './pricesCalculation.js';
-import productsQuery from '../queries/productsQuery.js';
-import categoriesQuery from '../queries/categoriesQuery.js';
-import NotFoundError from '../helpers/notFoundError.js';
+import productQuery from '../queries/productQuery.js';
+import categoryQuery from '../queries/categoryQuery.js';
+import TVAQuery from '../queries/TVAQuery.js';
+
+
+import ForbiddenError from '../helpers/ForbiddenError.js'
 
 export default async (req, res, next) => {
-    res.locals.products = await productsQuery.getAllProducts();
-    res.locals.categories = await categoriesQuery.getAllCategories();
+
+    const categories = await categoryQuery.getAllCategories();
+    res.locals.categories = categories.map(cat => cat.get( { plain: true } ));
+
+    const products = await productQuery.getAllProducts();
+    res.locals.products = products.map(prod => prod.get( { plain: true } ));
+
     for(const product of res.locals.products){
         product.priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value);
         product.priceHT = product.priceHT.toFixed(2)
     };
 
-    if(req.params.categoryId){
-        const categoryId = parseInt(req.params.categoryId);
-        if(isNaN(categoryId)) next(new NotFoundError(`Veuillez rentrer un id de type number !`));
-        res.locals.category = await categoriesQuery.getCategoryById(categoryId)
+    const TVA = await TVAQuery.getAllTVA();
+    res.locals.TVA = TVA.map(myTVA => myTVA.get( { plain: true } ));
+
+    if(Object.keys(req.params).length > 0) {
+        const key = Object.keys(req.params)[0];
+        const query = `${key}Query`;
+        const myQuery = eval(`async () => 
+                                {res.locals.${key} = await ${query}.getById(${req.params.id}); 
+                                if(res.locals.${key} === null) next(new ForbiddenError("Ce ${key} n'existe pas / plus"))}`);
+        await myQuery();
+    };
+
+    if(res.locals.product) res.locals.product.priceTTC = pricesCalculation.getProductTTC(res.locals.product.priceHT, res.locals.product.tva.value)
+
+    if(res.locals.category){
         for(const product of res.locals.category.products){
             product.priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value);
             product.priceHT = product.priceHT.toFixed(2)
         };
     }
 
-    if(req.params.productId){
-        const productId = parseInt(req.params.productId);
-        if(isNaN(productId)) { next(new NotFoundError(`Veuillez rentrer un id de type number !`))};
-        const product = await productsQuery.getProductById(productId)
-        product.priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value)
-        res.locals.product = product;
-
-    }
     return next()
 };

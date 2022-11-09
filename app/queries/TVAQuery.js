@@ -3,15 +3,12 @@ import { TVA } from '../models/index.js';
 export default {
 
     async getAllTVA () {
-        return await Tva.findAll({
-            include: 'products',
-            where: {
-                active: true
-            }
+        return await TVA.findAll({
+            include: 'products'
         });
     },
 
-    async getTVAById (id) {
+    async getById (id) {
         return await TVA.findByPk(id, {
             include: 'products'
         });
@@ -20,10 +17,6 @@ export default {
     async createTVA (body) {
         await TVA.create(body)
     },
-
-    // async updateTVA (TVA, body){
-    //     await TVA.update(body);
-    // },
 
     async unactiveTVA (TVAId) {
         const TVA = await this.getTVAById(TVAId);

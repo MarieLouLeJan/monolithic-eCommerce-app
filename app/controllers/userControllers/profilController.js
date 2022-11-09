@@ -1,9 +1,6 @@
-const bcrypt = require('bcrypt');
-const usersQuery = require("../../queries/usersQuery");
-const ordersQuery = require("../../queries/ordersQuery");
-const adressQuery = require("../../queries/adressQuery");
-const { dateFormat } = require('../../services/dateFormat');
-
+import adressQuery from '../../queries/adressQuery.js';
+import orderQuery from '../../queries/orderQuery.js';
+import dateFormat from '../../services/dateFormat.js'
 
 export default {
 
@@ -11,18 +8,12 @@ export default {
         res.render('dashboard/profil/profil' )
     },
 
-    // async updateProfilPage (_, res) {
-    //     res.render('dashboard/profil/updateProfil')
-    // },
-
     async showAdressPage (req, res) {
-        const adresses = await adressQuery.getAllAdressesByUser(req.session.user.id)
-        res.render('dashboard/profil/adress', { adresses })
+        res.render('dashboard/profil/adress')
     },
 
     async unactiveAdressAction (req, res) {
-        const adressId = parseInt(req.params.id);
-        await adressQuery.unactiveAdress(adressId);
+        await adressQuery.unactiveAdress(res.locals.adress);
         res.redirect('/dashboard/profil/adresses')
     },
 
@@ -36,28 +27,20 @@ export default {
     },
 
     async ordersHistory (req, res) {
-        const userOrders = await ordersQuery.getAllOrdersByUser(res.locals.user.id);
-        for(const order of userOrders){
-            order.date = dateFormat(order.created_at, 'MM-dd-yyyy')
-        };
-        res.render('dashboard/profil/ordersHistory', { orders: userOrders })
+        res.render('dashboard/profil/ordersHistory')
     },
 
 
     async orderHistoryDetails (req, res, next) {
-        const orderId = parseInt(req.params.orderId);
-        if(!isNaN(orderId)){
-            const order = await ordersQuery.getOrderById(orderId);
-            order.date = dateFormat(order.created_at, 'MM-dd-yyyy');
-            const adresses = await ordersQuery.getOrderTypeAdress(orderId);
-            const shipping = (adresses.find(adress => adress.adress_type.title === 'shipping')).get({ plain: true }).adresses;
-            const billing = (adresses.find(adress => adress.adress_type.title === 'billing')).get({ plain: true }).adresses;
-            const myProducts = await ordersQuery.getProductsByOrder(orderId);
-            const products = myProducts.map(product => product.get({ plain: true }));
-            console.log('shipping', shipping)
-            res.render('dashboard/profil/orderHistoryDetails', { order, billing, shipping, products });
-        } else if (isNaN(orderId)){
-            next()
-        }
+        res.locals.user.order.date = dateFormat(res.locals.user.order.created_at, 'MM-dd-yyyy');
+
+        let products = await orderQuery.getAllProductsByOrder(req.params.id);
+        products = products.map(product => product.get({ plain: true }))
+
+        let adresses = await orderQuery.getAllAdressesByOrder(req.params.id);
+        adresses = adresses.map(adress => adress.get({ plain: true }))
+        console.log(products)
+
+        res.render('dashboard/profil/orderHistoryDetails', { products, adresses })
     }
 };

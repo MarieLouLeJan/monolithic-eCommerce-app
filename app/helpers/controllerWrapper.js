@@ -1,9 +1,7 @@
-export default (controller) => {
-    return async (req, res, next) => {
+export default (controller) =>  async (req, res, next) => {
       try {
-        await controller(req, res, next);
+          await controller(req, res, next);
       } catch (err) {
-        next(err)
+          next(err)
       }
-    };
 };

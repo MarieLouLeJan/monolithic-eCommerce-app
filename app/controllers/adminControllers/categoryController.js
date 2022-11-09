@@ -1,47 +1,38 @@
-import categoriesQuery from '../../queries/categoriesQuery.js';
+import categoryQuery from '../../queries/categoryQuery.js';
 
 export default {
 
     async showAllCategories (_, res) {
-        const categories = await categoriesQuery.getAllCategories();
         res.render('dashboard/admin/allCategories', { categories })
     },
 
     async addCategoriesAction (req, res) {
-        req.body.created_by = req.session.user.name;
-        const categories = await categoriesQuery.getAllCategories();
-        const categoryFound = categories.find(cat => cat.name === req.body.name)
+        req.body.created_by = req.session.user.id;
+        const categoryFound = res.locals.categories.find(cat => cat.name === req.body.name)
         if(categoryFound){
-            const message = 'Cette catégorie existe déjà';
-            res.render('dashboard/admin/allCategories', { categories, message });
+            res.render('dashboard/admin/allCategories', { message: 'Cette catégorie existe déjà' });
             return;
         };
-        await categoriesQuery.createCategory(req.body)
+        await categoryQuery.createCategory(req.body)
         res.redirect('/dashboard/admin/categories')
     },
 
     async updateCategoriesPage (_, res) {
-        const categories = await categoriesQuery.getAllCategories();
-        res.render('dashboard/admin/updateCategories', { categories })
+        res.render('dashboard/admin/updateCategories')
     },
 
     async updateCategoriesAction (req, res) {
-        const categoryId = parseInt(req.body.categoryId);
-        const categories = categoriesQuery.getAllCategories();
-        const categoryFound = categories.find(cat => cat.name === req.body.name);
+        const categoryFound = res.locals.categories.find(cat => cat.name === req.body.name);
         if(categoryFound){
-            const message = 'Ce nom de catégorie est déjà utilisé';
-            res.render('dashboard/admin/updateCategories', { categories, message });
+            res.render('dashboard/admin/updateCategories', { message: 'Ce nom de catégorie est déjà utilisé' });
             return;
         }
-        const categoryToUpdate = await categoriesQuery.getCategoryById(categoryId);
-        await categoriesQuery.updateCategory(categoryToUpdate, req.body);
+        await categoryQuery.updateCategory(categoryToUpdate, req.body);
         res.redirect('/dashboard/admin/categories')
     },
 
-    async unactiveCategory (req, res) {
-        const categoryId = parseInt(req.params.categoryId);
-        const categoryToDestroy = await categoriesQuery.unactiveCategory(categoryId);
+    async unactiveCategory (_, res) {
+        await categoryQuery.unactiveCategory(categoryId);
         res.redirect('/dashboard/admin/categories')
     },
 }

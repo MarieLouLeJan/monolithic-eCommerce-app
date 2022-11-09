@@ -1,7 +1,5 @@
 
-const dateFormat = {
-
-    dateFormat (inputDate, format) {
+export default (inputDate, format) => {
         const date = new Date(inputDate);
 
         const day = date.getDate();
@@ -17,7 +15,5 @@ const dateFormat = {
         format = format.replace("dd", day.toString().padStart(2,"0"));
     
         return format;
-    }
-}
+};
 
-module.exports = dateFormat

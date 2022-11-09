@@ -6,19 +6,14 @@
     <%- include ('../partials/quickActions') %>
     <div class="row">
         <h1>
-            <% if (!locals.user){ %>
-                Vous n'êtes pas connecté ! 
-                Cliquez <a href="/login">ici</a> pour vous connecter !
-            <% } else if(locals.user){%>
-                Mes commandes
-            <% } %>
+            Mes commandes
         </h1>      
         <hr>
         <h3 class="info-perso">
         <% if(locals.user && !locals.order){ %>
             Aucun commande passée !
-        <%} %>
-            Commande du <%=order.date%>
+        <% } %>
+            Commande du <%= user.order.date %>
         </h3>
 
         <hr>
@@ -27,43 +22,54 @@
 
             
 
-            <div class="info-key">Livrée à</div>
-            <div class="info">
-                <%= shipping.entitled%>, 
-                <%= shipping.number %> <%= shipping.number_complement %> <%= shipping.street %>, 
-                <%= shipping.postal_code %> <%= shipping.city %> <%= shipping.complement %>,
-                <%= shipping.country %></div>
+
+                <% for(const adress of adresses){ %>
+                    <div class="info-key"><%= adress.adress_type.title %></div>
+                    <div class="info">
+                        <%= adress.adresses.entitled %>,
+                        <%= adress.adresses.number %> <%= adress.adresses.number_complement %> <%= adress.adresses.street %>,
+                        <%= adress.adresses.postal_code %> <%= adress.adresses.city %>
+                        <%= user.order.order_type_adress_adresses_country %>
+                    </div>
+                <% } %>
+            
 
             <div class="info-key">Nombre de produits:</div>
-            <div class="info"><%= order.quantity %></div>
+            <div class="info"><%= user.order.quantity %></div>
 
             <div class="info-key">Total HT</div>
-            <div class="info"><%= order.totalHT %>€</div>
+            <div class="info"><%= user.order.totalHT %>€</div>
 
             <div class="info-key">Total TVA</div>
-            <div class="info"><%= order.tax %>€</div>
+            <div class="info"><%= user.order.tax %>€</div>
 
             <div class="info-key">Total TTC</div>
-            <div class="info"><%= order.totalTTC %>€</div>
+            <div class="info"><%= user.order.totalTTC %>€</div>
 
             <div class="info-key">Etat</div>
-            <div class="info"><%= order.order_states.title %></div>
+            <div class="info"><%= user.order.order_state_title %></div>
         </div>
 
         <hr>
-        <% for(const prod of products) { %>
+
+        
+        <% for(const p of products) { %>
             <div class="info-div">
                 <div class="info-key">Produit</div>
-                <div class="info"> <a href="/product/<%=prod.id%>"><%= prod.product.title %></a></div>
+                <div class="info"> <a href="/product/<%=p.product.id%>"><%= p.product.title %></a></div>
                 <div class="info-key">Prix HT</div>
-                <div class="info"><%= prod.priceHT %>€</div>
-                <div class="info-key">Montant TVA</div>
-                <div class="info"><%= prod.tva %></div>
+                <div class="info"><%= p.product.priceHT %>€</div>
+                <div class="info-key">TVA appliquée</div>
+                <div class="info"><%= p.TVA %></div>
+                <div class="info-key">Prix TTC</div>
+                <div class="info"><%= p.product.priceTTC %>€</div>
                 <div class="info-key">Quantité</div>
-                <div class="info"><%= prod.quantity %></div>
+                <div class="info"><%= p.quantity %></div>
+                <!-- ICI ON PEUT AUSSI AJOUTER LE TOTAL POUR CHAQUE PRODUIT, EX: PRODUIT 1 ETAIT A 45 UNITE MAIS ON EN A COMMANDÉ 2, ACCESSIBLE VIA p.priceHT, la TVA (en %) p.tva -->
+
             </div>
             <hr>    
-        <%} %>
+        <% } %>
 
 
 

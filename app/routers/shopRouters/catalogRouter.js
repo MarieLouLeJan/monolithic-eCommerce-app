@@ -3,15 +3,17 @@ const catalogRouter = express.Router();
 
 import catalogController from '../../controllers/shopControllers/catalogController.js';
 
-import catalog from '../../services/catalog.js'
-import auth from '../../services/auth.js';
-
 import CW from '../../helpers/controllerWrapper.js';
 
-catalogRouter.get('/', auth, catalog, CW(catalogController.index));
-catalogRouter.get('/shop', auth, catalog, CW(catalogController.productsList));
-catalogRouter.get('/shop/category/:categoryId', auth, catalog, CW(catalogController.productsByCategory));
-catalogRouter.get('/shop/product/:productId', auth, catalog, CW(catalogController.productDetails));
+import param from '../../helpers/paramsIsNumber.js';
+import catalog from '../../services/catalog.js'
 
+catalogRouter.get('/', CW(catalogController.index));
+
+catalogRouter.get('/shop', CW(catalogController.productsList));
+
+catalogRouter.get('/shop/category/:category', param, catalog, CW(catalogController.productsByCategory));
+
+catalogRouter.get('/shop/product/:product', param, catalog, CW(catalogController.productDetails));
 
 export default catalogRouter;
