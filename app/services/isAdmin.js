@@ -5,5 +5,6 @@ export default (req, res, next) => {
     }
 
     req.status = 401;
+    
     return next(new Error('Unauthorized'));
 };

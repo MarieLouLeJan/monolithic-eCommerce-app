@@ -8,11 +8,11 @@ export default {
         res.render('shop/product/allProducts');
     },
 
-    async productsByCategory (req, res, next) {
+    async productsByCategory (req, res) {
         res.render('shop/product/productByCategory');
     },
 
-    async productDetails (req, res, next) {
+    async productDetails (_, res) {
         res.render('shop/product/productDetails');
     },
 };

@@ -1,4 +1,4 @@
-import { Order, Order_type_adress, AdressType, Product, Adress, Order_product } from '../models/index.js';
+import { Order, Order_type_adress, AdressType, Product, Adress, Order_product, OrderState } from '../models/index.js';
 
 export default {
 
@@ -9,13 +9,9 @@ export default {
         });
     },
 
-    async getOrderById (id) {
+    async getById (id) {
         return await Order.findByPk(id, {
-            include: [{ 
-                    model: Product, 
-                    through: Order_product,
-                    as: 'products'
-                },{
+            include: [{
                     model: Order_type_adress,
                     as: 'order_type_adress',
                     include:[
@@ -27,10 +23,40 @@ export default {
                             as: 'adresses'
                         }
                     ]
-            }],
+                },{
+                    model: OrderState,
+                    as: 'order_states'
+                }],
             raw: true,
             nest: true
         });
+    },
+
+    async getAllProductsByOrder (orderId) {
+        return Order_product.findAll({
+            where: {
+                order_id: orderId
+            },
+            include: {
+                model: Product,
+            },
+        })
+    },
+
+    async getAllAdressesByOrder (orderId) {
+        return Order_type_adress.findAll({
+            where: {
+                order_id: orderId
+            },
+            include: [
+                {
+                    model: Adress,
+                    as: 'adresses'
+                },{
+                    model: AdressType,
+                }
+            ]
+        })
     },
 
     async createOrder (body) {

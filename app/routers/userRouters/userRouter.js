@@ -8,6 +8,7 @@ import CW from '../../helpers/controllerWrapper.js';
 userRouter.route('/login')
         .get(CW(userController.loginPage))
         .post(CW(userController.loginAction));
+        
 userRouter.get('/logout', CW(userController.logout));
 
 userRouter.route('/register')

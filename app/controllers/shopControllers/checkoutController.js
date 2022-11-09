@@ -1,7 +1,7 @@
-import productsQuery from '../../queries/productsQuery.js';
-import ordersQuery from '../../queries/ordersQuery.js';
+import productQuery from '../../queries/productQuery.js';
+import orderQuery from '../../queries/orderQuery.js';
 import adressTypeQuery from '../../queries/adressTypeQuery.js';
-import OrderTypeAdress from '../../queries/orderTypeAdressQuery.js';
+import OrderTypeAdressQuery from '../../queries/orderTypeAdressQuery.js'
 
 
 export default {
@@ -13,6 +13,8 @@ export default {
 
         const cart = res.locals.cart
 
+        console.log(req.body)
+
         const newOrderBody = {
             totalHT: cart.totalHT,
             tax: cart.totalTax,
@@ -22,16 +24,17 @@ export default {
             order_states_id: 1,
         };
 
-        const myOrder = await ordersQuery.createOrder(newOrderBody)
+        const myOrder = await orderQuery.createOrder(newOrderBody)
 
         for(const product of cart){
-            const productToAdd = await productsQuery.getProductByIdCheckout(product.id)
+            const productToAdd = await productQuery.getProductByIdCheckout(product.id)
             const thought = {
                 quantity: product.qty, 
                 priceHT: product.priceHT, 
-                tva: product.tva.value, 
+                TVA: product.tva.title, 
+                priceTTC: product.priceTTC,
             }
-            await ordersQuery.addProductToOrder(myOrder, productToAdd, thought);
+            await orderQuery.addProductToOrder(myOrder, productToAdd, thought);
         };
 
         const shippingType = await adressTypeQuery.getAdressTypeWhere('shipping');
@@ -49,8 +52,8 @@ export default {
             adress_type_id: billingType[0].id
         };
         
-        await OrderTypeAdress.addOrderTypeAdress(shippingBody);
-        await OrderTypeAdress.addOrderTypeAdress(billingBody);
+        await OrderTypeAdressQuery.addOrderTypeAdress(shippingBody);
+        await OrderTypeAdressQuery.addOrderTypeAdress(billingBody);
 
 
         delete req.session.cart;

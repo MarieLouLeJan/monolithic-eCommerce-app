@@ -11,17 +11,17 @@
         <hr>
         <h3  class="info-perso">Mes commandes</h3>
         <hr>
-        <% if(orders.length === 0){ %>
+        <% if(user.orders.length === 0){ %>
             <div class="info-perso">
                 Aucune commande passée !
             </div>
-        <%}
+        <%}%>
 
         <hr>    
 
         <div class="info-div">
-            <% for(order of orders) { %>
-            <div class="info-key"> <a href="/dashboard/orders/details/<%=order.id%>">Commande du <%= order.date %></a>  </div>
+            <% for(const order of user.orders) { %>
+            <div class="info-key"> <a href="/dashboard/profil/orders/details/<%=order.id%>">Commande du <%= order.date %></a>  </div>
             <div class="info"><%= order.totalTTC %> € - <%= order.quantity%> produits - <%= order.state %></div>
             <% } %>
         </div>

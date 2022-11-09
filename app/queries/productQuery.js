@@ -5,12 +5,10 @@ export default {
     async getAllProducts () {
         return await Product.findAll({
             include: 'tva',
-            raw: true,
-            nest: true
         });
     },
 
-    async getProductById (id) {
+    async getById (id) {
         return await Product.findByPk(id, {
             include: [
                 'tva',

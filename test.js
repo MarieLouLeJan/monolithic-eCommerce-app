@@ -1,4 +1,7 @@
-const joujou = 'poupée'
+import orderQuery from './app/queries/orderQuery.js';
 
-if(joujou === 'poupée') console.log(joujou)
+
+const products = await orderQuery.getAllProductsByOrder(1);
+
+console.log(products)
 

@@ -39,7 +39,6 @@ const pricesCalculation = {
 
     getAllCartTotals: (cart) => {
         const myTotals = {};
-        console.log(pricesCalculation.getCartHT(cart))
         myTotals.cartHT = pricesCalculation.getCartHT(cart);
         myTotals.cartTTC = pricesCalculation.getCartTTC(cart);
         myTotals.cartTax = pricesCalculation.getCartTaxes(myTotals.cartTTC, myTotals.cartHT);

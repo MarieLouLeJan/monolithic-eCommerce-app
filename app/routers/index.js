@@ -15,19 +15,27 @@ import userRouter from './userRouters/userRouter.js';
 import profilRouter from './userRouters/profilRouter.js';
 
 import errorHandlers from '../helpers/errorHandlers.js';
-import NotFoundError from '../helpers/notFoundError.js';
+import NotFoundError from '../helpers/NotFoundError.js';
+import param from '../helpers/paramsIsNumber.js'
 
-router.use('/', categoryRouter);
-router.use('/', productRouter);
-router.use('/', TVARouter);
-router.use('/', userAdminRouter);
 
-router.use('/', catalogRouter);
-router.use('/', cartRouter);
-router.use('/', checkoutRouter);
+import catalog from '../services/catalog.js'
+import auth from '../services/auth.js';
+import authObligatory from '../services/authObligatory.js'
+import isAdmin from '../services/isAdmin.js'
+import cartObligatory from '../services/cartObligatory.js'
 
-router.use('/', userRouter);
-router.use('/', profilRouter);
+
+router.use('/dashboard/admin', catalog, authObligatory, isAdmin, categoryRouter, productRouter, TVARouter, userAdminRouter);
+
+
+router.use('/', catalog, auth, catalogRouter, userRouter);
+
+router.use('/cart', auth, cartRouter);
+
+router.use('/checkout', cartObligatory, authObligatory, checkoutRouter);
+
+router.use('/dashboard/profil', authObligatory, profilRouter);
 
 
 router.use((req, res, next) => {
