@@ -1,4 +1,58 @@
-### Projet application monolithique e-commerce
+# Projet de création d'un site e-commerce
 
-# Projet en cours de construction!
+<hr>
 
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%23563D7C.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)
+![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)
+
+<hr>
+
+ <img src="./assets/img/e-commerce_cover.jpg" alt="Cover">
+
+<br>
+<p>Ce projet a été conçu dans le but mettre en pratique mes compétences acquises en <strong>Spé - Api Data</strong>. L'objectif final étant d'en faire une API utilisable récupérable au front via le framework React</p>
+
+## Pour commencer
+
+<span>1 - Pour utilisé l'API commencer par installez Node.js :</span>
+<a href="https://nodejs.org/en/">Documentation officiel Node.js</a>
+
+<span>2 - Puis cloner ou forker le projet :</span>
+<a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/cloning-a-repository">Cloner un dépôt</a> /
+<a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo">Forker un dépôt</a>
+
+## Pré-requis
+
+<p>1 - Commencer par crée une base de donnée <a href="https://www.postgresql.org/">PostgresSQL</a></p>
+<p>2 - Modifier le fichier .env en remplacant les informations par vos identifiant à la BDD</p>
+
+## Serveur de Développement
+
+<p>Lorsque vous êtes sur le projet, installez toutes les dépendances en exécutant depuis le terminal :</p>
+
+```sh
+npm install
+```
+
+Puis lancer le server en fesant :
+
+```sh
+npm run start
+```
+
+## Important à savoir
+
+<ul>
+    <li>
+    Tout le monde peut pusher une nouvelle version qui peut améliorer la plateforme (les administrateurs peuvent fusionner s'ils jugent l'idée nécessaire).
+    </li>
+    <li>
+    N'oubliez pas de partager le projet, plus nous avons de membres dans la communauté, meilleures sont les mises à jour.
+    </li>
+</ul>
