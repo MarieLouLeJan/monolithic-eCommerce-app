@@ -5,7 +5,6 @@ import ForbiddenError from '../helpers/ForbiddenError.js';
 const cartObligatory = (req, res, next) => {
 
     if (!req.session.cart) next(new ForbiddenError(`Vous n'êtes pas autorisé(e) à accéder à cette page`));
-    console.log(req.session.cart);
     const { cartHT, cartTTC, cartTax } = pricesCalculation.getAllCartTotals(req.session.cart);
     req.session.cart.totalHT = cartHT;
     req.session.cart.totalTTC = cartTTC;

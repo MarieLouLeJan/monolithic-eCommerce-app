@@ -1,5 +1,5 @@
 %syntax-version=1.0.0
 %project=ecommerce
 
-structure 2022-11-04T13:56:09Z Marie-Lou Le Jan <marielou.lejan@gmail.com> # structure de la BDD ecommerce
-seeding 2022-11-06T14:51:04Z Marie-Lou Le Jan <marielou.lejan@gmail.com> # seeding
+structure 2022-11-10T08:31:38Z Marie-Lou Le Jan <marielou.lejan@gmail.com> # structure de la BDD
+seeding 2022-11-10T08:33:34Z Marie-Lou Le Jan <marielou.lejan@gmail.com> # seeding test

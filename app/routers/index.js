@@ -24,9 +24,10 @@ import auth from '../services/auth.js';
 import authObligatory from '../services/authObligatory.js'
 import isAdmin from '../services/isAdmin.js'
 import cartObligatory from '../services/cartObligatory.js'
+import catalogAdmin from '../services/catalogAdmin.js';
 
 
-router.use('/dashboard/admin', catalog, authObligatory, isAdmin, categoryRouter, productRouter, TVARouter, userAdminRouter);
+router.use('/dashboard/admin', catalogAdmin, authObligatory, isAdmin, categoryRouter, productRouter, TVARouter, userAdminRouter);
 
 
 router.use('/', catalog, auth, catalogRouter, userRouter);

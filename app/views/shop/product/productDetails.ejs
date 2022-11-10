@@ -24,9 +24,15 @@
 
         <p><%= product.description %> </p>
 
-        <form action="/cart/<%= product.id %>" method="POST">
-            <input class="button" value="Ajouter au panier" type="submit">
-        </form>
+        <% if(product.stock <= 0){ %>
+            <div>
+                Ce produit n'est pas disponible pour le moment
+            </div>
+        <% } else if(product.stock > 0) { %> 
+            <form action="/cart/<%= product.id %>" method="POST">
+                <input class="button" value="Ajouter au panier" type="submit">
+            </form>
+        <% } %>
     </div>
 </div>
 

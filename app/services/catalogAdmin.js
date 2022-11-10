@@ -8,14 +8,15 @@ import ForbiddenError from '../helpers/ForbiddenError.js'
 
 export default async (req, res, next) => {
 
-    const categories = await categoryQuery.getAllCategories();
+    const categories = await categoryQuery.getAllCategoriesAdmin();
     res.locals.categories = categories.map(cat => cat.get( { plain: true } ));
 
-    const products = await productQuery.getAllProducts();
+    const products = await productQuery.getAllProductsAdmin();
     res.locals.products = products.map(prod => prod.get( { plain: true } ));
 
     for(const product of res.locals.products){
         product.priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value);
+        product.priceHT = product.priceHT.toFixed(2)
     };
 
     const TVA = await TVAQuery.getAllTVA();
@@ -25,20 +26,18 @@ export default async (req, res, next) => {
         const key = Object.keys(req.params)[0];
         const query = `${key}Query`;
         const myQuery = eval(`async () => 
-                                {const ${key} = await ${query}.getById(${req.params.id}); 
-                                res.locals.${key} = ${key}.get({plain: true})
-                                if(res.locals.${key} === null || res.locals.${key}.active === false) next(new ForbiddenError("Ce ${key} n'existe pas / plus"))}`);
+                                {res.locals.${key} = await ${query}.getById(${req.params.id}); 
+                                if(res.locals.${key} === null) next(new ForbiddenError("Ce ${key} n'existe pas / plus"))}`);
         await myQuery();
     };
 
     if(res.locals.product){
         res.locals.product.priceTTC = pricesCalculation.getProductTTC(res.locals.product.priceHT, res.locals.product.tva.value);
-        res.locals.product.priceHT = res.locals.product.priceHT.toFixed(2);
-    };
+        res.locals.product.priceHT = res.locals.product.priceHT.toFixed(2)
+    } 
 
     if(res.locals.category){
         for(const product of res.locals.category.products){
-            res.locals.category.products = res.locals.category.products.filter(prod => prod.active === true)
             product.priceTTC = pricesCalculation.getProductTTC(product.priceHT, product.tva.value);
             product.priceHT = product.priceHT.toFixed(2)
         };

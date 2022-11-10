@@ -28,6 +28,7 @@ export default {
 
         for(const product of cart){
             const productToAdd = await productQuery.getProductByIdCheckout(product.id)
+            // await productQuery.updateProductStock(productToAdd, product.qty)
             const thought = {
                 quantity: product.qty, 
                 priceHT: product.priceHT, 
@@ -53,8 +54,10 @@ export default {
         };
         
 
-        await OrderTypeAdressQuery.addOrderTypeAdress(shippingBody);
-        await OrderTypeAdressQuery.addOrderTypeAdress(billingBody);
+        await OrderTypeAdressQuery.createOrderTypeAdress(shippingBody);
+        await OrderTypeAdressQuery.createOrderTypeAdress(billingBody);
+
+
 
 
         delete req.session.cart;

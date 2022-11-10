@@ -6,20 +6,22 @@ import productController from '../../controllers/adminControllers/productControl
 import CW from '../../helpers/controllerWrapper.js';
 
 import param from '../../helpers/paramsIsNumber.js';
-import catalog from '../../services/catalog.js'
+import catalogAdmin from '../../services/catalogAdmin.js';
 
-productRouter.get('/dashboard/admin/products', CW(productController.showAllProducts));
+productRouter.get('/products', CW(productController.showAllProducts));
 
-productRouter.route('/dashboard/admin/products/add')
+productRouter.route('/products/add')
         .get(productController.addProductPage)
         .post(productController.addProductAction);
 
-productRouter.get('/dashboard/admin/products/details/:product', param, catalog, CW(productController.showProductDetails));
+productRouter.get('/products/details/:product', param, catalogAdmin, CW(productController.showProductDetails));
 
-productRouter.route('/dashboard/admin/products/details/:id/update')
-        .get(param, catalog, CW(productController.updateProductPage))
-        .post(param, catalog, CW(productController.updateProductAction));
+productRouter.route('/products/details/:product/update')
+        .get(param, catalogAdmin, CW(productController.updateProductPage))
+        .post(param, catalogAdmin, CW(productController.updateProductAction));
 
-productRouter.get('/dashboard/admin/products/details/:product/delete', CW(productController.unactiveProduct));
+productRouter.get('/products/details/:product/unactive', param, catalogAdmin, CW(productController.unactiveProduct));
+productRouter.get('/products/details/:product/active', param, catalogAdmin, CW(productController.activeProduct));
+
 
 export default productRouter;

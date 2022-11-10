@@ -30,6 +30,12 @@
                     <%= product.title %>  
                 </div>
                 <div class="info-key">
+                    Catégorie
+                </div>
+                <div class="info">                       
+                    <%= product.categories.title %>  
+                </div>
+                <div class="info-key">
                     Description 
                 </div>
                 <div class="info">                       
@@ -48,16 +54,37 @@
                     <%= product.tva.title %>  
                 </div>
                 <div class="info-key">
-                    Catégorie
+                    Prix TTC
                 </div>
                 <div class="info">                       
-                    <%= product.categories.name %>  
+                    <%= product.priceTTC %>  
                 </div>
-
+                <div class="info-key">
+                    Créé par
+                </div>
+                <div class="info">                       
+                    <%= product.users.firstname%> <%= product.users.lastname %>
+                </div>
+                <div class="info-key">
+                    Stock
+                </div>
+                <div class="info">                       
+                    <%= product.stock %> 
+                </div>
+                <div class="info-key">
+                    Actif
+                </div>
+                <div class="info">                       
+                    <%= product.active %>  
+                </div>
             </div>
 
         <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/update">Modifiez le produit</a></div>
-        <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/delete">Supprimez le produit</a></div>
+        <% if(product.active === true){ %>
+            <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/unactive">Ne plus vendre le produit</a></div>
+        <% } else if(product.active === false){ %>
+            <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/active">Remettre le produit en vente</a></div>
+        <% } %>
 
     </div>
 </main>

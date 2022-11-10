@@ -43,7 +43,16 @@ const Product = sequelize.define('products',
             type: DataTypes.INTEGER,
             allowNull: false,
             validate:{
-                is: /(^\d+$)|(^\d+\.\d$)|(^\d+\.\d\d$)$/i,
+                isNumeric: true,
+                isFloat: true
+            }
+        },
+        stock: {
+            type: DataTypes.NUMBER,
+            allowNull: false,
+            validate: {
+                isNumeric: true,
+                isInt: true,
             }
         },
         active: {

@@ -15,35 +15,42 @@
         <hr>    
 
         <div class="info-div">
-        <% for(const cat of categories) { %>
-            <div class="info-key">
-                <%= cat.name %> 
-                <% if(cat.products.length === 0){ %>
-                    <form action="/dashboard/admin/category/deleteCategory/<%= cat.id %>" method="POST">
-                        <input class="button-cart" value="Supprimer" type="submit">
-                    </form> 
-                <% } else { %>
-                    Veuillez supprimer tous les produits de cette catégorie pour pouvoir la supprimer
-                <% } %>
-            </div>
-            <div class="info">                       
-                <%= cat.products.length %> produits 
-            </div>
-        <% } %>
+            <% for(const cat of categories) { %>
+                <div class="info-key">
+                    <%= cat.title %> 
+
+                </div>
+                <div class="info"> 
+                    <% if(cat.products.length === 0){ %>
+                        <% if(cat.active === true) { %>
+                            <form action="/dashboard/admin/categories/unactive/<%= cat.id %>" method="POST">
+                                <input class="button-cart" value="Désactiver" type="submit"/> 
+                            </form> 
+                        <% } else if (cat.active === false) { %>
+                            <form action="/dashboard/admin/categories/active/<%= cat.id %>" method="POST">
+                                <input class="button-cart" value="Réactiver" type="submit"/> 
+                            </form> 
+                        <% } %>
+                    <% } else if (cat.products.length > 0){ %>        
+                        <%= cat.products.length %> Produits
+                    <% } %>              
+                </div>
+            <% } %>
         </div>
 
         <% if(locals.message){ %>
             <%= message %>
         <%}%>
 
-        <form class="form" method="POST" action="/dashboard/admin/categories/addCategory">
+        <form class="form" method="POST" action="/dashboard/admin/categories/add">
             <div class="form-group">
-                <input type="text" placeholder="Ajouter une catégorie" name="name" />
+                <input type="text" placeholder="Ajouter une catégorie" name="title" />
+                <input type="hidden" name="active" value="true">
             </div>
             <input type="submit" class="btn btn-primary" value="Ajouter" />
         </form>
 
-        <div class="complete"><a  class="complete" href="/dashboard/admin/categories/updateCategory">Modifiez les catégories</a></div>
+        <div class="complete"><a  class="complete" href="/dashboard/admin/categories/update">Modifiez les catégories</a></div>
 
     </div>
 </main>

@@ -15,16 +15,16 @@
         <hr>    
 
         <% for(cat of categories) { %>
-            <form class="form" method="POST" action="/dashboard/admin/category/updateCategory">
-                <input type="text" placeholder="<%= cat.name %>" name="name"/>
-                <input type="hidden" name="categoryId" value=" <%= cat.id %> "/>
+            <form class="form" method="POST" action="/dashboard/admin/categories/update">
+                <input type="text" placeholder="<%= cat.title %>" name="title"/>
+                <input type="hidden" name="id" value=" <%= cat.id %> "/>
                 <input type="submit" class="btn btn-primary" value="Modifier" />
             </form>
             <hr>
         <% } %>
-        <% if(locals.message){%>
+        <% if(locals.message){ %>
         <%= message %>
-        <%}%>
+        <% } %>
     </div>
 
         <div class="complete"><a  class="complete" href="/dashboard/admin/category">Retour aux catégories</a></div>

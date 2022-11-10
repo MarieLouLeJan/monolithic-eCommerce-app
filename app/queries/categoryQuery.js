@@ -1,6 +1,6 @@
 import { Category, Product } from '../models/index.js';
 
-export default {
+const categoryQuery = {
 
     async getAllCategories () {
         return await Category.findAll({
@@ -8,6 +8,12 @@ export default {
             where: {
                 active: true
             }
+        });
+    },
+    
+    async getAllCategoriesAdmin () {
+        return await Category.findAll({
+            include: 'products',
         });
     },
 
@@ -28,19 +34,20 @@ export default {
         await Category.create(body)
     },
 
-    async updateCategory (body){
-        const category = await this.getCategoryById(id);
+    async updateCategory (id, body){
+        const category = await categoryQuery.getById(id);
         await category.update(body);
     },
 
     async unactiveCategory (category) {
-        await category.update({
-            active: false
-        });
-        // OU
-        // const category = await adressQuery.getAdressById(categoryId);
-        // adress.active = false;
-        // await category.save();
+        category.active = false;
+        await category.save();
     },
 
+    async activeCategory (category) {
+        category.active = true;
+        await category.save();
+    }
 };
+
+export default categoryQuery;

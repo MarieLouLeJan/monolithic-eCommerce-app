@@ -1,6 +1,6 @@
 import { Product } from '../models/index.js';
 
-export default {
+const productQuery = {
 
     async getAllProducts () {
         return await Product.findAll({
@@ -11,14 +11,19 @@ export default {
         });
     },
 
+    async getAllProductsAdmin () {
+        return await Product.findAll({
+            include: 'tva',
+        });
+    },
+
     async getById (id) {
         return await Product.findByPk(id, {
             include: [
                 'tva',
-                'categories'
+                'categories',
+                'users'
             ],
-            raw: true,
-            nest: true
         });
     },
 
@@ -26,19 +31,36 @@ export default {
         return await Product.findByPk(id);
     },
 
+    async removeFromStock (id, qty){
+        const product = await productQuery.getById(id)
+        product.stock = product.stock -= qty;
+        product.save()
+    },
+
+    async addToStock (id, qty){
+        const product = await productQuery.getById(id)
+        product.stock = product.stock += qty;
+        product.save()
+    },
+
     async createProduct (body) {
         await Product.create(body)
     },
 
-    async updateProduct (productId, body){
-        const product = await this.getProductById(productId);
-        product.update(body)
+    async updateProduct (id, body){
+        const product = await productQuery.getById(id);
+        await product.update(body)
     },
 
-    async unactiveProduct (productId) {
-        const product = await this.getProductById(productId);
-        product.actice = false;
+    async unactiveProduct (product) {
+        product.active = false;
         product.save();
     },
 
+    async activeProduct (product) {
+        product.active = true;
+        product.save();
+    },
 };
+
+export default productQuery;

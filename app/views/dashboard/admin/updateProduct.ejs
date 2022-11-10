@@ -31,20 +31,23 @@
                 <input type="url" placeholder="URL de l'image" name="image" />
             </div>
             <div class="form-group">
+                <input type="number" placeholder="En stock" name="stock" />
+            </div>
+            <div class="form-group">
                 <label for="tva_selection">TVA:</label>
                 <select name="tva_id" id="tva_selection">
                         <option value="">TVA: <%= product.tva.title %></option>
-                    <% for(tax of tva){ %>
+                    <% for(tax of TVA){ %>
                         <option value="<%=tax.id%>"><%= tax.title %></option>
                     <% } %>
                 </select>
             </div>
             <div class="form-group">
-                <label for="category_selection">TVA:</label>
+                <label for="category_selection">Catégories:</label>
                 <select name="category_id" id="category_selection">
-                        <option value="">Categorie: <%= product.categories.name %></option>
+                        <option value="">Categorie: <%= product.categories.title %></option>
                     <% for(cat of categories){ %>
-                        <option value="<%=cat.id%>"><%= cat.name %></option>
+                        <option value="<%=cat.id%>"><%= cat.title %></option>
                     <% } %>
                 </select>
             </div>

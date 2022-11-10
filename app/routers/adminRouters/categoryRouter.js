@@ -6,7 +6,7 @@ import categoryController from '../../controllers/adminControllers/categoryContr
 import CW from '../../helpers/controllerWrapper.js';
 
 import param from '../../helpers/paramsIsNumber.js';
-import catalog from '../../services/catalog.js'
+import catalogAdmin from '../../services/catalogAdmin.js'
 
 categoryRouter.get('/categories', CW(categoryController.showAllCategories));
 
@@ -16,7 +16,9 @@ categoryRouter.route('/categories/update')
         .get(CW(categoryController.updateCategoriesPage))
         .post(CW(categoryController.updateCategoriesAction));
         
-categoryRouter.post('/categories/delete/:category', param, catalog, CW(categoryController.unactiveCategory));
+categoryRouter.post('/categories/unactive/:category', param, catalogAdmin, CW(categoryController.unactiveCategory));
+categoryRouter.post('/categories/active/:category', param, catalogAdmin, CW(categoryController.activeCategory));
+
 
 
 export default categoryRouter;

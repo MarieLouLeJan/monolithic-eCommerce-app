@@ -7,13 +7,14 @@ import dateFormat from './dateFormat.js';
 export default async (req, res, next) => {
 
     req.session.user = {
-        id: 3,
-        firstname: 'Lilou',
-        lastname: 'LeJan',
-        email: 'lilou@gmail.com',
-        role_id: 1,
-        roles: { id: 1, title: 'customer'},
-    }
+        id: 2,
+        firstname: 'Maurice',
+        lastname: 'Admin',
+        email: 'admin@admin.com',
+        active: true,
+        role_id: 2,
+        roles: { id: 2, title: 'admin'}
+      }
 
     if (!req.session.user) {
         next(new ForbiddenError(`Veuillez vous connecter pour accéder à cette page !`));

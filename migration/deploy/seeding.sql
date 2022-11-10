@@ -19,11 +19,11 @@ VALUES ('Laptop', 2),
 INSERT INTO "tva" ("title", "value", "created_by")
 VALUES ('20%', 0.20, 2), ('10%', 0.10, 2);
 
-INSERT INTO "products" ("ref", "title", "description", "image", "priceHT", "category_id", "tva_id", "created_by")
-VALUES ('123AAAAA', 'Macbroke', 'Le PC portable de la marque à la poire.', 'https://picsum.photos/seed/1/300/200', 958, 1, 1, 2),
-('134BBBBB', 'iFraude', 'Le smartphone phare de la marque à la poire.', 'https://picsum.photos/seed/2/300/200', 1156, 2, 2, 2),
-('123CCCCC', 'Deell', 'pc Portable', 'https://picsum.photos/seed/2/300/200', 1213, 3, 2, 2),
-('123DDDDD', 'Dell Pasunrond', 'Un ordinateur portable pas cher mais pas top.', 'https://picsum.photos/seed/3/300/200', 521, 1, 2, 2);
+INSERT INTO "products" ("ref", "title", "description", "image", "priceHT", "stock", "category_id", "tva_id", "created_by")
+VALUES ('123AAAAA', 'Macbroke', 'Le PC portable de la marque à la poire.', 'https://picsum.photos/seed/1/300/200', 958, 0, 1, 1, 2),
+('134BBBBB', 'iFraude', 'Le smartphone phare de la marque à la poire.', 'https://picsum.photos/seed/2/300/200', 1156, 3, 2, 2, 2),
+('123CCCCC', 'Deell', 'pc Portable', 'https://picsum.photos/seed/2/300/200', 1213, 2, 3, 2, 2),
+('123DDDDD', 'Dell Pasunrond', 'Un ordinateur portable pas cher mais pas top.', 'https://picsum.photos/seed/3/300/200', 521.20, 4, 1, 2, 2);
 
 INSERT INTO "adress_types" ("title")
 VALUES ('shipping'),
@@ -37,8 +37,6 @@ VALUES ('en attente de paiement'),
 ('en attente du retour'),
 ('en attente de remboursement'),
 ('remboursée');
-
-
 
 
 COMMIT;

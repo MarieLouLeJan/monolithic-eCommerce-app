@@ -15,11 +15,11 @@
         <hr>    
 
         <% for(const cat of categories) { %>
-            <h3>Catégorie: <%= cat.name %></h3>
+            <h3>Catégorie: <%= cat.title %></h3>
             <% for(const prod of cat.products){ %>
                 <div class="info-div">
                 <div class="info-key">
-                    <a href="/dashboard/admin/products/details/<%= prod.id %>"><%= prod.ref %> </a>
+                    Ref: <a href="/dashboard/admin/products/details/<%= prod.id %>"><%= prod.ref %> </a>
                 </div>
                 <div class="info">                       
                     <%= prod.title %>  

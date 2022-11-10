@@ -7,10 +7,8 @@ export default {
     },
 
     async showProductDetails (req, res) {
-        const productId = parseInt(req.params.productId)
-        const product = await productQuery.getProductById(productId)
-        product.priceHT = product.priceHT.toFixed(2)
-        res.render('dashboard/admin/productDetails', { product });
+        console.log(res.locals.product);
+        res.render('dashboard/admin/productDetails');
     },
 
     async addProductPage (_, res) {
@@ -29,22 +27,23 @@ export default {
     },
 
     async updateProductPage (req, res) {
-        const productId = parseInt(req.params.id);
-        const product = await productQuery.getProductById(productId);
-        res.render('dashboard/admin/updateProduct', { product })
+        res.render('dashboard/admin/updateProduct')
     },
 
     async updateProductAction (req, res) {
-        const productId = parseInt(req.params.id)
         for (const prop in req.body) if (!req.body[prop] || req.body.length === 0) delete req.body[prop]; 
         if(req.body.priceHT) req.body.priceHT = parseFloat(req.body.priceHT);
-        await productQuery.updateProduct(productId, req.body);
-        res.redirect(`/dashboard/admin/products/details/${productId}`);
+        await productQuery.updateProduct(req.params.id, req.body);
+        res.redirect(`/dashboard/admin/products/details/${req.params.id}`);
     },
 
     async unactiveProduct (req, res){
-        const productId = parseInt(req.params.id);
-        await productQuery.unactiveProduct(productId);
-        res.redirect('/dashboard/admin/products');
+        await productQuery.unactiveProduct(res.locals.product);
+        res.redirect(`/dashboard/admin/products/details/${req.params.id}`);
+    },
+
+    async activeProduct (req, res){
+        await productQuery.activeProduct(res.locals.product);
+        res.redirect(`/dashboard/admin/products/details/${req.params.id}`);
     },
 };

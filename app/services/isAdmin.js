@@ -1,6 +1,6 @@
-export default (req, res, next) => {
+export default (req, _, next) => {
     
-    if (req.session.user.role.name === 'admin') {
+    if (req.session.user.roles.title === 'admin') {
         return next();
     }
 
