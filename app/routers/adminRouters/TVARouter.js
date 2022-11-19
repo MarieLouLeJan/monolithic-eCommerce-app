@@ -7,9 +7,10 @@ import CW from '../../helpers/controllerWrapper.js';
 
 import param from '../../helpers/paramsIsNumber.js';
 import catalog from '../../services/catalog.js'
+import catalogAdmin from '../../services/catalogAdmin.js';
 
-TVARouter.get('/dashboard/admin/TVA', CW(TVAController.showAllTVA));
-TVARouter.post('/dashboard/admin/TVA/add', CW(TVAController.addTVAAction));
-TVARouter.post('/dashboard/admin/TVA/delete/:TVA', param, catalog, CW(TVAController.unactiveTVA));
+TVARouter.get('/TVA', catalogAdmin, CW(TVAController.showAllTVA));
+TVARouter.post('/TVA/add', CW(TVAController.addTVAAction));
+
 
 export default TVARouter;

@@ -14,13 +14,6 @@ export default {
             res.render('user/signup', { error });
             return;
         }
-        if(req.body.password !== req.body.passwordConfirm) {
-            const error = "Les deux mots de passe ne correspondent pas"
-            res.render('user/signup', { error });
-            return;
-        };
-        req.body.password = await bcrypt.hash(req.body.password, 10);
-        req.body.role_id = 1;
         await userQuery.createUser(req.body)
         const message = 'Vous pouvez maintenant vous connecter !';
         res.render('user/signin', { message });

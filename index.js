@@ -1,5 +1,4 @@
-import dotenv from 'dotenv'
-dotenv.config();
+import './app/helpers/loadenv.js'
 import express from 'express';
 import router from './app/routers/index.js';
 import path from 'path';

@@ -9,9 +9,6 @@ const Role = sequelize.define('roles',
             allowNull: false,
             unicode: true,
             unique: true,
-            validate: {
-                is: /^[a-zA-Z ]+$/i,
-            }
         },
     },
     {

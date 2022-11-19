@@ -30,7 +30,7 @@ import catalogAdmin from '../services/catalogAdmin.js';
 router.use('/dashboard/admin', catalogAdmin, authObligatory, isAdmin, categoryRouter, productRouter, TVARouter, userAdminRouter);
 
 
-router.use('/', catalog, auth, catalogRouter, userRouter);
+router.use('/', auth, catalogRouter, userRouter);
 
 router.use('/cart', auth, cartRouter);
 

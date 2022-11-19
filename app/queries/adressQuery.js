@@ -19,7 +19,8 @@ export default {
         await Adress.create(body)
     },
 
-    async unactiveAdress (adress) {
+    async unactiveAdress (id) {
+        const adress = await Adress.findByPk(id);
         adress.active = false;
         await adress.save();
     },

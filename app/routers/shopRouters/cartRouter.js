@@ -11,13 +11,13 @@ import catalog from '../../services/catalog.js'
 
 import CW from '../../helpers/controllerWrapper.js';
 
-cartRouter.get('/', catalog, cart, CW(cartController.index));
+cartRouter.get('/', cart, CW(cartController.index));
 
-cartRouter.post('/:product', param, catalog, cart, CW(cartController.addOrUpdate));
+cartRouter.post('/:product', param, cart, CW(cartController.addOrUpdate));
 
-cartRouter.post('/erase/:product', param, catalog, cartObligatory, CW(cartController.removeAllProducts));
+cartRouter.post('/erase/:product', param, cartObligatory, CW(cartController.removeAllProducts));
 
-cartRouter.post('/remove/:product', param, catalog, cartObligatory, CW(cartController.removeOneProduct));
+cartRouter.post('/remove/:product', param, cartObligatory, CW(cartController.removeOneProduct));
 
 cartRouter.get('/destroy', cartObligatory, CW(cartController.destroyCart));
 

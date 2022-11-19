@@ -22,6 +22,13 @@
             </form>
             <hr>
         <% } %>
+        <% for(cat of unactiveCategories) { %>
+            <form class="form" method="POST" action="/dashboard/admin/categories/update/<%=cat.id%>">
+                <input type="text" placeholder="<%= cat.title %>" name="title"/>
+                <input type="submit" class="btn btn-primary" value="Modifier" />
+            </form>
+            <hr>
+        <% } %>
         <% if(locals.message){ %>
         <%= message %>
         <% } %>

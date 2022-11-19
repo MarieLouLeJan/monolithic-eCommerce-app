@@ -10,7 +10,11 @@
         
         <hr>
 
-        <h3  class="info-perso">Catégories</h3>
+        <h3  class="info-perso">Catégories </h3>
+
+        <hr>  
+
+        <h4  class="info-perso">Catégories Actives</h4>
 
         <hr>    
 
@@ -38,6 +42,38 @@
             <% } %>
         </div>
 
+        <hr>
+
+        <h4  class="info-perso">Catégories Non Actives</h4>
+
+        <hr>    
+
+        <div class="info-div">
+            <% for(const cat of unactiveCategories) { %>
+                <div class="info-key">
+                    <%= cat.title %> 
+
+                </div>
+                <div class="info"> 
+                    <% if(cat.products.length === 0){ %>
+                        <% if(cat.active === true) { %>
+                            <form action="/dashboard/admin/categories/unactive/<%= cat.id %>" method="POST">
+                                <input class="button-cart" value="Désactiver" type="submit"/> 
+                            </form> 
+                        <% } else if (cat.active === false) { %>
+                            <form action="/dashboard/admin/categories/active/<%= cat.id %>" method="POST">
+                                <input class="button-cart" value="Réactiver" type="submit"/> 
+                            </form> 
+                        <% } %>
+                    <% } else if (cat.products.length > 0){ %>        
+                        <%= cat.products.length %> Produits
+                    <% } %>              
+                </div>
+            <% } %>
+        </div>
+
+        <hr>
+
         <% if(locals.message){ %>
             <%= message %>
         <%}%>
@@ -46,6 +82,8 @@
             <div class="form-group">
                 <input type="text" placeholder="Ajouter une catégorie" name="title" />
                 <input type="hidden" name="active" value="true">
+                <input type="hidden" name="created_by" value="<%=user.id%>">
+
             </div>
             <input type="submit" class="btn btn-primary" value="Ajouter" />
         </form>

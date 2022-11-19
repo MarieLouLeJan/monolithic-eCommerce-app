@@ -23,7 +23,9 @@
             <div class="info">
                 <%= adress.number %> <%= adress.number_complement %> <%= adress.street %>, 
                 <%= adress.postal_code %> <%= adress.city %>, <%= adress.country %>
-                <a href="/dashboard/profil/unactiveAdress/<%=adress.id%>">Supprimer cette adresse</a> 
+                <form action="/dashboard/profil/unactiveAdress/<%=adress.id%>" method="POST">
+                    <input class="button-cart" value="Supprimer cette adresse" type="submit"/> 
+                </form> 
             </div>
 
             <% } %>

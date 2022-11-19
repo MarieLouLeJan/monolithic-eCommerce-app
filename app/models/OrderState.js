@@ -7,9 +7,6 @@ const OrderState = sequelize.define('order_states',
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
-            validate: {
-                is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i
-            }
         },
     },
     {

@@ -10,7 +10,9 @@ import catalog from '../../services/catalog.js'
 
 catalogRouter.get('/', CW(catalogController.index));
 
-catalogRouter.get('/shop', CW(catalogController.productsList));
+catalogRouter.get('/shop/:page', param, catalog, CW(catalogController.productsList));
+
+catalogRouter.get('/shop/search/search', catalog, catalogController.search);
 
 catalogRouter.get('/shop/category/:category', param, catalog, CW(catalogController.productsByCategory));
 

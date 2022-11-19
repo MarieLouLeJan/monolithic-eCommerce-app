@@ -5,7 +5,9 @@ import checkoutController from '../../controllers/shopControllers/checkoutContro
 
 import CW from '../../helpers/controllerWrapper.js';
 
-checkoutRouter.get('/', CW(checkoutController.checkoutPage));
+import cart from '../../services/cart.js';
+
+checkoutRouter.get('/', cart, CW(checkoutController.checkoutPage));
 
 checkoutRouter.post('/complete', CW(checkoutController.checkoutAction));
 

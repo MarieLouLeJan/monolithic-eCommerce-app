@@ -37,7 +37,7 @@
                 <label for="tva_selection">TVA:</label>
                 <select name="tva_id" id="tva_selection">
                         <option value="">TVA: <%= product.tva.title %></option>
-                    <% for(tax of TVA){ %>
+                    <% for(tax of tva){ %>
                         <option value="<%=tax.id%>"><%= tax.title %></option>
                     <% } %>
                 </select>

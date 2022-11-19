@@ -7,7 +7,6 @@ export default {
     },
 
     async addCategoriesAction (req, res) {
-        req.body.created_by = req.session.user.id;
         const categoryFound = res.locals.categories.find(cat => cat.title === req.body.title)
         if(categoryFound){
             res.render('dashboard/admin/allCategories', { message: 'Cette catégorie existe déjà' });
@@ -22,22 +21,23 @@ export default {
     },
 
     async updateCategoriesAction (req, res) {
-        const categoryFound = res.locals.categories.find(cat => cat.title === req.body.title);
+        const categoryFound = res.locals.allCategories.find(cat => cat.title === req.body.title);
         if(categoryFound){
             res.render('dashboard/admin/updateCategories', { message: 'Ce nom de catégorie est déjà utilisé' });
             return;
-        }
-        await categoryQuery.updateCategory(req.body.id, req.body);
+        };
+        console.log('PARAMS', req.params.category);
+        await categoryQuery.updateCategory(req.params.category, req.body);
         res.redirect('/dashboard/admin/categories')
     },
 
     async unactiveCategory (req, res) {
-        await categoryQuery.unactiveCategory(res.locals.category);
+        await categoryQuery.unactiveCategory(req.params.category);
         res.redirect('/dashboard/admin/categories')
     },
 
     async activeCategory (req, res) {
-        await categoryQuery.activeCategory(res.locals.category);
+        await categoryQuery.activeCategory(req.params.category);
         res.redirect('/dashboard/admin/categories')
     },
 }

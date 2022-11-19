@@ -12,13 +12,10 @@ export default {
             res.render('dashboard/admin/tva', { message: 'TVA déjà existante' });
             return;
         }
+        req.body.created_by = req.session.user.id;
+        req.body.active = true;
         TVAQuery.createTVA(req.body);
         res.redirect('/dashboard/admin/tva');
     },
 
-    async unactiveTVA (req, res) {
-        const TVAId = parseInt(req.params.id);
-        await TVAQuery.unactiveTVA(TVAId);
-        res.redirect('/dashboard/admin/TVA');
-    }
 };

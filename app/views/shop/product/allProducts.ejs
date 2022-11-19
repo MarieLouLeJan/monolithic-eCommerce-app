@@ -8,6 +8,14 @@
     </div>
 </div>
 
+<section class="products-section container">
+    <h3>Chercher un produit</h3>
+    <form action="/shop/search/search" class="form" method="GET">
+        <input  type="text" id="search" name="search" placeholder="MacBook Pro...">
+        <input type="submit" class="btn btn-primary" value="Rechercher" />
+    </form>
+</section>
+
 <div class="products-section container">
     <div class="sidebar">
 
@@ -21,6 +29,7 @@
             <% } %>
         </ul>
     </div>
+
 
     <div>
         <div class="products text-center">
@@ -45,6 +54,44 @@
 
         </div>
     </div>
+
+
+
+</div>
+<% if (pages > 0) { %>
+    <div class="div-pagination">
+        <ul class="pagination text-center">
+            <% if (current == 1) { %>
+                <li class="disabled"><a>First</a></li>
+            <% } else { %>
+                <li><a href="/shop/1">First</a></li>
+            <% } %>
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+            <% if (i !== 1) { %>
+                <li class="disabled"><a>...</a></li>
+            <% } %>
+            <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                <% if (i == current) { %>
+                    <li class="active"><a><%= i %></a></li>
+                <% } else { %>
+                    <li><a href="/shop/<%= i %>"><%= i %></a></li>
+                <% } %>
+                <% if (i == Number(current) + 4 && i < pages) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+            <% } %>
+            <% if (current == pages) { %>
+                <li class="disabled"><a>Last</a></li>
+            <% } else { %>
+                <li><a href="/shop/<%= pages %>">Last</a></li>
+            <% } %>
+        </ul>
+    </div>
+<% } %>
+</div>
+
+
+    
 </div>
 
 <% include ('../../partials/foot') %>

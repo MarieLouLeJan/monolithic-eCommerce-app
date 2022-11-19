@@ -81,9 +81,13 @@
 
         <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/update">Modifiez le produit</a></div>
         <% if(product.active === true){ %>
-            <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/unactive">Ne plus vendre le produit</a></div>
+            <form action="/dashboard/admin/products/details/unactive/<%= product.id %>" method="POST">
+                <input class="button-cart" value="Désactiver le produit" type="submit"/> 
+            </form> 
         <% } else if(product.active === false){ %>
-            <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/active">Remettre le produit en vente</a></div>
+            <form action="/dashboard/admin/products/details/active/<%= product.id %>" method="POST">
+                <input class="button-cart" value="Réactiver le produit" type="submit"/> 
+            </form> 
         <% } %>
 
     </div>

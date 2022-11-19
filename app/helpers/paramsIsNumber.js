@@ -1,11 +1,11 @@
 import NotFoundError from './NotFoundError.js';
 
-export default (req, res, next) => {
+export default (req, _, next) => {
 
-    if(Object.keys(req.params).length > 0) {
-            let id = parseInt((Object.values(req.params))[0]);
-            if(isNaN(parseInt(id))) next(new NotFoundError(`Veuillez entrer un paramètre de type number`));
-            req.params.id = id;
-    }
+    Object.keys(req.params).forEach(key => {
+        req.params[key] = parseInt(Object.values(req.params[key]))
+        if(isNaN(Object.values(req.params[key]))) next(new NotFoundError(`Veuillez entrer un paramètre de type number`));
+    })
+
     next()
 }

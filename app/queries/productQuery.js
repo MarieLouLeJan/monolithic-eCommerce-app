@@ -1,8 +1,10 @@
 import { Product } from '../models/index.js';
+import { Op } from "sequelize";
+
 
 const productQuery = {
 
-    async getAllProducts () {
+    async getAllActiveProducts () {
         return await Product.findAll({
             where: {
                 active: true,
@@ -11,13 +13,17 @@ const productQuery = {
         });
     },
 
-    async getAllProductsAdmin () {
+    async getAllUnactiveProducts () {
         return await Product.findAll({
+            where: {
+                active: false,
+            },
             include: 'tva',
         });
     },
 
-    async getById (id) {
+
+    async getProductById (id) {
         return await Product.findByPk(id, {
             include: [
                 'tva',
@@ -27,20 +33,23 @@ const productQuery = {
         });
     },
 
+    async getProductsBySearch (search) {
+        return await Product.findAll({ 
+            where: [
+                { title: { [Op.iLike]: '%' + search + '%' } },
+                { active: true }
+            ],
+            include: [
+                'tva',
+                'categories',
+                'users'
+            ],
+        });
+
+    },
+
     async getProductByIdCheckout (id) {
         return await Product.findByPk(id);
-    },
-
-    async removeFromStock (id, qty){
-        const product = await productQuery.getById(id)
-        product.stock = product.stock -= qty;
-        product.save()
-    },
-
-    async addToStock (id, qty){
-        const product = await productQuery.getById(id)
-        product.stock = product.stock += qty;
-        product.save()
     },
 
     async createProduct (body) {
@@ -48,19 +57,33 @@ const productQuery = {
     },
 
     async updateProduct (id, body){
-        const product = await productQuery.getById(id);
+        const product = await productQuery.getProductById(id);
         await product.update(body)
     },
 
-    async unactiveProduct (product) {
+    async unactiveProduct (id) {
+        const product = await productQuery.getProductById(id)
+        console.log(product)
         product.active = false;
         product.save();
     },
 
-    async activeProduct (product) {
+    async activeProduct (id) {
+        const product = await productQuery.getProductById(id)
         product.active = true;
         product.save();
     },
+
+    async getAndCountAllProducts (perpage, page) {
+        return await Product.findAndCountAll({
+            limit: perpage,
+            offset: (( perpage * page ) - perpage),
+            where: {
+                active: true,
+            },
+            include: 'tva',
+        });
+    }
 };
 
 export default productQuery;

@@ -6,6 +6,7 @@ const pricesCalculation = {
         return totalTTC.toFixed(2);
     },
 
+
     getAllProductsTotal: (HT, qty, TVA) => {
         // HT = parseFloat(HT);
         const totalProduct = [];

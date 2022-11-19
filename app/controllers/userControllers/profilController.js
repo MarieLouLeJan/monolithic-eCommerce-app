@@ -1,5 +1,6 @@
 import adressQuery from '../../queries/adressQuery.js';
 import orderQuery from '../../queries/orderQuery.js';
+import userQuery from '../../queries/userQuery.js';
 import dateFormat from '../../services/dateFormat.js'
 
 export default {
@@ -13,7 +14,7 @@ export default {
     },
 
     async unactiveAdressAction (req, res) {
-        await adressQuery.unactiveAdress(res.locals.adress);
+        await adressQuery.unactiveAdress(req.params.adress);
         res.redirect('/dashboard/profil/adresses')
     },
 
@@ -32,15 +33,23 @@ export default {
 
 
     async orderHistoryDetails (req, res, next) {
-        res.locals.user.order.date = dateFormat(res.locals.user.order.created_at, 'MM-dd-yyyy');
+        const order = res.locals.user.orders.find(order => order.id = req.params.order)
+        order.date = dateFormat(order.created_at, 'MM-dd-yyyy');
+        
+        let products = await orderQuery.getAllProductsByOrder(order.id);
+        order.products = products.map(product => product.get({ plain: true }))
 
-        let products = await orderQuery.getAllProductsByOrder(req.params.id);
-        products = products.map(product => product.get({ plain: true }))
+        let adresses = await orderQuery.getAllAdressesByOrder(order.id);
+        order.adresses = adresses.map(adress => adress.get({ plain: true }))
+        console.log(order)
 
-        let adresses = await orderQuery.getAllAdressesByOrder(req.params.id);
-        adresses = adresses.map(adress => adress.get({ plain: true }))
-        console.log(products)
 
-        res.render('dashboard/profil/orderHistoryDetails', { products, adresses })
+        res.render('dashboard/profil/orderHistoryDetails', { order })
+    },
+
+    async unactiveAccountAction (req, res, next) {
+        userQuery.unactiveAccount(res.locals.user.id);
+        delete req.session 
+        res.redirect('/logout')
     }
 };

@@ -46,10 +46,10 @@
                     <%= product.qty %>
                   </div>
                   <div>
-                    <%= product.priceHT * product.qty %> &euro; HT
+                    <%= product.totalHT %> &euro; HT
                   </div>
                   <div>
-                    <%= Math.round((product.priceTTC * product.qty) * 100) / 100 %> &euro; TTC
+                    <%= product.totalTTC %> &euro; TTC
                   </div>
                 </div>
               </div>

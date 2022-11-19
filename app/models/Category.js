@@ -7,9 +7,6 @@ const Category = sequelize.define('categories',
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
-            validate: {
-                is: /^[a-zA-Z0-9Ã-ÿ '"°-]+$/i
-            }
         },
         active: {
             type: DataTypes.BOOLEAN,

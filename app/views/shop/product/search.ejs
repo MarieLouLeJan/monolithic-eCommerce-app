@@ -1,0 +1,60 @@
+<%- include ('../../partials/nav') %>
+
+<div class="breadcrumbs">
+    <div class="container">
+        <a href="/shop">Home</a>
+        <i class="fa fa-chevron-right breadcrumb-separator"></i>
+        <span>Shop</span>
+    </div>
+</div>
+
+<section class="products-section container">
+    <h3>Chercher un produit</h3>
+    <form action="/shop/search" class="form">
+        <input type="text" id="search" name="search" placeholder="MacBook Pro...">
+        <input type="submit" value="search">
+    </form>
+</section>
+
+<div class="products-section container">
+    <div class="sidebar">
+
+        <h3 class="mt-3">Les catégories</h3>
+
+        <ul>
+            <% for(cat of categories){ %>
+             <li>
+                <a href="/shop/category/<%= cat.id %>"><%= cat.title %></a>
+            </li>
+            <% } %>
+        </ul>
+    </div>
+
+
+
+    <div>
+        <div class="products text-center">
+            <div><%= productsFound.length %> produits trouvés</div>
+                <% for(product of productsFound) { %>
+                    <div class="product">
+                        <a href="/shop/product/<%= product.id %>">
+                            <img
+                                src="<%= product.image %>"
+                                alt="<%= product.title %>"
+                            />
+                        </a>
+                        <a href="/shop/product/<%= product.id %>">
+                            <div class="product-name"><%= product.title %></div>
+                        </a>
+                        <div class="product-price"><%= product.priceHT%>€ HT</div>
+                        <div class="product-price">TVA: <%= product.tva.title %></div>
+                        <div class="product-price"><%= product.priceTTC%>€ TTC</div>
+
+                    </div>
+                <% }%>
+
+        </div>
+    </div>
+</div>
+
+<% include ('../../partials/foot') %>

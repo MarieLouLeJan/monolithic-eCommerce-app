@@ -1,6 +1,6 @@
 import { User, Role } from '../models/index.js';
 
-export default {
+const userQuery = {
 
     async getAllUsers () {
         return await User.findAll({
@@ -37,4 +37,12 @@ export default {
     async createUser (body) {
         await User.create(body);
     },
+
+    async unactiveAccount (userId) {
+        const userToUnactive = await User.findByPk(userId);
+        userToUnactive.active = false;
+        userToUnactive.save();
+    }
 };
+
+export default userQuery;

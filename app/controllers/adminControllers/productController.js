@@ -7,8 +7,8 @@ export default {
     },
 
     async showProductDetails (req, res) {
-        console.log(res.locals.product);
-        res.render('dashboard/admin/productDetails');
+        const product = await productQuery.getProductById(req.params.product)
+        res.render('dashboard/admin/productDetails', { product });
     },
 
     async addProductPage (_, res) {
@@ -21,29 +21,29 @@ export default {
             res.render('dashboard/admin/addProduct', { message: "Ce produit existe déjà" });
             return;
         }
-        req.body.priceHT = parseFloat(req.body.priceHT);
         await productQuery.createProduct(req.body);
-        res.redirect(`/dashboard/admin/products/details/${productCreated.id}`);
+        res.redirect(`/dashboard/admin/products`);
     },
 
     async updateProductPage (req, res) {
-        res.render('dashboard/admin/updateProduct')
+        const product = await productQuery.getProductById(req.params.product)
+        res.render('dashboard/admin/updateProduct', { product })
     },
 
     async updateProductAction (req, res) {
-        for (const prop in req.body) if (!req.body[prop] || req.body.length === 0) delete req.body[prop]; 
+        for(const prop in req.body) if(!req.body[prop] || req.body.length === 0) delete req.body[prop]; 
         if(req.body.priceHT) req.body.priceHT = parseFloat(req.body.priceHT);
-        await productQuery.updateProduct(req.params.id, req.body);
-        res.redirect(`/dashboard/admin/products/details/${req.params.id}`);
+        await productQuery.updateProduct(req.params.product, req.body);
+        res.redirect(`/dashboard/admin/products/details/${req.params.product}`);
     },
 
     async unactiveProduct (req, res){
-        await productQuery.unactiveProduct(res.locals.product);
-        res.redirect(`/dashboard/admin/products/details/${req.params.id}`);
+        await productQuery.unactiveProduct(req.params.product);
+        res.redirect(`/dashboard/admin/products/details/${req.params.product}`);
     },
 
     async activeProduct (req, res){
-        await productQuery.activeProduct(res.locals.product);
-        res.redirect(`/dashboard/admin/products/details/${req.params.id}`);
+        await productQuery.activeProduct(req.params.product);
+        res.redirect(`/dashboard/admin/products/details/${req.params.product}`);
     },
 };

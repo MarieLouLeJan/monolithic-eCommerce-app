@@ -6,6 +6,7 @@ import OrderTypeAdressQuery from '../../queries/orderTypeAdressQuery.js'
 
 export default {
     async checkoutPage (req, res) {
+        console.log(req.session)
         res.render('shop/cart/checkout')
     },
 
@@ -13,7 +14,6 @@ export default {
 
         const cart = res.locals.cart
 
-        console.log(req.body)
 
         const newOrderBody = {
             totalHT: cart.totalHT,
