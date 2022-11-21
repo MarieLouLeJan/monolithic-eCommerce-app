@@ -1,21 +1,25 @@
 import express from 'express';
 const catalogRouter = express.Router();
 
-import catalogController from '../../controllers/shopControllers/catalogController.js';
+import controller from '../../controllers/shopControllers/catalogController.js';
+import validate from '../../services/validations/validate.js';
+import productReview from '../../services/validations/schemas/productReview.js'
 
 import CW from '../../helpers/controllerWrapper.js';
-
 import param from '../../helpers/paramsIsNumber.js';
-import catalog from '../../services/catalog.js'
 
-catalogRouter.get('/', CW(catalogController.index));
+catalogRouter.get('/', CW(controller.index));
 
-catalogRouter.get('/shop/:page', param, catalog, CW(catalogController.productsList));
+catalogRouter.get('/shop/:page', param, CW(controller.productsList));
 
-catalogRouter.get('/shop/search/search', catalog, catalogController.search);
+catalogRouter.get('/shop/search/search', controller.search);
 
-catalogRouter.get('/shop/category/:category', param, catalog, CW(catalogController.productsByCategory));
+catalogRouter.get('/shop/category/:category', param,  CW(controller.productsByCategory));
 
-catalogRouter.get('/shop/product/:product', param, catalog, CW(catalogController.productDetails));
+catalogRouter.get('/shop/product/:product', param, CW(controller.productDetails));
+
+catalogRouter.get('/shop/product/:product/addReview', param, CW(controller.addReviewPage))
+catalogRouter.post('/shop/product/:product/addReview', param, validate(productReview), CW(controller.addReviewAction))
+
 
 export default catalogRouter;

@@ -1,6 +1,5 @@
-import { Product } from '../models/index.js';
+import { Product, Product_review, User } from '../models/index.js';
 import { Op } from "sequelize";
-
 
 const productQuery = {
 
@@ -28,9 +27,24 @@ const productQuery = {
             include: [
                 'tva',
                 'categories',
-                'users'
+                'users',
             ],
         });
+    },
+
+    async getReviewsByProduct (id) {
+        return await Product_review.findAll({
+            where: { 
+                product_id: id 
+            },
+            include: {
+                model: User,
+            },
+        })
+    },
+
+    async addReviewToProduct (body) {
+        return await Product_review.create(body)
     },
 
     async getProductsBySearch (search) {
@@ -45,7 +59,6 @@ const productQuery = {
                 'users'
             ],
         });
-
     },
 
     async getProductByIdCheckout (id) {
@@ -74,16 +87,16 @@ const productQuery = {
         product.save();
     },
 
-    async getAndCountAllProducts (perpage, page) {
-        return await Product.findAndCountAll({
-            limit: perpage,
-            offset: (( perpage * page ) - perpage),
-            where: {
-                active: true,
-            },
-            include: 'tva',
-        });
-    }
+    // async getAndCountAllProducts (perpage, page) {
+    //     return await Product.findAndCountAll({
+    //         limit: perpage,
+    //         offset: (( perpage * page ) - perpage),
+    //         where: {
+    //             active: true,
+    //         },
+    //         include: 'tva',
+    //     });
+    // }
 };
 
 export default productQuery;

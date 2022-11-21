@@ -1,4 +1,4 @@
-import { User, Role } from '../models/index.js';
+import { User, Role, Product, Product_review } from '../models/index.js';
 
 const userQuery = {
 
@@ -42,7 +42,18 @@ const userQuery = {
         const userToUnactive = await User.findByPk(userId);
         userToUnactive.active = false;
         userToUnactive.save();
-    }
+    },
+
+    async getReviewsByUser (id) {
+        return await Product_review.findAll({
+            where: { 
+                user_id: id 
+            },
+            include: {
+                model: Product,
+            },
+        })
+    },
 };
 
 export default userQuery;

@@ -16,9 +16,8 @@ import profilRouter from './userRouters/profilRouter.js';
 
 import errorHandlers from '../helpers/errorHandlers.js';
 import NotFoundError from '../helpers/NotFoundError.js';
-import param from '../helpers/paramsIsNumber.js'
 
-
+import cart from '../services/cart.js';
 import catalog from '../services/catalog.js'
 import auth from '../services/auth.js';
 import authObligatory from '../services/authObligatory.js'
@@ -27,12 +26,15 @@ import cartObligatory from '../services/cartObligatory.js'
 import catalogAdmin from '../services/catalogAdmin.js';
 
 
-router.use('/dashboard/admin', catalogAdmin, authObligatory, isAdmin, categoryRouter, productRouter, TVARouter, userAdminRouter);
+router.use('/dashboard/admin/categories', catalogAdmin, authObligatory, isAdmin, categoryRouter);
+router.use('/dashboard/admin/products', catalogAdmin, authObligatory, isAdmin, productRouter);
+router.use('/dashboard/admin/TVA', catalogAdmin, authObligatory, isAdmin, TVARouter);
+router.use('/dashboard/admin/users', catalogAdmin, authObligatory, isAdmin, userAdminRouter);
 
 
-router.use('/', auth, catalogRouter, userRouter);
+router.use('/', auth, catalog, catalogRouter, userRouter);
 
-router.use('/cart', auth, cartRouter);
+router.use('/cart', auth, cart, cartRouter);
 
 router.use('/checkout', cartObligatory, authObligatory, checkoutRouter);
 

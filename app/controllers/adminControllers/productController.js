@@ -7,8 +7,9 @@ export default {
     },
 
     async showProductDetails (req, res) {
-        const product = await productQuery.getProductById(req.params.product)
-        res.render('dashboard/admin/productDetails', { product });
+        const product = await productQuery.getProductById(req.params.product);
+        const reviews = await productQuery.getReviewsByProduct(req.params.product)
+        res.render('dashboard/admin/productDetails', { product, reviews });
     },
 
     async addProductPage (_, res) {

@@ -2,38 +2,33 @@ import { Sequelize, DataTypes } from 'sequelize';
 import sequelize from '../database.js';
 
 
-const Order_product = sequelize.define('order_product',
+const Product_review = sequelize.define('product_review',
     {
         product_id: {
             type: DataTypes.NUMBER,
             allowNull: false,
         },
-        order_id: {
+        user_id: {
             type: DataTypes.NUMBER,
             allowNull: false,
         },
-        quantity: {
+        note: {
             type: DataTypes.NUMBER,
             allowNull: false,
         },
-        priceHT: {
-            type: DataTypes.STRING,
+        content: {
+            type: DataTypes.TEXT,
             allowNull: false,
-        },
-        TVA: {
-            type: DataTypes.NUMBER,
-            allowNull: false,
-            unique: true,
-        },
+        }
     },
     {
         timestamps: false,
         sequelize,
-        tableName: 'order_product',
+        tableName: 'product_review',
     }
 );
 
-Order_product.removeAttribute('id');
+Product_review.removeAttribute('id');
 
 
-export default Order_product;
+export default Product_review;

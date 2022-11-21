@@ -24,23 +24,19 @@ const Product = sequelize.define('products',
         priceHT: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            validate:{
-                isNumeric: true,
-                isFloat: true
-            }
         },
         stock: {
             type: DataTypes.NUMBER,
             allowNull: false,
-            validate: {
-                isNumeric: true,
-                isInt: true,
-            }
         },
         active: {
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
+        note: {
+            type: DataTypes.NUMBER,
+            allowNull: true
+        }
     },
     {
         sequelize,

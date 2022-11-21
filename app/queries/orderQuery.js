@@ -33,7 +33,7 @@ export default {
     },
 
     async getAllProductsByOrder (orderId) {
-        return Order_product.findAll({
+        return await Order_product.findAll({
             where: {
                 order_id: orderId
             },

@@ -1,4 +1,7 @@
-import { Category, Product } from '../models/index.js';
+import { Model } from 'sequelize';
+import { Category, Product, TVA } from '../models/index.js';
+import { Op } from "sequelize";
+
 
 const categoryQuery = {
 
@@ -28,6 +31,24 @@ const categoryQuery = {
             }
         });
     },
+
+    // async getCategoryBySearch (search) {
+    //     return await Category.findAll({ 
+    //         where: [
+    //             { title: { [Op.iLike]: '%' + search + '%' } },
+    //             { active: true }
+    //         ],
+    //         include: [
+    //             { 
+    //                 model: Product, as: "products",
+    //                 where: {active: true},
+    //                 include: [
+    //                     { model: TVA, as: "tva" }
+    //                 ]
+    //             } 
+    //         ],
+    //     });
+    // },
 
     
     async getAllUnactiveCategories () {

@@ -1,14 +1,14 @@
 import express from 'express';
 const userAdminRouter = express.Router();
 
-import userAdminController from '../../controllers/adminControllers/userAdminController.js';
+import controller from '../../controllers/adminControllers/userAdminController.js';
 
 import CW from '../../helpers/controllerWrapper.js';
 
-userAdminRouter.get('/dashboard/admin/users',  CW(userAdminController.showAllUsers));
+userAdminRouter.get('/',  CW(controller.showAllUsers));
 
-userAdminRouter.route('/dashboard/admin/users/createAdmin') 
-                .get(CW(userAdminController.createAdminPage))
-                .post(CW(userAdminController.createAdminAction));
+userAdminRouter.route('/users/createAdmin') 
+                .get(CW(controller.createAdminPage))
+                .post(CW(controller.createAdminAction));
 
 export default userAdminRouter;

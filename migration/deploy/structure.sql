@@ -72,10 +72,18 @@ CREATE TABLE "products" (
     "priceHT"           FLOAT NOT NULL,
     "active"            BOOLEAN NOT NULL DEFAULT true,
     "stock"             INTEGER NOT NULL,
+    "note"              FLOAT,
     "category_id"       INTEGER NOT NULL REFERENCES categories("id"),
     "tva_id"            INTEGER NOT NULL REFERENCES tva("id"),
     "created_by"        INTEGER NOT NULL REFERENCES users("id"),
     "created_at"        TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE TABLE "product_review"(
+    "product_id"        INTEGER NOT NULL REFERENCES products("id"),
+    "user_id"           INTEGER NOT NULL REFERENCES users("id"),
+    "note"              INTEGER NOT NULL,
+    "content"           TEXT NOT NULL
 );
 
 CREATE TABLE "order_states" (

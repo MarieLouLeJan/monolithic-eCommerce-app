@@ -77,6 +77,14 @@
                 <div class="info">                       
                     <%= product.active %>  
                 </div>
+                <% for(const review of reviews){ %>
+                    <div class="info-key">
+                        Avis
+                    </div>
+                    <div class="info">                       
+                        <%= review.content %>  
+                    </div>
+                <% } %>
             </div>
 
         <div class="complete"><a  class="complete" href="/dashboard/admin/products/details/<%= product.id %>/update">Modifiez le produit</a></div>

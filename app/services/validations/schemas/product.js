@@ -5,7 +5,7 @@ const imagePattern = /^(http(s?):)([/|.|\w|\s|-])*\.(?:jpe?g|png)$/;
 const pricePattern = /^\d+(?:\.\d{0,2})?$/
 
 const product = {
-    ref: Joi.string().min(2),
+    ref: Joi.string().min(4),
     title: Joi.string().pattern(frenchPattern).min(2).max(30),
     description: Joi.string().pattern(frenchPattern).min(2).max(200),
     image: Joi.string().pattern(imagePattern).min(10),

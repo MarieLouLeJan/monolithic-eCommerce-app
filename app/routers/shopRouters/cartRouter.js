@@ -1,25 +1,23 @@
 import express from 'express';
 const cartRouter = express.Router();
 
-import cartController from '../../controllers/shopControllers/cartController.js';
+import controller from '../../controllers/shopControllers/cartController.js';
 
 import cartObligatory from '../../services/cartObligatory.js';
 import cart from '../../services/cart.js';
+
 import param from '../../helpers/paramsIsNumber.js';
-import catalog from '../../services/catalog.js'
-
-
 import CW from '../../helpers/controllerWrapper.js';
 
-cartRouter.get('/', cart, CW(cartController.index));
+cartRouter.get('/', cart, CW(controller.index));
 
-cartRouter.post('/:product', param, cart, CW(cartController.addOrUpdate));
+cartRouter.post('/:product', param, cart, CW(controller.addOrUpdate));
 
-cartRouter.post('/erase/:product', param, cartObligatory, CW(cartController.removeAllProducts));
+cartRouter.post('/erase/:product', param, cartObligatory, CW(controller.removeAllProducts));
 
-cartRouter.post('/remove/:product', param, cartObligatory, CW(cartController.removeOneProduct));
+cartRouter.post('/remove/:product', param, cartObligatory, CW(controller.removeOneProduct));
 
-cartRouter.get('/destroy', cartObligatory, CW(cartController.destroyCart));
+cartRouter.get('/destroy', cartObligatory, CW(controller.destroyCart));
 
 
 export default cartRouter;
