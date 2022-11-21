@@ -8,7 +8,7 @@ VALUES ('customer'),
 
 INSERT INTO "users" ("firstname", "lastname", "email", "password", "role_id")
 VALUES ('John', 'Example', 'example@example.com', '$2b$10$nIIIGWlkm3SzwVF81h4qOekR8ABLUqXoiWAVSkB6oNpKroyyky84G', 1), 
-('Maurice', 'Admin', 'admin@admin.com', '$2b$10$nIIIGWlkm3SzwVF81h4qOekR8ABLUqXoiWAVSkB6oNpKroyyky84G', 2);
+('Julie', 'Admin', 'admin@admin.com', '$2b$10$nIIIGWlkm3SzwVF81h4qOekR8ABLUqXoiWAVSkB6oNpKroyyky84G', 2);
 
 INSERT INTO "categories" ("title", "created_by")
 VALUES ('Laptop', 2),
@@ -46,22 +46,17 @@ VALUES
 ('ref23', 'Smallprinty', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat officiis esse odio, dolore vitae cum itaque deleniti numquam fuga eos explicabo. Reiciendis neque dolori', 'https://images.pexels.com/photos/3570244/pexels-photo-3570244.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 124, 36, 4, 2, 2),
 ('ref24', 'Smallprinty', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellat officiis esse odio, dolore vitae cum itaque deleniti numquam fuga eos explicabo. Reiciendis neque dolori', 'https://images.pexels.com/photos/6956320/pexels-photo-6956320.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', 56, 27, 4, 2, 2);
 
-INSERT INTO "product_review" ("product_id", "user_id", "note", "content")
-VALUES (1, 1, 4, 'Très bon produit'),
-(1, 1, 4, 'Passable');
 
 INSERT INTO "adress_types" ("title")
 VALUES ('shipping'),
 ('billing');
 
 INSERT INTO "order_states" ("title")
-VALUES ('en attente de paiement'),
-('en cours de livraison'),
-('livrée'),
-('annulée'),
-('en attente du retour'),
-('en attente de remboursement'),
-('remboursée');
+VALUES ('Order placed'),
+('Processing'),
+('Shipped'),
+('Delivered'),
+('Cancelled'),
 
 
 COMMIT;

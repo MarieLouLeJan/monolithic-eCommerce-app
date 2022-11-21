@@ -5,7 +5,7 @@ export default {
 
     async showAllUsers (_, res) {
         const adminRole = await roleQuery.getRoleByRoleName('admin');
-        const userRole = await roleQuery.getRoleByRoleName('user')
+        const userRole = await roleQuery.getRoleByRoleName('costumer')
         res.render('dashboard/admin/users/allUsers', { adminRole, userRole })
     },
 
